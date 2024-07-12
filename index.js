@@ -114,7 +114,7 @@ schedule.scheduleJob('* * * * *', async () => {
 
   await checkVip(bot, i18n)
 
-  await require('./actions/checkPayme')(bot, i18n)
+  // await require('./actions/checkPayme')(bot, i18n)
 })
 
 const { randomInt } = require('crypto')
