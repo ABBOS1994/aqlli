@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e2e20ac8-c33c-406d-a974-c9c00dfb2024" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.prettierrc.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/addAdmin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/addBotSubscription.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/addJoin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/addSubscription.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/addVip.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/addWithdraw.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/ban.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/botStat.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/listUsers.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/action.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/add.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/delete.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/editPost.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/inline.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/inlineUpdate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/keyboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/lang.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/lauchWorker.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/preview.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/quantity.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/start.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/startDate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/mail/worker.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/stat.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/sysRef.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/view/add.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/view/delete.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/view/editPost.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/view/endDate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/view/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/view/inline.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/view/inlineUpdate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/view/keyboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/view/lang.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/view/preview.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/view/quantity.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/view/startDate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/admin/view/unique.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/cabinet.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/chatJoin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/checkPayme.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/checkVip.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/error.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/handle.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/help.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/myChatMember.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/partner.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/showView.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/solve.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/start.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/translateBot.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/vip.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helpers/admin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helpers/botStat.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helpers/convertChars.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helpers/htmlToImage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helpers/language.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helpers/mainKeyboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helpers/substrHTML.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helpers/updateStat.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helpers/whisper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/locales/uz.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/middlewares/attachUser.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/middlewares/logging.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/middlewares/subscription.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/middlewares/sysRefs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/deposit.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/mail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/ref.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/view.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pm2.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routers/callbackQuery.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routers/inlineQuery.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routers/message.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="2" />
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1720790458" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1720790457" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="ProjectId" id="2j8Qr7QBXgXVlWO9Vyh0JLCTrBA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="20.15.0" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\user\WebstormProjects\aqlli\node_modules\prettier" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RunManager" selected="npm.format:write">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="format:check" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="format:check" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="format:write" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="format:write" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.format:write" />
+        <item itemvalue="npm.format:check" />
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e2e20ac8-c33c-406d-a974-c9c00dfb2024" name="Default Changelist" comment="" />
+      <created>1720766419199</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1720766419199</updated>
+      <workItem from="1720766421169" duration="7146000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="638" y="319" key="#ESLint" timestamp="1720766720776">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="638" y="319" key="#ESLint/0.0.1536.816@0.0.1536.816" timestamp="1720766720776" />
+    <state width="1515" height="291" key="GridCell.Tab.0.bottom" timestamp="1720784515590">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state width="1515" height="291" key="GridCell.Tab.0.bottom/0.0.1536.816@0.0.1536.816" timestamp="1720784515590" />
+    <state width="1515" height="291" key="GridCell.Tab.0.center" timestamp="1720784515590">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state width="1515" height="291" key="GridCell.Tab.0.center/0.0.1536.816@0.0.1536.816" timestamp="1720784515590" />
+    <state width="1515" height="291" key="GridCell.Tab.0.left" timestamp="1720784515590">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state width="1515" height="291" key="GridCell.Tab.0.left/0.0.1536.816@0.0.1536.816" timestamp="1720784515590" />
+    <state width="1515" height="291" key="GridCell.Tab.0.right" timestamp="1720784515590">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state width="1515" height="291" key="GridCell.Tab.0.right/0.0.1536.816@0.0.1536.816" timestamp="1720784515590" />
+    <state x="277" y="53" key="SettingsEditor" timestamp="1720766645338">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="277" y="53" key="SettingsEditor/0.0.1536.816@0.0.1536.816" timestamp="1720766645338" />
+    <state x="478" y="10" width="579" height="795" key="find.popup" timestamp="1720780137897">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="478" y="10" width="579" height="795" key="find.popup/0.0.1536.816@0.0.1536.816" timestamp="1720780137897" />
+  </component>
+</project>
