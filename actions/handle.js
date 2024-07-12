@@ -12,27 +12,17 @@ const User = require('../models/user')
 const marked = require('marked')
 marked.use({
   tokenizer: {
-    fences() {
-    },
-    heading() {
-    },
-    hr() {
-    },
-    blockquote() {
-    },
-    list() {
-    },
-    def() {
-    },
-    table() {
-    },
-    lheading() {
-    },
-    paragraph() {
-    },
+    fences() {},
+    heading() {},
+    hr() {},
+    blockquote() {},
+    list() {},
+    def() {},
+    table() {},
+    lheading() {},
+    paragraph() {},
   },
 })
-
 const parseText = (text, article) =>
   marked
     .parse(text)
@@ -75,9 +65,8 @@ module.exports = async (ctx) => {
   if (!text && !image) return ctx.replyWithHTML(ctx.i18n.t('noPrompt'))
 
   const isPremium = ctx.user.vip && ctx.user.vip > new Date()
-  const isUnlimitedUser = ctx.user.username === 'maxfiy_dasturchi'
 
-  if (!isUnlimitedUser && ctx.user.requests <= 0 && !isPremium)
+  if (ctx.user.requests <= 0 && !isPremium)
     return ctx.replyWithHTML(
       ctx.i18n.t('noRequests.text'),
       Markup.inlineKeyboard([
@@ -153,8 +142,8 @@ module.exports = async (ctx) => {
   const question = `${
     ctx.i18n.locale() === 'ru' && !conversationId
       ? ctx.i18n.t('promptPrefix', {
-        date: new Date().toLocaleString(),
-      })
+          date: new Date().toLocaleString(),
+        })
       : ''
   }${text}`
   let result
