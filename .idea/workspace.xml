@@ -20,92 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="620a8095-b611-4ac6-b07b-cbcadc975251" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.prettierrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.prettierrc.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/addAdmin.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/addAdmin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/addBotSubscription.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/addBotSubscription.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/addJoin.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/addJoin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/addSubscription.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/addSubscription.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/addVip.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/addVip.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/addWithdraw.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/addWithdraw.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/ban.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/ban.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/botStat.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/botStat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/listUsers.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/listUsers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/action.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/action.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/add.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/add.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/delete.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/delete.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/editPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/editPost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/inline.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/inline.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/inlineUpdate.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/inlineUpdate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/keyboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/keyboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/lang.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/lang.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/lauchWorker.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/lauchWorker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/preview.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/preview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/quantity.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/quantity.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/start.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/start.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/startDate.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/startDate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/mail/worker.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/mail/worker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/stat.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/stat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/sysRef.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/sysRef.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/view/add.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/view/add.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/view/delete.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/view/delete.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/view/editPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/view/editPost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/view/endDate.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/view/endDate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/view/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/view/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/view/inline.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/view/inline.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/view/inlineUpdate.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/view/inlineUpdate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/view/keyboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/view/keyboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/view/lang.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/view/lang.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/view/preview.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/view/preview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/view/quantity.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/view/quantity.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/view/startDate.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/view/startDate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/admin/view/unique.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/admin/view/unique.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/cabinet.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/cabinet.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/chatJoin.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/chatJoin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/checkPayme.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/checkPayme.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/checkVip.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/checkVip.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/error.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/error.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/handle.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/handle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/help.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/help.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/myChatMember.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/myChatMember.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/partner.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/partner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/showView.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/showView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/solve.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/solve.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/start.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/start.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/translateBot.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/translateBot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/vip.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/vip.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/botStat.js" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/botStat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/convertChars.js" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/convertChars.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/htmlToImage.js" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/htmlToImage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/language.js" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/language.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/mainKeyboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/mainKeyboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/substrHTML.js" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/substrHTML.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/updateStat.js" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/updateStat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/whisper.js" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/whisper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/locales/uz.yml" beforeDir="false" afterPath="$PROJECT_DIR$/locales/uz.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlewares/attachUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/middlewares/attachUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlewares/logging.js" beforeDir="false" afterPath="$PROJECT_DIR$/middlewares/logging.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlewares/subscription.js" beforeDir="false" afterPath="$PROJECT_DIR$/middlewares/subscription.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlewares/sysRefs.js" beforeDir="false" afterPath="$PROJECT_DIR$/middlewares/sysRefs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/deposit.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/deposit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/mail.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/mail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/ref.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/ref.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/view.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/view.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pm2.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/pm2.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/callbackQuery.js" beforeDir="false" afterPath="$PROJECT_DIR$/routers/callbackQuery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/inlineQuery.js" beforeDir="false" afterPath="$PROJECT_DIR$/routers/inlineQuery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/message.js" beforeDir="false" afterPath="$PROJECT_DIR$/routers/message.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,6 +124,7 @@
       <option name="presentableId" value="Default" />
       <updated>1738143378491</updated>
       <workItem from="1738143379649" duration="2096000" />
+      <workItem from="1738164554846" duration="1478000" />
     </task>
     <servers />
   </component>
@@ -231,21 +148,25 @@
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="690" y="263" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1032@0.0.1920.1032" timestamp="1738144816438" />
-    <state width="1899" height="279" key="GridCell.Tab.0.bottom" timestamp="1738145358936">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1899" height="295" key="GridCell.Tab.0.bottom" timestamp="1738169000197">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1899" height="279" key="GridCell.Tab.0.bottom/0.0.1920.1032@0.0.1920.1032" timestamp="1738145358936" />
-    <state width="1899" height="279" key="GridCell.Tab.0.center" timestamp="1738145358936">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1899" height="295" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1738169000197" />
+    <state width="1899" height="295" key="GridCell.Tab.0.center" timestamp="1738169000197">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1899" height="279" key="GridCell.Tab.0.center/0.0.1920.1032@0.0.1920.1032" timestamp="1738145358936" />
-    <state width="1899" height="279" key="GridCell.Tab.0.left" timestamp="1738145358936">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1899" height="295" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1738169000197" />
+    <state width="1899" height="295" key="GridCell.Tab.0.left" timestamp="1738169000197">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1899" height="279" key="GridCell.Tab.0.left/0.0.1920.1032@0.0.1920.1032" timestamp="1738145358936" />
-    <state width="1899" height="279" key="GridCell.Tab.0.right" timestamp="1738145358936">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1899" height="295" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1738169000197" />
+    <state width="1899" height="295" key="GridCell.Tab.0.right" timestamp="1738169000197">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="1899" height="279" key="GridCell.Tab.0.right/0.0.1920.1032@0.0.1920.1032" timestamp="1738145358936" />
+    <state width="1899" height="295" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1738169000197" />
   </component>
 </project>
