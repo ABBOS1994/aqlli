@@ -83,7 +83,7 @@ bot.launch(
 )
 
 bot.telegram.getWebhookInfo().then((webhookInfo) => {
-  console.log(`✅ Bot is up and running\n${JSON.stringify(webhookInfo, null, ' ')}`)
+  console.log(`✅ Bot is up and running \n ${JSON.stringify(webhookInfo, null, ' ')}`)
 })
 bot.telegram.getMe().then((info) => console.log(info))
 

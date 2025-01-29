@@ -19,9 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="620a8095-b611-4ac6-b07b-cbcadc975251" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="620a8095-b611-4ac6-b07b-cbcadc975251" name="Default Changelist" comment="1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,8 +124,16 @@
       <option name="presentableId" value="Default" />
       <updated>1738143378491</updated>
       <workItem from="1738143379649" duration="2096000" />
-      <workItem from="1738164554846" duration="1478000" />
+      <workItem from="1738164554846" duration="1771000" />
     </task>
+    <task id="LOCAL-00001" summary="1">
+      <created>1738169145841</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1738169145841</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,6 +150,10 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="1" />
+    <option name="LAST_COMMIT_MESSAGE" value="1" />
   </component>
   <component name="WindowStateProjectService">
     <state x="690" y="263" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1738144816438">
@@ -168,5 +180,9 @@
     </state>
     <state width="1899" height="279" key="GridCell.Tab.0.right/0.0.1920.1032@0.0.1920.1032" timestamp="1738145358936" />
     <state width="1899" height="295" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1738169000197" />
+    <state x="552" y="260" key="Vcs.Push.Dialog.v2" timestamp="1738169147935">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="552" y="260" key="Vcs.Push.Dialog.v2/0.0.1920.1080@0.0.1920.1080" timestamp="1738169147935" />
   </component>
 </project>
