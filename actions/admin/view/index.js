@@ -4,13 +4,13 @@ const dateConfig = {
   month: 'numeric',
   day: 'numeric',
   hour: 'numeric',
-  minute: 'numeric',
+  minute: 'numeric'
 }
 const { ObjectId } = require('mongodb')
 const statuses = {
   notStarted: '🛠 Просмотры еще не начаты',
   doing: '🕒 Просмотры выполняются',
-  ended: '📬 Просмотры завершены',
+  ended: '📬 Просмотры завершены'
 }
 
 module.exports = async (ctx) => {
@@ -20,7 +20,7 @@ module.exports = async (ctx) => {
   else if (isNaN(ctx.state[0])) {
     a =
       (await ctx.View.countDocuments({
-        _id: { $gte: ObjectId(ctx.state[0]) },
+        _id: { $gte: ObjectId(ctx.state[0]) }
       })) - 1
   } else a = Number(ctx.state[0])
 
@@ -37,9 +37,9 @@ module.exports = async (ctx) => {
     return ctx.editMessageText('Нет просмотров', {
       reply_markup: Markup.inlineKeyboard([
         [Markup.callbackButton('Добавить', 'admin_view_add')],
-        [Markup.callbackButton('‹ Назад', 'admin_back')],
+        [Markup.callbackButton('‹ Назад', 'admin_back')]
       ]),
-      parse_mode: 'HTML',
+      parse_mode: 'HTML'
     })
   } else {
     await ctx.deleteMessage()
@@ -59,14 +59,14 @@ module.exports = async (ctx) => {
       [
         Markup.callbackButton('◀️', `admin_view_id_${a - 1}`),
         Markup.callbackButton(`${a + 1}/${count} 🔄`, `admin_view_id_${a}`),
-        Markup.callbackButton('▶️', `admin_view_id_${a + 1}`),
+        Markup.callbackButton('▶️', `admin_view_id_${a + 1}`)
       ],
       [
         Markup.callbackButton(
           `👉${statuses[result.status]}👈`,
-          `admin_view_id_${a}_${result._id}`,
-        ),
-      ],
+          `admin_view_id_${a}_${result._id}`
+        )
+      ]
     ]
 
     if (result.status === 'notStarted') {
@@ -74,9 +74,9 @@ module.exports = async (ctx) => {
         [
           Markup.callbackButton(
             `🔘 Кнопки ${result.keyboard.length ? '✅' : '❌'}`,
-            `admin_view_keyboard_${result._id}`,
+            `admin_view_keyboard_${result._id}`
           ),
-          Markup.callbackButton('🧹', `admin_view_keyboard_${result._id}_del`),
+          Markup.callbackButton('🧹', `admin_view_keyboard_${result._id}_del`)
         ],
         [
           Markup.callbackButton(
@@ -85,9 +85,9 @@ module.exports = async (ctx) => {
                 ? new Date(result.startDate).toLocaleString('ru', dateConfig)
                 : '❌'
             }`,
-            `admin_view_startDate_${result._id}`,
+            `admin_view_startDate_${result._id}`
           ),
-          Markup.callbackButton('🧹', `admin_view_startDate_${result._id}_del`),
+          Markup.callbackButton('🧹', `admin_view_startDate_${result._id}_del`)
         ],
         [
           Markup.callbackButton(
@@ -96,38 +96,38 @@ module.exports = async (ctx) => {
                 ? new Date(result.endDate).toLocaleString('ru', dateConfig)
                 : '❌'
             }`,
-            `admin_view_endDate_${result._id}_end`,
+            `admin_view_endDate_${result._id}_end`
           ),
-          Markup.callbackButton('🧹', `admin_view_endDate_${result._id}_del`),
+          Markup.callbackButton('🧹', `admin_view_endDate_${result._id}_del`)
         ],
         [
           Markup.callbackButton(
             `🫂 Макс кол-во ${result.quantity === 0 ? '♾️' : result.quantity}`,
-            `admin_view_quantity_${result._id}`,
+            `admin_view_quantity_${result._id}`
           ),
-          Markup.callbackButton('🧹', `admin_view_quantity_${result._id}_del`),
+          Markup.callbackButton('🧹', `admin_view_quantity_${result._id}_del`)
         ],
         [
           Markup.callbackButton(
             `🏳️ Язык ${result.lang === null ? 'все' : result.lang}`,
-            `admin_view_lang_${result._id}`,
+            `admin_view_lang_${result._id}`
           ),
-          Markup.callbackButton('🧹', `admin_view_lang_${result._id}_del`),
+          Markup.callbackButton('🧹', `admin_view_lang_${result._id}_del`)
         ],
         [
           Markup.callbackButton(
             `🌐 Превью ${result.preview ? '✅' : '❌'}`,
-            `admin_view_preview_${result._id}`,
+            `admin_view_preview_${result._id}`
           ),
           Markup.callbackButton(
             `✉️ Уникальные ${result.unique ? '✅' : '❌'}`,
-            `admin_view_unique_${result._id}`,
+            `admin_view_unique_${result._id}`
           ),
           Markup.callbackButton(
             '📃 Изменить пост',
-            `admin_view_editPost_${result._id}`,
-          ),
-        ],
+            `admin_view_editPost_${result._id}`
+          )
+        ]
       ])
     }
 
@@ -136,21 +136,21 @@ module.exports = async (ctx) => {
         [
           Markup.callbackButton(
             `👁 Просмотров ${result.views}`,
-            'admin_view_none',
-          ),
-        ],
+            'admin_view_none'
+          )
+        ]
       ])
     }
 
     extraKeyboard = extraKeyboard.concat([
       [
         Markup.switchToChatButton('✈️ Поделиться', `view_${result._id}`),
-        Markup.callbackButton('🗑 Удалить', `admin_view_delete_${result._id}`),
+        Markup.callbackButton('🗑 Удалить', `admin_view_delete_${result._id}`)
       ],
       [
         Markup.callbackButton('Добавить просмотры', 'admin_view_add'),
-        Markup.callbackButton('‹ Назад', 'admin_back'),
-      ],
+        Markup.callbackButton('‹ Назад', 'admin_back')
+      ]
     ])
     const keyboard = result.keyboard.concat(extraKeyboard)
 
@@ -158,7 +158,7 @@ module.exports = async (ctx) => {
 
     return ctx.telegram.sendCopy(ctx.from.id, result.message, {
       reply_markup: Markup.inlineKeyboard(keyboard),
-      disable_web_page_preview: !result.preview,
+      disable_web_page_preview: !result.preview
     })
   }
 }

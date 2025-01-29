@@ -10,7 +10,7 @@ let Deposit = mongoose.Schema({
   paidAt: Date,
   user: Number,
   email: String,
-  id: mongoose.ObjectId,
+  id: mongoose.ObjectId
 })
 Deposit = mongoose.model('Deposit', Deposit)
 

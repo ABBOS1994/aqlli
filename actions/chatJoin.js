@@ -4,7 +4,7 @@ const convertChars = require('../helpers/convertChars')
 
 module.exports = async (ctx) => {
   const find = config.joinChannels?.find(
-    (channel) => channel.id === ctx.chat.id,
+    (channel) => channel.id === ctx.chat.id
   )
   if (!find) return
 
@@ -15,8 +15,8 @@ module.exports = async (ctx) => {
       ctx.from.id,
       ctx.i18n.t('joinRequest.text'),
       {
-        parse_mode: 'HTML',
-      },
+        parse_mode: 'HTML'
+      }
     )
 
     await User.create({
@@ -24,7 +24,7 @@ module.exports = async (ctx) => {
       name: convertChars(ctx.from.first_name),
       username: ctx.from.username,
       alive: true,
-      from: `chatJoin-${ctx.chat.id}`,
+      from: `chatJoin-${ctx.chat.id}`
     }).catch(() => {})
   } catch (err) {
     // eslint-disable-next-line no-console

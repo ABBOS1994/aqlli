@@ -34,7 +34,7 @@ adminRouter.on('addAdmin', require('../actions/admin/addAdmin'))
 adminRouter.on('addSubscription', require('../actions/admin/addSubscription'))
 adminRouter.on(
   'addBotSubscription',
-  require('../actions/admin/addBotSubscription'),
+  require('../actions/admin/addBotSubscription')
 )
 adminRouter.on('addJoin', require('../actions/admin/addJoin'))
 adminRouter.on('addVip', require('../actions/admin/addVip'))

@@ -17,14 +17,14 @@ module.exports = async (ctx) => {
 Текущий список каналов/чатов на обязательную подписку: ${config.subsChannels
         .map(
           (e) =>
-            `<a href='${e.link}'>${e.title}</a> ${e.lang} (<code>${e.id}</code>)`,
+            `<a href='${e.link}'>${e.title}</a> ${e.lang} (<code>${e.id}</code>)`
         )
         .join(', ')}`,
       {
         ...admin.backKeyboard,
         parse_mode: 'HTML',
-        disable_web_page_preview: true,
-      },
+        disable_web_page_preview: true
+      }
     )
   } else {
     const list = ctx.message.text.split(' ')
@@ -37,7 +37,7 @@ module.exports = async (ctx) => {
       if (!list[1]) {
         return ctx.replyWithHTML(
           'Не указана ссылка на канал/чат.',
-          admin.backKeyboard,
+          admin.backKeyboard
         )
       }
 
@@ -54,7 +54,7 @@ module.exports = async (ctx) => {
           link: list[1],
           title: getChat.title,
           id: getChat.id,
-          lang: list[2] || 'all',
+          lang: list[2] || 'all'
         })
       } else config.subsChannels.splice(find, 1)
     }
@@ -66,13 +66,13 @@ module.exports = async (ctx) => {
 Текущий список: ${config.subsChannels
         .map(
           (e) =>
-            `<a href='${e.link}'>${e.title}</a> ${e.lang} (<code>${e.id}</code>)`,
+            `<a href='${e.link}'>${e.title}</a> ${e.lang} (<code>${e.id}</code>)`
         )
         .join(', ')}`,
       {
         ...admin.backKeyboard,
-        disable_web_page_preview: true,
-      },
+        disable_web_page_preview: true
+      }
     )
   }
 }

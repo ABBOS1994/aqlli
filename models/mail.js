@@ -13,7 +13,7 @@ let Mail = mongoose.Schema({
   all: { type: Number, default: 0 },
   startDate: Date,
   endDate: Date,
-  errorsCount: { type: Object, default: {} },
+  errorsCount: { type: Object, default: {} }
 })
 Mail = mongoose.model('Mail', Mail)
 

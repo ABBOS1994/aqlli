@@ -9,7 +9,7 @@ module.exports = async (ctx) => {
     config.botStat = {
       send: false,
       alive: false,
-      botMan: false,
+      botMan: false
     }
   }
 
@@ -30,8 +30,8 @@ module.exports = async (ctx) => {
     return ctx.editMessageText(
       'Введите ключ.',
       Markup.inlineKeyboard([
-        [Markup.callbackButton('‹ Назад', 'admin_botStat')],
-      ]).extra({ parse_mode: 'HTML' }),
+        [Markup.callbackButton('‹ Назад', 'admin_botStat')]
+      ]).extra({ parse_mode: 'HTML' })
     )
   }
 
@@ -45,23 +45,23 @@ module.exports = async (ctx) => {
       [
         Markup.callbackButton(
           `BotStat ${config.botStat.send ? '✅' : '❌'}`,
-          'admin_botStat_send',
+          'admin_botStat_send'
         ),
-        Markup.callbackButton('Ключ', 'admin_botStat_token'),
+        Markup.callbackButton('Ключ', 'admin_botStat_token')
       ],
       [
         Markup.callbackButton(
           `BotMan ${config.botStat.botMan ? '✅' : '❌'}`,
-          'admin_botStat_botMan',
-        ),
+          'admin_botStat_botMan'
+        )
       ],
       [
         Markup.callbackButton(
           `Живые ${config.botStat.alive ? '✅' : '❌'}`,
-          'admin_botStat_alive',
-        ),
+          'admin_botStat_alive'
+        )
       ],
-      [Markup.callbackButton('‹ Назад', 'admin_back')],
-    ]).extra({ parse_mode: 'HTML' }),
+      [Markup.callbackButton('‹ Назад', 'admin_back')]
+    ]).extra({ parse_mode: 'HTML' })
   )
 }

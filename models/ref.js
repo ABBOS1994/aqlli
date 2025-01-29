@@ -8,7 +8,7 @@ let Ref = mongoose.Schema({
   uniqueCount: Number,
   newCount: Number,
   users: Array,
-  price: Number,
+  price: Number
 })
 Ref = mongoose.model('Ref', Ref)
 

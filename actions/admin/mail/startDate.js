@@ -7,15 +7,15 @@ module.exports = async (ctx) => {
 
     if (ctx.state[1]) {
       const mail = await ctx.Mail.findByIdAndUpdate(ctx.state[0], {
-        $unset: { startDate: 1 },
+        $unset: { startDate: 1 }
       })
       return ctx.replyWithHTML('Время удалено', {
         reply_markup: Markup.inlineKeyboard([
           Markup.callbackButton(
             'Продолжить настройку',
-            `admin_mail_id_${mail._id}`,
-          ),
-        ]),
+            `admin_mail_id_${mail._id}`
+          )
+        ])
       })
     }
 
@@ -25,14 +25,14 @@ module.exports = async (ctx) => {
       'Введите дату и время начала рассылки.\n\nПример: 2022.09.26 12:30',
       {
         reply_markup: Markup.inlineKeyboard([
-          Markup.callbackButton('‹ Назад', `admin_mail_id_${ctx.state[0]}`),
+          Markup.callbackButton('‹ Назад', `admin_mail_id_${ctx.state[0]}`)
         ]),
-        parse_mode: 'HTML',
-      },
+        parse_mode: 'HTML'
+      }
     )
   } else {
     const mail = await ctx.Mail.findByIdAndUpdate(ctx.state[0], {
-      startDate: new Date(ctx.message.text),
+      startDate: new Date(ctx.message.text)
     })
 
     ctx.user.state = null
@@ -41,9 +41,9 @@ module.exports = async (ctx) => {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
           'Продолжить настройку',
-          `admin_mail_id_${mail._id}`,
-        ),
-      ]),
+          `admin_mail_id_${mail._id}`
+        )
+      ])
     })
   }
 }

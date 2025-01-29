@@ -21,8 +21,8 @@ module.exports = async (ctx) => {
       {
         ...admin.backKeyboard,
         parse_mode: 'HTML',
-        disable_web_page_preview: true,
-      },
+        disable_web_page_preview: true
+      }
     )
   } else {
     const list = ctx.message.text.split(' ')
@@ -43,7 +43,7 @@ module.exports = async (ctx) => {
       if (find === -1) {
         config.joinChannels.push({
           title: getChat.title,
-          id: getChat.id,
+          id: getChat.id
         })
       } else config.joinChannels.splice(find, 1)
     }
@@ -56,8 +56,8 @@ module.exports = async (ctx) => {
         .join(', ')}`,
       {
         ...admin.backKeyboard,
-        disable_web_page_preview: true,
-      },
+        disable_web_page_preview: true
+      }
     )
   }
 }

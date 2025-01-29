@@ -12,8 +12,8 @@ module.exports = async (ctx) => {
       `Для добавления вывода пользователю введите его id и сумму через пробел`,
       {
         ...admin.backKeyboard,
-        parse_mode: 'HTML',
-      },
+        parse_mode: 'HTML'
+      }
     )
   } else {
     const list = ctx.message.text.split(' ')
@@ -21,7 +21,7 @@ module.exports = async (ctx) => {
     const user = await User.findOneAndUpdate(
       { id: list[0] },
       { $inc: { withdraw: Number(list[1]) } },
-      { new: true },
+      { new: true }
     )
 
     return ctx.replyWithHTML(
@@ -30,7 +30,7 @@ module.exports = async (ctx) => {
       }</a> теперь оплачено - ${user.withdraw} UZS, доступно к выводу ${
         user.earned - user.withdraw
       } UZS`,
-      admin.backKeyboard,
+      admin.backKeyboard
     )
   }
 }

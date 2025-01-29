@@ -6,14 +6,14 @@ const dateConfig = {
   month: 'numeric',
   day: 'numeric',
   hour: 'numeric',
-  minute: 'numeric',
+  minute: 'numeric'
 }
 const statuses = {
   notStarted: '🛠 Просмотры еще не начаты',
   doing: '🕒 Просмотры выполняются',
   // paused: `⏸ Просмотры приостановлены`,
   // stopped: `⏹ Просмотры остановлены`,
-  ended: '📬 Просмотры завершены',
+  ended: '📬 Просмотры завершены'
 }
 
 module.exports = async (ctx) => {
@@ -41,7 +41,7 @@ module.exports = async (ctx) => {
   return ctx.editMessageText(result, {
     parse_mode: 'HTML',
     reply_markup: Markup.inlineKeyboard([
-      Markup.callbackButton('🔄', `inlineUpdateView_${view._id}`),
-    ]),
+      Markup.callbackButton('🔄', `inlineUpdateView_${view._id}`)
+    ])
   })
 }

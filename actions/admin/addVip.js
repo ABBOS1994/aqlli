@@ -10,8 +10,8 @@ module.exports = async (ctx) => {
       `Для изменения кол-во часов подписки введите id и кол-во часов через пробел.`,
       {
         ...admin.backKeyboard,
-        parse_mode: 'HTML',
-      },
+        parse_mode: 'HTML'
+      }
     )
   } else {
     const list = ctx.message.text.split(' ')
@@ -22,14 +22,14 @@ module.exports = async (ctx) => {
     const user = await User.findOneAndUpdate(
       { id: list[0] },
       { vip: date },
-      { new: true },
+      { new: true }
     )
 
     return ctx.replyWithHTML(
       `Вы добавили премиум <a href='tg://user?id=${user?.id}'>${
         user?.name
       }</a> до ${date.toLocaleDateString()}`,
-      admin.backKeyboard,
+      admin.backKeyboard
     )
   }
 }

@@ -10,32 +10,32 @@ module.exports = async (ctx) => {
   const keyboard = Markup.inlineKeyboard([
     [
       Markup.callbackButton('Статистика', 'admin_stat'),
-      Markup.callbackButton('Админы', 'admin_addAdmin'),
+      Markup.callbackButton('Админы', 'admin_addAdmin')
     ],
     [
       Markup.callbackButton('Рассылка', 'admin_mail'),
-      Markup.callbackButton('Просмотры', 'admin_view'),
+      Markup.callbackButton('Просмотры', 'admin_view')
     ],
     [
       Markup.callbackButton('Рефералка', 'admin_sysRef'),
-      Markup.callbackButton('Список пользователей', 'admin_listUsers'),
+      Markup.callbackButton('Список пользователей', 'admin_listUsers')
     ],
     [
       Markup.callbackButton('BotStat.io', 'admin_botStat'),
-      Markup.callbackButton('(Раз)бан пользователя', 'admin_ban'),
+      Markup.callbackButton('(Раз)бан пользователя', 'admin_ban')
     ],
     [
       Markup.callbackButton('Обязательная подписка', 'admin_addSubscription'),
       Markup.callbackButton(
         'Обязательная подписка бот',
-        'admin_addBotSubscription',
-      ),
+        'admin_addBotSubscription'
+      )
     ],
     [
       Markup.callbackButton('Подписка для пользователей', 'admin_addVip'),
-      Markup.callbackButton('Вывод', 'admin_addWithdraw'),
+      Markup.callbackButton('Вывод', 'admin_addWithdraw')
     ],
-    [Markup.callbackButton('Принятие заявок', 'admin_addJoin')],
+    [Markup.callbackButton('Принятие заявок', 'admin_addJoin')]
   ]).extra({ parse_mode: 'HTML' })
 
   ctx.user.state = null

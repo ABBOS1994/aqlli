@@ -14,7 +14,7 @@ module.exports = async (ctx) => {
     0,
     0,
     0,
-    0,
+    0
   )
   const yesterday = new Date(
     now.getFullYear(),
@@ -23,7 +23,7 @@ module.exports = async (ctx) => {
     0,
     0,
     0,
-    0,
+    0
   )
   const week = new Date(
     now.getFullYear(),
@@ -32,7 +32,7 @@ module.exports = async (ctx) => {
     0,
     0,
     0,
-    0,
+    0
   )
   const month = new Date(
     now.getFullYear(),
@@ -41,7 +41,7 @@ module.exports = async (ctx) => {
     0,
     0,
     0,
-    0,
+    0
   )
 
   const promises = [
@@ -59,7 +59,7 @@ module.exports = async (ctx) => {
     User.countDocuments({ createdAt: { $gte: yesterday, $lte: today } }),
     User.countDocuments({
       alive: true,
-      createdAt: { $gte: yesterday, $lte: today },
+      createdAt: { $gte: yesterday, $lte: today }
     }),
 
     User.countDocuments({ createdAt: { $gte: month } }),
@@ -68,7 +68,7 @@ module.exports = async (ctx) => {
     User.aggregate([
       { $match: { alive: true } },
       { $group: { _id: '$langCode', count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
+      { $sort: { count: -1 } }
     ]),
 
     Deposit.aggregate([
@@ -78,9 +78,9 @@ module.exports = async (ctx) => {
         $group: {
           _id: 'amount',
           amount: { $sum: '$amount' },
-          count: { $sum: 1 },
-        },
-      },
+          count: { $sum: 1 }
+        }
+      }
     ]),
     Deposit.aggregate([
       { $match: { status: 'paid', paidAt: { $gte: today } } },
@@ -89,9 +89,9 @@ module.exports = async (ctx) => {
         $group: {
           _id: 'amount',
           amount: { $sum: '$amount' },
-          count: { $sum: 1 },
-        },
-      },
+          count: { $sum: 1 }
+        }
+      }
     ]),
     Deposit.aggregate([
       { $match: { status: 'paid', paidAt: { $gte: week } } },
@@ -100,9 +100,9 @@ module.exports = async (ctx) => {
         $group: {
           _id: 'amount',
           amount: { $sum: '$amount' },
-          count: { $sum: 1 },
-        },
-      },
+          count: { $sum: 1 }
+        }
+      }
     ]),
     Deposit.aggregate([
       { $match: { status: 'paid', paidAt: { $gte: month } } },
@@ -111,15 +111,15 @@ module.exports = async (ctx) => {
         $group: {
           _id: 'amount',
           amount: { $sum: '$amount' },
-          count: { $sum: 1 },
-        },
-      },
+          count: { $sum: 1 }
+        }
+      }
     ]),
     Deposit.aggregate([
       { $match: { status: 'paid' } },
       { $group: { _id: '$per', count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
-    ]),
+      { $sort: { count: -1 } }
+    ])
   ]
 
   const [
@@ -140,7 +140,7 @@ module.exports = async (ctx) => {
     depositForDay,
     depositForWeek,
     depositForMonth,
-    depositByPer,
+    depositByPer
   ] = await Promise.all(promises)
 
   const text = `
@@ -150,7 +150,7 @@ module.exports = async (ctx) => {
 Всего: ${all.format(0)}
 Живых: ${alive.format(0)} (${Math.round((alive / all) * 100)}%)
 Прошедщих ОП: ${subscribed.format(0)} (${Math.round(
-    (subscribed / alive) * 100,
+    (subscribed / alive) * 100
   )}%)
 
 DAU: ${dau.format(0)} (${Math.round((dau / wau) * 100)}%)
@@ -166,8 +166,8 @@ MAU: ${mau.format(0)} (${Math.round((mau / alive) * 100)}%)
     .map(
       (lang) =>
         `${lang._id?.toUpperCase()}: ${lang.count.format(0)} (${Math.round(
-          (lang.count / alive) * 100,
-        )}%)`,
+          (lang.count / alive) * 100
+        )}%)`
     )
     .join(', ')}
 
@@ -195,8 +195,8 @@ MAU: ${mau.format(0)} (${Math.round((mau / alive) * 100)}%)
     .map(
       (lang) =>
         `${lang._id?.toUpperCase()}: ${lang.count.format(0)} (${Math.round(
-          (lang.count / deposit[0]?.count) * 100,
-        )}%)`,
+          (lang.count / deposit[0]?.count) * 100
+        )}%)`
     )
     .join(', ')}`
 
@@ -204,7 +204,7 @@ MAU: ${mau.format(0)} (${Math.round((mau / alive) * 100)}%)
     text,
     Markup.inlineKeyboard([
       [Markup.callbackButton('Обновить', 'admin_stat')],
-      [Markup.callbackButton('‹ Назад', 'admin_back')],
-    ]).extra({ parse_mode: 'HTML' }),
+      [Markup.callbackButton('‹ Назад', 'admin_back')]
+    ]).extra({ parse_mode: 'HTML' })
   )
 }

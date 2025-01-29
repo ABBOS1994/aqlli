@@ -13,12 +13,12 @@ module.exports = async (ctx) => {
         title: 'Рассылка',
         input_message_content: {
           message_text: 'Для получения информации нажмите на кнопку',
-          parse_mode: 'HTML',
+          parse_mode: 'HTML'
         },
         reply_markup: Markup.inlineKeyboard([
-          Markup.callbackButton('🔄', `inlineUpdateMail_${mail._id}`),
-        ]),
-      },
+          Markup.callbackButton('🔄', `inlineUpdateMail_${mail._id}`)
+        ])
+      }
     ])
   }
 }

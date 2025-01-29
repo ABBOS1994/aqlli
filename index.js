@@ -17,7 +17,7 @@ const allowedUpdates = [
   'inline_query',
   'callback_query',
   'my_chat_member',
-  'chat_join_request',
+  'chat_join_request'
 ]
 
 const bot = new Telegraf(process.env.BOT_TOKEN, { handlerTimeout: 1 })
@@ -28,14 +28,14 @@ const I18n = require('telegraf-i18n')
 const i18n = new I18n({
   directory: 'locales',
   defaultLanguage: 'ru',
-  defaultLanguageOnMissing: true,
+  defaultLanguageOnMissing: true
 })
 bot.use(i18n.middleware())
 
 const rateLimit = require('telegraf-ratelimit')
 const limitConfig = {
   window: 3000,
-  limit: 3,
+  limit: 3
 }
 bot.use(rateLimit(limitConfig))
 
@@ -70,20 +70,20 @@ bot.launch(
           port: process.env.WEBHOOK_PORT,
           extra: {
             max_connections: 100,
-            allowed_updates: allowedUpdates,
-          },
-        },
+            allowed_updates: allowedUpdates
+          }
+        }
       }
     : {
         polling: {
-          allowedUpdates,
-        },
-      },
+          allowedUpdates
+        }
+      }
 )
 
 bot.telegram.getWebhookInfo().then((webhookInfo) => {
   console.log(
-    `✅ Bot is up and running\n${JSON.stringify(webhookInfo, null, ' ')}`,
+    `✅ Bot is up and running\n${JSON.stringify(webhookInfo, null, ' ')}`
   )
 })
 bot.telegram.getMe().then((info) => console.log(info))
@@ -99,7 +99,6 @@ const lauchWorker = require('./actions/admin/mail/lauchWorker')
 const checkVip = require('./actions/checkVip')
 
 function imitateAsync() {}
-
 ;(async () => {
   const result = await Mail.findOne({ status: 'doing' })
   if (result) lauchWorker(result._id)
@@ -108,13 +107,13 @@ function imitateAsync() {}
 schedule.scheduleJob('* * * * *', async () => {
   const result = await Mail.findOne({
     status: 'notStarted',
-    startDate: { $exists: true, $lte: new Date() },
+    startDate: { $exists: true, $lte: new Date() }
   })
   if (result) lauchWorker(result._id)
 
   await checkVip(bot, i18n)
 
-  // await require('./actions/checkPayme')(bot, i18n)
+  await require('./actions/checkPayme')(bot, i18n)
 })
 
 const { randomInt } = require('crypto')

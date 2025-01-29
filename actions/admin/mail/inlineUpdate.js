@@ -6,14 +6,14 @@ const dateConfig = {
   month: 'numeric',
   day: 'numeric',
   hour: 'numeric',
-  minute: 'numeric',
+  minute: 'numeric'
 }
 const statuses = {
   stopped: '⏹ Рассылка остановлена',
   paused: '⏸ Рассылка приостановлена',
   ended: '📬 Рассылка завершена',
   doing: '🕒 Рассылка выполняется',
-  notStarted: '🛠 Рассылка еще не начата',
+  notStarted: '🛠 Рассылка еще не начата'
 }
 
 const parts = [
@@ -27,7 +27,7 @@ const parts = [
   '███████▓▓▓',
   '████████▓▓',
   '█████████▓',
-  '██████████',
+  '██████████'
 ]
 
 module.exports = async (ctx) => {
@@ -37,7 +37,7 @@ module.exports = async (ctx) => {
   const procent = (mail.success + mail.unsuccess) / mail.all
   const time = new Date()
   time.setSeconds(
-    time.getSeconds() + (mail.all - mail.success - mail.unsuccess) * 0.016,
+    time.getSeconds() + (mail.all - mail.success - mail.unsuccess) * 0.016
   )
 
   const result = `${statuses[mail.status]}
@@ -47,7 +47,7 @@ ${
     ? mail.startDate
       ? `Запланирована на ${new Date(mail.startDate).toLocaleString(
           'ru',
-          dateConfig,
+          dateConfig
         )}`
       : 'Не запланирована'
     : `${
@@ -73,13 +73,13 @@ ${
 ${
   mail.status === 'doing'
     ? `⌚️ Окончание через ≈${Math.round(
-        (time - new Date()) / (1000 * 60),
+        (time - new Date()) / (1000 * 60)
       )} мин.`
     : mail.status !== 'notStarted'
     ? `🕰 Длительность ${Math.round(
         ((mail.endDate ? new Date(mail.endDate) : new Date()) -
           new Date(mail.startDate)) /
-          (1000 * 60),
+          (1000 * 60)
       )} мин.`
     : ''
 }
@@ -89,7 +89,7 @@ ${
   return ctx.editMessageText(result, {
     parse_mode: 'HTML',
     reply_markup: Markup.inlineKeyboard([
-      Markup.callbackButton('🔄', `inlineUpdateMail_${mail._id}`),
-    ]),
+      Markup.callbackButton('🔄', `inlineUpdateMail_${mail._id}`)
+    ])
   })
 }

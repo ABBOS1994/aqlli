@@ -13,8 +13,8 @@ module.exports = async (ctx) => {
 \nТекущий список администраторов: ${config.admins.join(', ')}`,
       {
         ...admin.backKeyboard,
-        parse_mode: 'HTML',
-      },
+        parse_mode: 'HTML'
+      }
     )
   } else {
     const list = ctx.message.text.split(' ')
@@ -30,9 +30,9 @@ module.exports = async (ctx) => {
 
     return ctx.replyWithHTML(
       `Список администраторов обновлен\n\nТекущий список: ${config.admins.join(
-        ', ',
+        ', '
       )}`,
-      admin.backKeyboard,
+      admin.backKeyboard
     )
   }
 }

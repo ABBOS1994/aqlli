@@ -20,8 +20,8 @@ marked.use({
     def() {},
     table() {},
     lheading() {},
-    paragraph() {},
-  },
+    paragraph() {}
+  }
 })
 const parseText = (text, article) =>
   marked
@@ -45,7 +45,7 @@ module.exports = async (ctx) => {
     ctx.telegram
       .editMessageText(ctx.chat.id, message.message_id, null, text, {
         parse_mode: 'HTML',
-        disable_web_page_preview: true,
+        disable_web_page_preview: true
       })
       .catch((err) => {
         console.error(err)
@@ -70,13 +70,13 @@ module.exports = async (ctx) => {
     return ctx.replyWithHTML(
       ctx.i18n.t('noRequests.text'),
       Markup.inlineKeyboard([
-        Markup.callbackButton(ctx.i18n.t('noRequests.key'), 'vip'),
-      ]).extra(),
+        Markup.callbackButton(ctx.i18n.t('noRequests.key'), 'vip')
+      ]).extra()
     )
 
   const message = await ctx.replyWithHTML(ctx.i18n.t('generation'), {
     reply_to_message_id: ctx.message.message_id,
-    allow_sending_without_reply: true,
+    allow_sending_without_reply: true
   })
 
   const math = image && ctx.state[1] === 'math'
@@ -90,20 +90,20 @@ module.exports = async (ctx) => {
         {
           src: fileLink,
           formats: ['text'],
-          include_detected_alphabets: true,
+          include_detected_alphabets: true
         },
         {
           headers: {
             app_id: process.env.MATHPIX_ID,
-            app_key: process.env.MATHPIX_KEY,
-          },
-        },
+            app_key: process.env.MATHPIX_KEY
+          }
+        }
       )
 
       result = responce.data.text
     } else
       result = await tesseract.recognize(fileLink, {
-        lang: `rus`,
+        lang: `rus`
       })
     console.log('OCR: ', result)
 
@@ -129,12 +129,12 @@ module.exports = async (ctx) => {
   ctx.user.requests -= 1
 
   const api = new ChatGPTAPI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY
   })
 
   const unofAPI = new ChatGPTAPI({
     apiKey: 'test',
-    apiBaseUrl: 'http://31.222.229.214:8080/v1',
+    apiBaseUrl: 'http://31.222.229.214:8080/v1'
   })
 
   let lastMessageUpdate = new Date()
@@ -142,7 +142,7 @@ module.exports = async (ctx) => {
   const question = `${
     ctx.i18n.locale() === 'ru' && !conversationId
       ? ctx.i18n.t('promptPrefix', {
-          date: new Date().toLocaleString(),
+          date: new Date().toLocaleString()
         })
       : ''
   }${text}`
@@ -163,11 +163,11 @@ module.exports = async (ctx) => {
             editMessageText(
               `<a href='http://noting.com/${result.conversationId}|||${
                 result.parentMessageId
-              }'>‍</a>${parseText(result.text)}`,
-            ),
+              }'>‍</a>${parseText(result.text)}`
+            )
           ])
         }
-      },
+      }
     })
   } catch (error) {
     console.error(`Unofficial API`, error)
@@ -188,11 +188,11 @@ module.exports = async (ctx) => {
               editMessageText(
                 `<a href='http://noting.com/${result.conversationId}|||${
                   result.parentMessageId
-                }'>‍</a>${parseText(result.text)}`,
-              ),
+                }'>‍</a>${parseText(result.text)}`
+              )
             ])
           }
-        },
+        }
       })
     } catch (error) {
       console.error(`Official API`, error)
@@ -207,14 +207,14 @@ module.exports = async (ctx) => {
     `https://api.mathpix.com/v3/converter`,
     {
       mmd: result.text,
-      formats: { html: true },
+      formats: { html: true }
     },
     {
       headers: {
         app_id: process.env.MATHPIX_ID,
-        app_key: process.env.MATHPIX_KEY,
-      },
-    },
+        app_key: process.env.MATHPIX_KEY
+      }
+    }
   )
 
   await sleep(3000)
@@ -224,9 +224,9 @@ module.exports = async (ctx) => {
     {
       headers: {
         app_id: process.env.MATHPIX_ID,
-        app_key: process.env.MATHPIX_KEY,
-      },
-    },
+        app_key: process.env.MATHPIX_KEY
+      }
+    }
   )
 
   const buffer = await htmlToImage(html.data)
@@ -235,12 +235,12 @@ module.exports = async (ctx) => {
     editMessageText(
       `<a href='http://noting.com/${result.conversationId}|||${
         result.parentMessageId
-      }'>‍</a>${parseText(result.text)}`,
+      }'>‍</a>${parseText(result.text)}`
     ),
     ctx.replyWithPhoto({ source: buffer }),
     showView(ctx),
     ctx.user.requests >= 0
       ? ctx.replyWithHTML(ctx.i18n.t('left', { n: ctx.user.requests }))
-      : undefined,
+      : undefined
   ])
 }

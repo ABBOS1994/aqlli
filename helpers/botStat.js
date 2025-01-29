@@ -22,9 +22,9 @@ module.exports = async () => {
       method: 'post',
       url: `https://api.botstat.io/create/${process.env.BOT_TOKEN}/${config.botStat.key}?notify_id=${config.admins[0]}`,
       headers: {
-        ...formData.getHeaders(),
+        ...formData.getHeaders()
       },
-      data: formData,
+      data: formData
     }
     await axios(axiosConfig)
   }
@@ -34,9 +34,9 @@ module.exports = async () => {
       method: 'post',
       url: `https://api.botstat.io/botman/${process.env.BOT_TOKEN}?owner_id=${config.admins[0]}`,
       headers: {
-        ...formData.getHeaders(),
+        ...formData.getHeaders()
       },
-      data: formData,
+      data: formData
     }
     await axios(axiosConfig)
   }

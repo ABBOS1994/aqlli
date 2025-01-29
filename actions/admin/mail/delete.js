@@ -8,8 +8,8 @@ module.exports = async (ctx) => {
 
   return ctx.replyWithHTML('Рассылка удалена', {
     reply_markup: Markup.inlineKeyboard([
-      Markup.callbackButton('‹ Назад', 'admin_mail'),
+      Markup.callbackButton('‹ Назад', 'admin_mail')
     ]),
-    parse_mode: 'HTML',
+    parse_mode: 'HTML'
   })
 }

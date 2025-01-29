@@ -24,6 +24,6 @@ module.exports = async (ctx, next) => {
       ctx.callbackQuery?.data ||
       ctx.inlineQuery?.query ||
       'noData'
-    } [${Date.now() - startDate}ms]`,
+    } [${Date.now() - startDate}ms]`
   )
 }

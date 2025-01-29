@@ -2,7 +2,7 @@ const config = require('../config')
 const Markup = require('telegraf/markup')
 const asyncFilter = async (arr, predicate) =>
   Promise.all(arr.map(predicate)).then((results) =>
-    arr.filter((_v, index) => results[index]),
+    arr.filter((_v, index) => results[index])
   )
 const start = require('../actions/start')
 const { Telegraf } = require('telegraf')
@@ -20,7 +20,7 @@ module.exports = async (ctx, next) => {
 
   let notSubscribed = []
   const channels = config.subsChannels?.filter((channel) =>
-    [undefined, ctx.user?.lang, 'all'].includes(channel.lang),
+    [undefined, ctx.user?.lang, 'all'].includes(channel.lang)
   )
   if (channels?.length) {
     notSubscribed = await asyncFilter(channels, async (channel) => {
@@ -34,7 +34,7 @@ module.exports = async (ctx, next) => {
   }
 
   const bots = config.subsBots?.filter((channel) =>
-    [undefined, ctx.user?.lang, 'all'].includes(channel.lang),
+    [undefined, ctx.user?.lang, 'all'].includes(channel.lang)
   )
   if (bots?.length) {
     notSubscribed = notSubscribed.concat(
@@ -46,7 +46,7 @@ module.exports = async (ctx, next) => {
             .catch(() => {})) || false
 
         return !check
-      }),
+      })
     )
   }
 
@@ -66,19 +66,19 @@ module.exports = async (ctx, next) => {
           ...notSubscribed.map((channel, index) => {
             return Markup.urlButton(
               `${ctx.i18n.t(
-                `subscribe.${channel.token ? 'bot' : 'channel'}`,
+                `subscribe.${channel.token ? 'bot' : 'channel'}`
               )} №${index + 1}`,
-              channel.link,
+              channel.link
             )
           }),
           Markup.callbackButton(
             ctx.i18n.t('subscribe.key.check'),
-            'subscription',
-          ),
+            'subscription'
+          )
         ],
-        { columns: 1 },
+        { columns: 1 }
       ),
-      disable_web_page_preview: true,
+      disable_web_page_preview: true
     })
   }
 

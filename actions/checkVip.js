@@ -8,7 +8,7 @@ module.exports = async (bot, i18n) => {
   minuteLast.setMinutes(minuteLast.getMinutes() - 1)
 
   const users = await User.find({
-    vip: { $gte: minuteLast, $lte: now },
+    vip: { $gte: minuteLast, $lte: now }
   })
 
   return Promise.all(
@@ -17,9 +17,9 @@ module.exports = async (bot, i18n) => {
         user.id,
         i18n.t('uz', 'vipExpires.text'),
         Markup.inlineKeyboard([
-          Markup.callbackButton(i18n.t('uz', 'vipExpires.key'), 'vip'),
-        ]).extra({ parse_mode: 'HTML' }),
-      ),
-    ),
+          Markup.callbackButton(i18n.t('uz', 'vipExpires.key'), 'vip')
+        ]).extra({ parse_mode: 'HTML' })
+      )
+    )
   )
 }
