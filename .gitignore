@@ -10,3 +10,6 @@ package-lock.json
 #./.env
 ./.git
 ./package-lock.json
+.idea
+/.idea
+package.json

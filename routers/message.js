@@ -9,8 +9,8 @@ const router = new Router(async (ctx) => {
   const route = ctx.message?.text?.startsWith('/')
     ? 'command'
     : ctx.user.state
-    ? 'state'
-    : 'else'
+      ? 'state'
+      : 'else'
 
   return { route }
 })

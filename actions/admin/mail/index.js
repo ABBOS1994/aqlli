@@ -237,12 +237,12 @@ ${
         (time - new Date()) / (1000 * 60),
       )} мин.`
     : result.status !== 'notStarted'
-    ? `<b>🕰 Длительность</b> ${Math.round(
-        ((result.endDate ? new Date(result.endDate) : new Date()) -
-          new Date(result.startDate)) /
-          (1000 * 60),
-      )} мин.`
-    : ''
+      ? `<b>🕰 Длительность</b> ${Math.round(
+          ((result.endDate ? new Date(result.endDate) : new Date()) -
+            new Date(result.startDate)) /
+            (1000 * 60),
+        )} мин.`
+      : ''
 }
 `
 }`

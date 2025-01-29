@@ -1,8 +1,7 @@
-const Markup = require('telegraf/markup')
+const { Markup } = require('telegraf')
 
-const backKeyboard = Markup.inlineKeyboard(
-  [Markup.callbackButton('‹ Назад', 'admin_back')],
-  { columns: 2 },
-).extra()
+const backKeyboard = Markup.inlineKeyboard([
+  Markup.button.callback('‹ Назад', 'admin_back'),
+], { columns: 2 })
 
 module.exports = { backKeyboard }

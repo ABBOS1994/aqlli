@@ -76,12 +76,12 @@ ${
         (time - new Date()) / (1000 * 60),
       )} мин.`
     : mail.status !== 'notStarted'
-    ? `🕰 Длительность ${Math.round(
-        ((mail.endDate ? new Date(mail.endDate) : new Date()) -
-          new Date(mail.startDate)) /
-          (1000 * 60),
-      )} мин.`
-    : ''
+      ? `🕰 Длительность ${Math.round(
+          ((mail.endDate ? new Date(mail.endDate) : new Date()) -
+            new Date(mail.startDate)) /
+            (1000 * 60),
+        )} мин.`
+      : ''
 }
 `
 }`
