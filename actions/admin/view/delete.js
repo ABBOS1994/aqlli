@@ -8,8 +8,8 @@ module.exports = async (ctx) => {
 
   return ctx.replyWithHTML('Просмотры удалены', {
     reply_markup: Markup.inlineKeyboard([
-      Markup.callbackButton('‹ Назад', 'admin_view'),
+      Markup.callbackButton('‹ Назад', 'admin_view')
     ]),
-    parse_mode: 'HTML',
+    parse_mode: 'HTML'
   })
 }

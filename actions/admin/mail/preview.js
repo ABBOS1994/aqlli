@@ -14,10 +14,10 @@ module.exports = async (ctx) => {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
           'Продолжить настройку',
-          `admin_mail_id_${ctx.state[0]}`,
-        ),
+          `admin_mail_id_${ctx.state[0]}`
+        )
       ]),
-      parse_mode: 'HTML',
-    },
+      parse_mode: 'HTML'
+    }
   )
 }

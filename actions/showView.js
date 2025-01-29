@@ -6,11 +6,11 @@ module.exports = async (ctx) => {
   let views = await View.find({
     $or: [
       { startDate: { $gte: new Date() } },
-      { startDate: { $exists: false } },
+      { startDate: { $exists: false } }
     ],
     $or: [{ endDate: { $lte: new Date() } }, { endDate: { $exists: false } }],
     $or: [{ lang: ctx.user.lang }, { lang: null }],
-    status: 'doing',
+    status: 'doing'
   })
 
   views = views.filter((view) => {
@@ -27,13 +27,13 @@ module.exports = async (ctx) => {
       $addToSet: { users: ctx.user.id },
       status:
         view.quantity && view.quantity <= view.views + 1 ? 'ended' : 'doing',
-      $inc: { views: 1 },
+      $inc: { views: 1 }
     }),
     ctx.telegram.sendCopy(ctx.user.id, view.message, {
       reply_markup: {
-        inline_keyboard: view.keyboard,
+        inline_keyboard: view.keyboard
       },
-      disable_web_page_preview: !view.preview,
-    }),
+      disable_web_page_preview: !view.preview
+    })
   ])
 }

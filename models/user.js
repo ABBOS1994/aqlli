@@ -6,7 +6,7 @@ let User = mongoose.Schema(
       type: Number,
       index: true,
       unique: true,
-      required: true,
+      required: true
     },
     name: String,
     username: String,
@@ -14,42 +14,42 @@ let User = mongoose.Schema(
     lang: String,
     ban: {
       type: Boolean,
-      default: false,
+      default: false
     },
     langCode: String,
     alive: {
       type: Boolean,
-      default: true,
+      default: true
     },
     from: String,
     lastMessage: Date,
     requests: {
       type: Number,
-      default: 3,
+      default: 3
     },
     deposit: Number,
     vip: Date,
     earned: {
       default: 0,
-      type: Number,
+      type: Number
     },
     withdraw: {
       default: 0,
-      type: Number,
+      type: Number
     },
     refCount: {
       default: 0,
-      type: Number,
+      type: Number
     },
     acquainted: Boolean,
     subscribed: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   {
-    timestamps: true,
-  },
+    timestamps: true
+  }
 )
 User = mongoose.model('User', User)
 

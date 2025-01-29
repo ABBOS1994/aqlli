@@ -22,8 +22,8 @@ module.exports = async (ctx, next) => {
           { name: cmd[1] },
           {
             $inc: { count: 1, newCount },
-            $set: { last: date },
-          },
+            $set: { last: date }
+          }
         )
       } else {
         await Ref.updateOne(
@@ -31,8 +31,8 @@ module.exports = async (ctx, next) => {
           {
             $inc: { count: 1, newCount, uniqueCount: 1 },
             $push: { users: ctx.from.id },
-            $set: { last: date },
-          },
+            $set: { last: date }
+          }
         )
       }
     } else {
@@ -43,17 +43,17 @@ module.exports = async (ctx, next) => {
         count: 1,
         uniqueCount: 1,
         newCount,
-        users: [ctx.from.id],
+        users: [ctx.from.id]
       })
     }
   } else if (cmd[0] === 'r' && ctx.freshUser) {
     const referrals = await User.countDocuments({
       from: `r-${cmd[1]}`,
-      deposit: { $gte: 199 },
+      deposit: { $gte: 199 }
     })
 
     const updateObject = {
-      $inc: { refCount: 1 },
+      $inc: { refCount: 1 }
     }
     if (referrals !== 0 && referrals % 49 === 0) updateObject.$inc.earned = 500
     if (referrals === 4) {

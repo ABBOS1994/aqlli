@@ -14,7 +14,7 @@ const exportTemplate = {
   from: '',
   lastMessage: '',
   createdAt: '',
-  updatedAt: '',
+  updatedAt: ''
 }
 
 module.exports = async (ctx) => {
@@ -37,21 +37,21 @@ module.exports = async (ctx) => {
       case 'full':
         users = await User.find(
           {},
-          Object.keys(exportTemplate).join(' '),
+          Object.keys(exportTemplate).join(' ')
         ).lean()
 
         contentUsers = [Object.keys(exportTemplate).join(';')]
         contentUsers.push(
           users.map((value) =>
-            Object.values({ ...exportTemplate, ...value }).join(';'),
-          ),
+            Object.values({ ...exportTemplate, ...value }).join(';')
+          )
         )
         break
     }
 
     return ctx.replyWithDocument({
       source: Buffer.from(contentUsers.join('\n'), 'utf8'),
-      filename: 'users.csv',
+      filename: 'users.csv'
     })
   } else {
     await ctx.answerCbQuery()
@@ -62,10 +62,10 @@ module.exports = async (ctx) => {
         [
           // Markup.callbackButton(`Бекап`, `admin_listUsers_full`),
           Markup.callbackButton('Полный', 'admin_listUsers_all'),
-          Markup.callbackButton('Живые', 'admin_listUsers_alive'),
+          Markup.callbackButton('Живые', 'admin_listUsers_alive')
         ],
-        [Markup.callbackButton('‹ Назад', 'admin_back')],
-      ]).extra(),
+        [Markup.callbackButton('‹ Назад', 'admin_back')]
+      ]).extra()
     )
   }
 }

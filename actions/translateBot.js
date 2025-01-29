@@ -13,7 +13,7 @@ module.exports = async (ctx, next) => {
     await ctx.replyWithHTML(ctx.i18n.t('start.text', { name: ctx.user.name }), {
       reply_markup: mainKeyboard(ctx),
       disable_web_page_preview: true,
-      parse_mode: 'HTML',
+      parse_mode: 'HTML'
     })
 
     ctx.updateType = 'message'
@@ -26,7 +26,7 @@ module.exports = async (ctx, next) => {
 
       return ctx.replyWithHTML(
         'Здравствуйте, выберите язык для использования бота.\nHello, select the language for using the bot.',
-        langKeyboard.extra(),
+        langKeyboard.extra()
       )
     } else return next()
   }

@@ -17,14 +17,14 @@ module.exports = async (ctx) => {
 Текущий список каналов/чатов на обязательную подписку: ${config.subsBots
         ?.map(
           (e) =>
-            `<a href='${e.link}'>${e.id}</a> ${e.lang} (<code>${e.id}</code>)`,
+            `<a href='${e.link}'>${e.id}</a> ${e.lang} (<code>${e.id}</code>)`
         )
         .join(', ')}`,
       {
         ...admin.backKeyboard,
         parse_mode: 'HTML',
-        disable_web_page_preview: true,
-      },
+        disable_web_page_preview: true
+      }
     )
   } else {
     const list = ctx.message.text.split(' ')
@@ -38,7 +38,7 @@ module.exports = async (ctx) => {
       if (!list[1]) {
         return ctx.replyWithHTML(
           'Не указана ссылка на бот.',
-          admin.backKeyboard,
+          admin.backKeyboard
         )
       }
 
@@ -48,7 +48,7 @@ module.exports = async (ctx) => {
           link: list[1],
           id,
           lang: list[2] || 'all',
-          token: list[0],
+          token: list[0]
         })
       } else config.subsBots.splice(find, 1)
     }
@@ -60,13 +60,13 @@ module.exports = async (ctx) => {
 Текущий список: ${config.subsBots
         .map(
           (e) =>
-            `<a href='${e.link}'>${e.id}</a> ${e.lang} (<code>${e.id}</code>)`,
+            `<a href='${e.link}'>${e.id}</a> ${e.lang} (<code>${e.id}</code>)`
         )
         .join(', ')}`,
       {
         ...admin.backKeyboard,
-        disable_web_page_preview: true,
-      },
+        disable_web_page_preview: true
+      }
     )
   }
 }

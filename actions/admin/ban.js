@@ -11,8 +11,8 @@ module.exports = async (ctx) => {
       'Для добавления/удаления в/из бан(а) введите его id.',
       {
         ...admin.backKeyboard,
-        parse_mode: 'HTML',
-      },
+        parse_mode: 'HTML'
+      }
     )
   } else {
     if (config.admins.includes(Number(ctx.message.text)))
@@ -22,7 +22,7 @@ module.exports = async (ctx) => {
     if (!user) {
       return ctx.reply(
         `Пользователь с id ${ctx.message.text} не найден.`,
-        admin.backKeyboard,
+        admin.backKeyboard
       )
     }
 
@@ -33,7 +33,7 @@ module.exports = async (ctx) => {
 
     return ctx.replyWithHTML(
       `Пользователь ${user.name} ${user.ban ? 'забанен' : 'разбанен'}.`,
-      admin.backKeyboard,
+      admin.backKeyboard
     )
   }
 }

@@ -13,11 +13,11 @@ module.exports = async (ctx) => {
       return ctx.editMessageText(
         ctx.i18n.t(`solve.solution.image.${ctx.state[1]}`),
         Markup.inlineKeyboard([
-          Markup.callbackButton(ctx.i18n.t('back'), 'solve_image'),
+          Markup.callbackButton(ctx.i18n.t('back'), 'solve_image')
         ]).extra({
           disable_web_page_preview: true,
-          parse_mode: 'HTML',
-        }),
+          parse_mode: 'HTML'
+        })
       )
     }
 
@@ -27,30 +27,30 @@ module.exports = async (ctx) => {
         [
           Markup.callbackButton(
             ctx.i18n.t('solve.solution.image.keys.default'),
-            'solve_image_default',
-          ),
+            'solve_image_default'
+          )
         ],
         [
           Markup.callbackButton(
             ctx.i18n.t('solve.solution.image.keys.math'),
-            'solve_image_math',
-          ),
+            'solve_image_math'
+          )
         ],
-        [Markup.callbackButton(ctx.i18n.t('back'), 'solve')],
+        [Markup.callbackButton(ctx.i18n.t('back'), 'solve')]
       ]).extra({
         disable_web_page_preview: true,
-        parse_mode: 'HTML',
-      }),
+        parse_mode: 'HTML'
+      })
     )
   } else if (ctx.state[0])
     return ctx.editMessageText(
       ctx.i18n.t(`solve.solution.${ctx.state[0]}`),
       Markup.inlineKeyboard([
-        Markup.callbackButton(ctx.i18n.t('back'), 'solve'),
+        Markup.callbackButton(ctx.i18n.t('back'), 'solve')
       ]).extra({
         disable_web_page_preview: true,
-        parse_mode: 'HTML',
-      }),
+        parse_mode: 'HTML'
+      })
     )
 
   return ctx[ctx.message ? 'reply' : 'editMessageText'](
@@ -61,14 +61,14 @@ module.exports = async (ctx) => {
             Markup.callbackButton(ctx.i18n.t('solve.keys.text'), 'solve_text'),
             Markup.callbackButton(
               ctx.i18n.t('solve.keys.image'),
-              'solve_image',
+              'solve_image'
             ),
           ]
         : [Markup.callbackButton(ctx.i18n.t('solve.key'), 'solve_acquainted')],
-      { columns: 1 },
+      { columns: 1 }
     ).extra({
       disable_web_page_preview: true,
-      parse_mode: 'HTML',
-    }),
+      parse_mode: 'HTML'
+    })
   )
 }

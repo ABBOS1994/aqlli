@@ -7,15 +7,15 @@ module.exports = async (ctx) => {
 
     if (ctx.state[1]) {
       const mail = await ctx.Mail.findByIdAndUpdate(ctx.state[0], {
-        keyboard: [],
+        keyboard: []
       })
       return ctx.replyWithHTML('Клавиатура удалена', {
         reply_markup: Markup.inlineKeyboard([
           Markup.callbackButton(
             'Продолжить настройку',
-            `admin_mail_id_${mail._id}`,
-          ),
-        ]),
+            `admin_mail_id_${mail._id}`
+          )
+        ])
       })
     }
     ctx.user.state = `admin_mail_keyboard_${ctx.state[0]}`
@@ -31,10 +31,10 @@ module.exports = async (ctx) => {
 Кнопка 3 http://example3.com | Кнопка 4 http://example4.com</code>`,
       {
         reply_markup: Markup.inlineKeyboard([
-          Markup.callbackButton('‹ Назад', `admin_mail_id_${ctx.state[0]}`),
+          Markup.callbackButton('‹ Назад', `admin_mail_id_${ctx.state[0]}`)
         ]),
-        parse_mode: 'HTML',
-      },
+        parse_mode: 'HTML'
+      }
     )
   } else {
     const possibleUrls = [
@@ -43,7 +43,7 @@ module.exports = async (ctx) => {
       'tg://',
       'ton://',
       't.me/',
-      'telegram.me/',
+      'telegram.me/'
     ]
 
     const splitByEnter = ctx.message.text.split('\n')
@@ -53,13 +53,13 @@ module.exports = async (ctx) => {
 
       return splitByWand.map((wand) => {
         const indexOfUrl = wand.indexOf(
-          possibleUrls.find((url) => wand.includes(url)),
+          possibleUrls.find((url) => wand.includes(url))
         )
         if (indexOfUrl === -1) return false
 
         const key = {
           text: wand.slice(0, indexOfUrl).replace(' - ', '').trim(),
-          url: wand.slice(indexOfUrl).trim(),
+          url: wand.slice(indexOfUrl).trim()
         }
 
         return key.text && key.url ? key : false
@@ -68,7 +68,7 @@ module.exports = async (ctx) => {
 
     if (
       keyboard.findIndex(
-        (enterKeyboard) => enterKeyboard.findIndex((key) => !key) !== -1,
+        (enterKeyboard) => enterKeyboard.findIndex((key) => !key) !== -1
       ) !== -1
     )
       return ctx.reply('Ошибка при построении клавиатуры')
@@ -76,15 +76,15 @@ module.exports = async (ctx) => {
     ctx.user.state = null
 
     const mail = await ctx.Mail.findByIdAndUpdate(ctx.state[0], {
-      keyboard,
+      keyboard
     })
     return ctx.replyWithHTML('Клавиатура сохранена', {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
           'Продолжить настройку',
-          `admin_mail_id_${mail._id}`,
-        ),
-      ]),
+          `admin_mail_id_${mail._id}`
+        )
+      ])
     })
   }
 }

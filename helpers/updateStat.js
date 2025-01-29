@@ -25,8 +25,8 @@ module.exports = async (bot) => {
           .catch((e) => ({
             id: user.id,
             i,
-            result: e.description,
-          })),
+            result: e.description
+          }))
       )
 
       if (i !== 0 && i % 10 === 0) {
@@ -35,7 +35,7 @@ module.exports = async (bot) => {
         const findIndex = results.findIndex(
           (result) =>
             typeof result.result === 'string' &&
-            result.result.startsWith('Too Many Requests:'),
+            result.result.startsWith('Too Many Requests:')
         )
         const find = results[findIndex]
         if (find) {
@@ -63,7 +63,7 @@ module.exports = async (bot) => {
       if (i % 500 === 0) {
         await Promise.all([
           User.updateMany({ id: { $in: died } }, { alive: false }),
-          User.updateMany({ id: { $in: alive } }, { alive: true }),
+          User.updateMany({ id: { $in: alive } }, { alive: true })
         ])
         died = []
         alive = []
@@ -76,6 +76,6 @@ module.exports = async (bot) => {
   await Promise.all([
     ...promises,
     User.updateMany({ id: { $in: died } }, { alive: false }),
-    User.updateMany({ id: { $in: alive } }, { alive: true }),
+    User.updateMany({ id: { $in: alive } }, { alive: true })
   ])
 }

@@ -13,7 +13,7 @@ module.exports = async (ctx) => {
         month: 'long',
         day: 'numeric',
         hour: 'numeric',
-        minute: 'numeric',
+        minute: 'numeric'
       }),
       vip: isPremium
         ? new Date(ctx.user.vip).toLocaleString('ru-RU', {
@@ -21,15 +21,15 @@ module.exports = async (ctx) => {
             month: 'long',
             day: 'numeric',
             hour: 'numeric',
-            minute: 'numeric',
+            minute: 'numeric'
           })
-        : false,
+        : false
     }),
     Markup.inlineKeyboard([
-      [Markup.callbackButton(ctx.i18n.t('cabinet.key'), 'vip')],
+      [Markup.callbackButton(ctx.i18n.t('cabinet.key'), 'vip')]
     ]).extra({
       disable_web_page_preview: true,
-      parse_mode: 'HTML',
-    }),
+      parse_mode: 'HTML'
+    })
   )
 }

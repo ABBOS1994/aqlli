@@ -11,7 +11,7 @@ let View = mongoose.Schema({
   views: { type: Number, default: 0 },
   users: Array,
   startDate: { type: Date, index: true },
-  endDate: { type: Date, index: true },
+  endDate: { type: Date, index: true }
 })
 View = mongoose.model('View', View)
 

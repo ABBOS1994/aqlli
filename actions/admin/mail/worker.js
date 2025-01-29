@@ -22,7 +22,7 @@ function imitateAsync() {}
 
   const mailConfig = {
     alive: true,
-    $or: [{ vip: { $lte: new Date() } }, { vip: { $exists: false } }],
+    $or: [{ vip: { $lte: new Date() } }, { vip: { $exists: false } }]
   }
   if (mail.lang !== null) mailConfig.lang = mail.lang
 
@@ -43,17 +43,17 @@ function imitateAsync() {}
     { ...mail.message, chat: {} },
     {
       reply_markup: {
-        inline_keyboard: mail.keyboard,
+        inline_keyboard: mail.keyboard
       },
-      disable_web_page_preview: !mail.preview,
-    },
+      disable_web_page_preview: !mail.preview
+    }
   )
   const message1 = { ...message, chat: {} }
 
   for (y; y <= Math.ceil(mail.all / shift); y++) {
     const users = await User.find(
       { ...mailConfig, id: { $ne: mail.uid } },
-      { id: 1 },
+      { id: 1 }
     )
       .limit(shift)
       .skip(y * shift)
@@ -65,16 +65,16 @@ function imitateAsync() {}
         bot.telegram
           .sendCopy(user.id, i % 2 === 0 ? message : message1, {
             reply_markup: {
-              inline_keyboard: mail.keyboard,
+              inline_keyboard: mail.keyboard
             },
-            disable_web_page_preview: !mail.preview,
+            disable_web_page_preview: !mail.preview
           })
           .then(() => ({ id: user.id, i, result: true }))
           .catch((e) => ({
             id: user.id,
             i,
-            result: e.description,
-          })),
+            result: e.description
+          }))
       )
 
       if (i !== 0 && i % 10 === 0) {
@@ -83,7 +83,7 @@ function imitateAsync() {}
         const findIndex = results.findIndex(
           (result) =>
             typeof result.result === 'string' &&
-            result.result.startsWith('Too Many Requests:'),
+            result.result.startsWith('Too Many Requests:')
         )
         const find = results[findIndex]
         if (find) {
@@ -119,14 +119,14 @@ function imitateAsync() {}
           {
             success: mail.success,
             unsuccess: mail.unsuccess,
-            errorsCount: mail.errorsCount,
+            errorsCount: mail.errorsCount
           },
-          { new: true },
+          { new: true }
         )
 
         await Promise.all([
           User.updateMany({ id: { $in: died } }, { alive: false }),
-          User.updateMany({ id: { $in: alive } }, { alive: true }),
+          User.updateMany({ id: { $in: alive } }, { alive: true })
         ])
         died = []
         alive = []
@@ -142,7 +142,7 @@ function imitateAsync() {}
   await Promise.all([
     ...promises,
     User.updateMany({ id: { $in: died } }, { alive: false }),
-    User.updateMany({ id: { $in: alive } }, { alive: true }),
+    User.updateMany({ id: { $in: alive } }, { alive: true })
   ])
 
   await Mail.findByIdAndUpdate(workerData, {
@@ -151,7 +151,7 @@ function imitateAsync() {}
     success: mail.success,
     unsuccess: mail.unsuccess,
     all: mail.success + mail.unsuccess,
-    errorsCount: mail.errorsCount,
+    errorsCount: mail.errorsCount
   })
 
   parentPort.postMessage('complete')

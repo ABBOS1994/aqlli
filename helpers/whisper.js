@@ -8,12 +8,12 @@ module.exports = (path, params) => {
     shell.exec(
       command,
       {
-        silent: true,
+        silent: true
       },
       (code, stdout, stderr) => {
         if (code === 0) resolve(stdout)
         else reject(stderr)
-      },
+      }
     )
   })
 }

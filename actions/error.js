@@ -21,7 +21,7 @@ module.exports = async (err, ctx) => {
         ctx?.inlineQuery?.query ||
         'empty'
       }`,
-      err,
+      err
     )
 
     config.lastFloodError = Date.now()
@@ -40,7 +40,7 @@ module.exports = async (err, ctx) => {
           'empty'
         }
       \n<i>${convertChars(err.description)}</i>`,
-        { parse_mode: 'HTML' },
+        { parse_mode: 'HTML' }
       )
       .catch((error) => {
         console.error('Error Flood handling error', error)
@@ -60,7 +60,7 @@ module.exports = async (err, ctx) => {
       `${new Date().toLocaleString('ru')} SLOW ANSWER in ${ctx.updateType}[${
         ctx.updateSubTypes
       }] | ${ctx.callbackQuery?.data}`,
-      err,
+      err
     )
 
     config.lastTimeoutError = Date.now()
@@ -73,7 +73,7 @@ module.exports = async (err, ctx) => {
           ctx.callbackQuery?.data
         }
       \n<i>${convertChars(err.description)}</i>`,
-        { parse_mode: 'HTML' },
+        { parse_mode: 'HTML' }
       )
       .catch((error) => {
         console.error('Error SlowAnswer handling error', error)
@@ -95,7 +95,7 @@ module.exports = async (err, ctx) => {
       'Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message',
       'Bad Request: message to delete not found',
       'Forbidden: bot was blocked by the user',
-      "Bad Request: message can't be deleted for everyone",
+      "Bad Request: message can't be deleted for everyone"
     ].includes(err.description)
   ) {
     return
@@ -111,7 +111,7 @@ module.exports = async (err, ctx) => {
       ctx.inlineQuery?.query ||
       'noData'
     } ${ctx.user?.state || 'noState'}`,
-    err,
+    err
   )
 
   return ctx.telegram
@@ -131,7 +131,7 @@ module.exports = async (err, ctx) => {
           `<code>${JSON.stringify(convertChars(err.on), null, 2)}</code>`) ||
         'noStack'
       }`,
-      { parse_mode: 'HTML' },
+      { parse_mode: 'HTML' }
     )
     .catch((error) => {
       console.error('Error Main handling error', error)

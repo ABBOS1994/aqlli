@@ -17,7 +17,7 @@ module.exports = async (ctx) => {
         user.name,
         user.username,
         user.deposit,
-        user.createdAt,
+        user.createdAt
       ])
     })
 
@@ -27,8 +27,8 @@ module.exports = async (ctx) => {
     return xlsx.getFile().then((buffer) =>
       ctx.replyWithDocument({
         source: buffer,
-        filename: `referrals.xlsx`,
-      }),
+        filename: `referrals.xlsx`
+      })
     )
   } else if (ctx.state[0] === 'withdraw') {
     return ctx.editMessageText(
@@ -37,14 +37,14 @@ module.exports = async (ctx) => {
         [
           Markup.urlButton(
             ctx.i18n.t('partner.withdraw.key.text'),
-            ctx.i18n.t('partner.withdraw.key.url'),
-          ),
+            ctx.i18n.t('partner.withdraw.key.url')
+          )
         ],
-        [Markup.callbackButton(ctx.i18n.t('back'), 'partner')],
+        [Markup.callbackButton(ctx.i18n.t('back'), 'partner')]
       ]).extra({
         disable_web_page_preview: true,
-        parse_mode: 'HTML',
-      }),
+        parse_mode: 'HTML'
+      })
     )
   }
 
@@ -54,19 +54,19 @@ module.exports = async (ctx) => {
       earned: ctx.user.earned.format(0),
       withdraw: ctx.user.withdraw.format(0),
       diff: (ctx.user.earned - ctx.user.withdraw).format(0),
-      link: `https://t.me/${process.env.BOT_USERNAME}?start=r-${ctx.from.id}`,
+      link: `https://t.me/${process.env.BOT_USERNAME}?start=r-${ctx.from.id}`
     }),
     Markup.inlineKeyboard([
       [Markup.callbackButton(ctx.i18n.t('partner.keys.list'), 'partner_list')],
       [
         Markup.callbackButton(
           ctx.i18n.t('partner.keys.withdraw'),
-          'partner_withdraw',
-        ),
-      ],
+          'partner_withdraw'
+        )
+      ]
     ]).extra({
       disable_web_page_preview: true,
-      parse_mode: 'HTML',
-    }),
+      parse_mode: 'HTML'
+    })
   )
 }

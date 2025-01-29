@@ -8,14 +8,14 @@ module.exports = async (ctx) => {
 
     return ctx.replyWithHTML('Отправьте любой пост в готовом виде.', {
       reply_markup: Markup.inlineKeyboard([
-        Markup.callbackButton('‹ Назад', `admin_mail_id_${ctx.state[0]}`),
+        Markup.callbackButton('‹ Назад', `admin_mail_id_${ctx.state[0]}`)
       ]),
-      parse_mode: 'HTML',
+      parse_mode: 'HTML'
     })
   } else {
     const mail = await ctx.Mail.findByIdAndUpdate(ctx.state[0], {
       keyboard: ctx.message?.reply_markup?.inline_keyboard,
-      message: ctx.message,
+      message: ctx.message
     })
     ctx.user.state = null
 
@@ -23,9 +23,9 @@ module.exports = async (ctx) => {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
           'Продолжить настройку',
-          `admin_mail_id_${mail._id}`,
-        ),
-      ]),
+          `admin_mail_id_${mail._id}`
+        )
+      ])
     })
   }
 }
