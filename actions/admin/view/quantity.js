@@ -9,10 +9,10 @@ module.exports = async (ctx) => {
       const view = await ctx.View.findByIdAndUpdate(ctx.state[0], {
         quantity: 0,
       })
-      return ctx.replyWithHTML('Кол-во пользоваталей удалено', {
+      return ctx.replyWithHTML('Foydalanuvchilar soni o‘chirildi', {
         reply_markup: Markup.inlineKeyboard([
           Markup.callbackButton(
-            'Продолжить настройку',
+            'Sozlashni davom ettirish',
             `admin_view_id_${view._id}`,
           ),
         ]),
@@ -21,9 +21,9 @@ module.exports = async (ctx) => {
 
     ctx.user.state = `admin_view_quantity_${ctx.state[0]}`
 
-    return ctx.replyWithHTML('Введите максимальное кол-во получателей', {
+    return ctx.replyWithHTML('Maksimal qabul qiluvchilar sonini kiriting', {
       reply_markup: Markup.inlineKeyboard([
-        Markup.callbackButton('‹ Назад', `admin_view_id_${ctx.state[0]}`),
+        Markup.callbackButton('‹ Ortga', `admin_view_id_${ctx.state[0]}`),
       ]),
       parse_mode: 'HTML',
     })
@@ -34,10 +34,10 @@ module.exports = async (ctx) => {
 
     ctx.user.state = null
 
-    return ctx.replyWithHTML('Кол-во получателей сохранено', {
+    return ctx.replyWithHTML('Qabul qiluvchilar soni saqlandi', {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
-          'Продолжить настройку',
+          'Sozlashni davom ettirish',
           `admin_view_id_${view._id}`,
         ),
       ]),

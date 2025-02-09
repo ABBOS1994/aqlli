@@ -8,20 +8,23 @@ module.exports = async (ctx) => {
 
     ctx.user.state = 'admin_ban'
     return ctx.editMessageText(
-      'Для добавления/удаления в/из бан(а) введите его id.',
+      '🚫 Foydalanuvchini ban qilish yoki banidan chiqarish uchun ID kiriting:',
       {
         ...admin.backKeyboard,
         parse_mode: 'HTML',
       },
     )
   } else {
-    if (config.admins.includes(Number(ctx.message.text)))
-      return ctx.replyWithHTML('Нельзя забанить админа')
+    const userId = Number(ctx.message.text)
 
-    const user = await User.findOne({ id: ctx.message.text })
+    if (config.admins.includes(userId)) {
+      return ctx.replyWithHTML('❌ Adminni ban qilish mumkin emas!', admin.backKeyboard)
+    }
+
+    const user = await User.findOne({ id: userId })
     if (!user) {
       return ctx.reply(
-        `Пользователь с id ${ctx.message.text} не найден.`,
+        `❌ Foydalanuvchi topilmadi: ${userId}`,
         admin.backKeyboard,
       )
     }
@@ -32,7 +35,7 @@ module.exports = async (ctx) => {
     await user.save()
 
     return ctx.replyWithHTML(
-      `Пользователь ${user.name} ${user.ban ? 'забанен' : 'разбанен'}.`,
+      `✅ Foydalanuvchi ${user.name} ${user.ban ? 'ban qilindi' : 'banidan chiqarildi'}.`,
       admin.backKeyboard,
     )
   }

@@ -6,9 +6,9 @@ module.exports = async (ctx) => {
     await ctx.deleteMessage()
 
     ctx.user.state = 'admin_view_add'
-    return ctx.replyWithHTML('Отправьте любой пост в готовом виде.', {
+    return ctx.replyWithHTML('Postni tayyor holda yuboring.', {
       reply_markup: Markup.inlineKeyboard([
-        Markup.callbackButton('‹ Назад', 'admin_view'),
+        Markup.callbackButton('‹ Ortga', 'admin_view'),
       ]),
       parse_mode: 'HTML',
     })
@@ -22,10 +22,10 @@ module.exports = async (ctx) => {
     await view.save()
     ctx.user.state = null
 
-    return ctx.replyWithHTML('Пост сохранен', {
+    return ctx.replyWithHTML('Post saqlandi', {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
-          'Продолжить настройку',
+          'Sozlashni davom ettirish',
           `admin_view_id_${view._id}`,
         ),
       ]),

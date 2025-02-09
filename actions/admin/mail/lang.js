@@ -9,10 +9,15 @@ module.exports = async (ctx) => {
       const mail = await ctx.Mail.findByIdAndUpdate(ctx.state[0], {
         lang: null,
       })
-      return ctx.replyWithHTML('Язык удален', {
+
+      if (!mail) {
+        return ctx.replyWithHTML('❌ Xatolik: Tarqatish topilmadi.')
+      }
+
+      return ctx.replyWithHTML('📌 Til o‘chirildi.', {
         reply_markup: Markup.inlineKeyboard([
           Markup.callbackButton(
-            'Продолжить настройку',
+            '🔧 Sozlashni davom ettirish',
             `admin_mail_id_${mail._id}`,
           ),
         ]),
@@ -21,26 +26,34 @@ module.exports = async (ctx) => {
 
     ctx.user.state = `admin_mail_lang_${ctx.state[0]}`
 
-    return ctx.replyWithHTML('Введите язык.\n\nПример: ru', {
-      reply_markup: Markup.inlineKeyboard([
-        Markup.callbackButton('‹ Назад', `admin_mail_id_${ctx.state[0]}`),
-      ]),
-      parse_mode: 'HTML',
-    })
+    return ctx.replyWithHTML(
+      '🔤 Tilni kiriting.\n\n📌 Misol: <code>uz</code> yoki <code>ru</code>',
+      {
+        reply_markup: Markup.inlineKeyboard([
+          Markup.callbackButton('⬅️ Orqaga', `admin_mail_id_${ctx.state[0]}`),
+        ]),
+        parse_mode: 'HTML',
+      },
+    )
   } else {
     const mail = await ctx.Mail.findByIdAndUpdate(ctx.state[0], {
-      lang: ctx.message.text,
+      lang: ctx.message.text.trim(),
     })
+
+    if (!mail) {
+      return ctx.replyWithHTML('❌ Xatolik: Tarqatish topilmadi.')
+    }
 
     ctx.user.state = null
 
-    return ctx.replyWithHTML('Язык сохранен', {
+    return ctx.replyWithHTML(`📌 Til saqlandi: <b>${ctx.message.text.trim()}</b>`, {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
-          'Продолжить настройку',
+          '🔧 Sozlashni davom ettirish',
           `admin_mail_id_${mail._id}`,
         ),
       ]),
+      parse_mode: 'HTML',
     })
   }
 }

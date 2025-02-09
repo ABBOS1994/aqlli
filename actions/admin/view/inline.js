@@ -2,23 +2,31 @@ const View = require('../../../models/view')
 const Markup = require('telegraf/markup')
 
 module.exports = async (ctx) => {
-  if (!ctx.state[1]) return
-  const view = await View.findById(ctx.state[1])
+  try {
+    if (!ctx.state[1]) return
 
-  if (view) {
+    const view = await View.findById(ctx.state[1])
+
+    if (!view) {
+      console.error(`❌ Xatolik: View ID ${ctx.state[1]} topilmadi.`)
+      return ctx.answerInlineQuery([])
+    }
+
     return ctx.answerInlineQuery([
       {
         type: 'article',
         id: '0',
-        title: 'Просмотры',
+        title: 'Ko‘rishlar',
         input_message_content: {
-          message_text: 'Для получения информации нажмите на кнопку',
+          message_text: 'Ma’lumot olish uchun tugmani bosing:',
           parse_mode: 'HTML',
         },
         reply_markup: Markup.inlineKeyboard([
-          Markup.callbackButton('🔄', `inlineUpdateView_${view._id}`),
+          Markup.callbackButton('🔄 Yangilash', `inlineUpdateView_${view._id}`),
         ]),
       },
     ])
+  } catch (error) {
+    console.error(`❌ Xatolik: ${error.message}`)
   }
 }

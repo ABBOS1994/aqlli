@@ -9,10 +9,10 @@ module.exports = async (ctx) => {
       const view = await ctx.View.findByIdAndUpdate(ctx.state[0], {
         $unset: { endDate: 1 },
       })
-      return ctx.replyWithHTML('Дата и время удалены', {
+      return ctx.replyWithHTML('Sana va vaqt o‘chirildi.', {
         reply_markup: Markup.inlineKeyboard([
           Markup.callbackButton(
-            'Продолжить настройку',
+            'Sozlashni davom ettirish',
             `admin_view_id_${view._id}`,
           ),
         ]),
@@ -22,10 +22,10 @@ module.exports = async (ctx) => {
     ctx.user.state = `admin_view_endDate_${ctx.state[0]}`
 
     return ctx.replyWithHTML(
-      'Введите дату и время конца показа просмотров.\n\nПример: 2022.09.26 12:30',
+      'Ko‘rishlarni tugatish sanasi va vaqtini kiriting.\n\nMisol: 2025.02.10 14:30',
       {
         reply_markup: Markup.inlineKeyboard([
-          Markup.callbackButton('‹ Назад', `admin_view_id_${ctx.state[0]}`),
+          Markup.callbackButton('‹ Orqaga', `admin_view_id_${ctx.state[0]}`),
         ]),
         parse_mode: 'HTML',
       },
@@ -37,10 +37,10 @@ module.exports = async (ctx) => {
 
     ctx.user.state = null
 
-    return ctx.replyWithHTML('Дата и время конца показа просмотров сохранено', {
+    return ctx.replyWithHTML('Ko‘rishlarni tugatish sanasi va vaqti saqlandi.', {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
-          'Продолжить настройку',
+          'Sozlashni davom ettirish',
           `admin_view_id_${view._id}`,
         ),
       ]),

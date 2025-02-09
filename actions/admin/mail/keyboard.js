@@ -1,4 +1,5 @@
 const Markup = require('telegraf/markup')
+const Mail = require('../../../models/mail') // ✅ Mail modelini chaqirish
 
 module.exports = async (ctx) => {
   if (ctx.callbackQuery) {
@@ -6,82 +7,67 @@ module.exports = async (ctx) => {
     await ctx.deleteMessage()
 
     if (ctx.state[1]) {
-      const mail = await ctx.Mail.findByIdAndUpdate(ctx.state[0], {
-        keyboard: [],
-      })
-      return ctx.replyWithHTML('Клавиатура удалена', {
+      const mail = await Mail.findByIdAndUpdate(ctx.state[0], { keyboard: [] })
+      return ctx.replyWithHTML('📌 Tugmalar o‘chirildi.', {
         reply_markup: Markup.inlineKeyboard([
           Markup.callbackButton(
-            'Продолжить настройку',
+            '⚙️ Sozlashni davom ettirish',
             `admin_mail_id_${mail._id}`,
           ),
         ]),
       })
     }
+
     ctx.user.state = `admin_mail_keyboard_${ctx.state[0]}`
 
     return ctx.replyWithHTML(
-      `Введите список кнопок в следующем формате:
+      `Tugmalarni quyidagi formatda kiriting:
 
-<code>Кнопка 1 http://example1.com</code>
+<code>Tugma 1 http://example1.com</code>
 
-<i>Используйте разделитель "|", чтобы добавить кнопки в один ряд:</i>
+<i>Agar bir qatorga bir nechta tugma qo‘shmoqchi bo‘lsangiz, "|" bilan ajrating:</i>
 
-<code>Кнопка 1 http://example1.com | Кнопка 2 http://example2.com
-Кнопка 3 http://example3.com | Кнопка 4 http://example4.com</code>`,
+<code>
+Tugma 1 http://example1.com | Tugma 2 http://example2.com
+Tugma 3 http://example3.com | Tugma 4 http://example4.com
+</code>`,
       {
         reply_markup: Markup.inlineKeyboard([
-          Markup.callbackButton('‹ Назад', `admin_mail_id_${ctx.state[0]}`),
+          Markup.callbackButton('⬅️ Orqaga', `admin_mail_id_${ctx.state[0]}`),
         ]),
         parse_mode: 'HTML',
       },
     )
   } else {
-    const possibleUrls = [
-      'http://',
-      'https://',
-      'tg://',
-      'ton://',
-      't.me/',
-      'telegram.me/',
-    ]
+    const possibleUrls = ['http://', 'https://', 'tg://', 'ton://', 't.me/', 'telegram.me/']
 
     const splitByEnter = ctx.message.text.split('\n')
-
     const keyboard = splitByEnter.map((enter) => {
       const splitByWand = enter.split('|')
-
       return splitByWand.map((wand) => {
-        const indexOfUrl = wand.indexOf(
-          possibleUrls.find((url) => wand.includes(url)),
-        )
-        if (indexOfUrl === -1) return false
+        const foundUrl = possibleUrls.find((url) => wand.includes(url))
+        if (!foundUrl) return false // ✅ Xatolikni oldini olish
 
         const key = {
-          text: wand.slice(0, indexOfUrl).replace(' - ', '').trim(),
-          url: wand.slice(indexOfUrl).trim(),
+          text: wand.slice(0, wand.indexOf(foundUrl)).replace(' - ', '').trim(),
+          url: wand.slice(wand.indexOf(foundUrl)).trim(),
         }
 
         return key.text && key.url ? key : false
       })
     })
 
-    if (
-      keyboard.findIndex(
-        (enterKeyboard) => enterKeyboard.findIndex((key) => !key) !== -1,
-      ) !== -1
-    )
-      return ctx.reply('Ошибка при построении клавиатуры')
+    if (keyboard.some((row) => row.some((key) => !key))) {
+      return ctx.reply('❌ Tugmalar yaratishda xatolik yuz berdi!')
+    }
 
     ctx.user.state = null
+    const mail = await Mail.findByIdAndUpdate(ctx.state[0], { keyboard })
 
-    const mail = await ctx.Mail.findByIdAndUpdate(ctx.state[0], {
-      keyboard,
-    })
-    return ctx.replyWithHTML('Клавиатура сохранена', {
+    return ctx.replyWithHTML('✅ Tugmalar saqlandi.', {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
-          'Продолжить настройку',
+          '⚙️ Sozlashni davom ettirish',
           `admin_mail_id_${mail._id}`,
         ),
       ]),

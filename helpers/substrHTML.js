@@ -1,27 +1,29 @@
 module.exports = function substrHTML(string, length) {
-  let m
-  const r = /<([^>\s]*)[^>]*>/g
+  if (!string || typeof string !== 'string') return ''
+
+  let match
+  const tagRegex = /<([^>\s]*)[^>]*>/g
   const stack = []
-  let lasti = 0
+  let lastIndex = 0
   let result = ''
 
-  while ((m = r.exec(string)) && length) {
-    const temp = string.substring(lasti, m.index).substr(0, length)
+  while ((match = tagRegex.exec(string)) && length > 0) {
+    const temp = string.substring(lastIndex, match.index).substr(0, length)
     result += temp
     length -= temp.length
-    lasti = r.lastIndex
+    lastIndex = tagRegex.lastIndex
 
-    if (length) {
-      result += m[0]
-      if (m[1].indexOf('/') === 0) stack.pop()
-      else if (m[1].lastIndexOf('/') !== m[1].length - 1) stack.push(m[1])
+    if (length > 0) {
+      result += match[0]
+      if (match[1].startsWith('/')) stack.pop()
+      else if (!match[1].endsWith('/')) stack.push(match[1])
     }
   }
 
-  result += string.substr(lasti, length)
+  result += string.substr(lastIndex, length)
 
   while (stack.length) {
-    result += '</' + stack.pop() + '>'
+    result += `</${stack.pop()}>`
   }
 
   return result

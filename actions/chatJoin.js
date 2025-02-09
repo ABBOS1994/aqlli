@@ -3,31 +3,28 @@ const User = require('../models/user')
 const convertChars = require('../helpers/convertChars')
 
 module.exports = async (ctx) => {
-  const find = config.joinChannels?.find(
-    (channel) => channel.id === ctx.chat.id,
-  )
-  if (!find) return
-
   try {
+    const find = config.joinChannels?.find((channel) => channel.id === ctx.chat.id)
+    if (!find) return
+
+    // Foydalanuvchini chatga qo‘shish
     await ctx.telegram.approveChatJoinRequest(ctx.chat.id, ctx.from.id)
 
-    await ctx.telegram.sendMessage(
-      ctx.from.id,
-      ctx.i18n.t('joinRequest.text'),
-      {
-        parse_mode: 'HTML',
-      },
-    )
+    // Foydalanuvchiga xabar yuborish
+    await ctx.telegram.sendMessage(ctx.from.id, '✅ Siz guruhga muvaffaqiyatli qo‘shildingiz!', {
+      parse_mode: 'HTML',
+    })
 
+    // Yangi foydalanuvchini bazaga qo‘shish
     await User.create({
       id: ctx.from.id,
-      name: convertChars(ctx.from.first_name),
-      username: ctx.from.username,
+      name: convertChars(ctx.from.first_name || 'Noma’lum'),
+      username: ctx.from.username || 'Noma’lum',
       alive: true,
       from: `chatJoin-${ctx.chat.id}`,
-    }).catch(() => {})
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error(err)
+    }).catch(() => {
+    })
+  } catch (error) {
+    console.error(`❌ Xatolik: ${error.message}`)
   }
 }

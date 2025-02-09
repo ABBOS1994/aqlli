@@ -1,5 +1,6 @@
 const Markup = require('telegraf/markup')
 const lauchWorker = require('../mail/lauchWorker')
+const Mail = require('../../../models/mail') // ✅ Mail modelini chaqirish
 
 module.exports = async (ctx) => {
   await ctx.answerCbQuery()
@@ -13,20 +14,24 @@ module.exports = async (ctx) => {
     lauchWorker(ctx.state[0])
   }
 
-  await ctx.Mail.findByIdAndUpdate(ctx.state[0], updateObject)
+  const mail = await Mail.findByIdAndUpdate(ctx.state[0], updateObject)
+
+  if (!mail) {
+    return ctx.reply('❌ Xatolik: Tarqatish topilmadi.')
+  }
 
   return ctx.replyWithHTML(
-    `Рассылка ${
+    `📩 Tarqatish ${
       ctx.state[1] === 'stop'
-        ? 'остановлена'
+        ? 'to‘xtatildi'
         : ctx.state[1] === 'pause'
-          ? 'приостановлена'
-          : 'возобновлена'
-    }`,
+        ? 'pauza qilindi'
+        : 'davom ettirildi'
+    }.`,
     {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
-          'Продолжить настройку',
+          '⚙ Sozlashni davom ettirish',
           `admin_mail_id_${ctx.state[0]}`,
         ),
       ]),

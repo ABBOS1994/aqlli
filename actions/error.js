@@ -1,139 +1,77 @@
-const config = require('../config.json')
-const fs = require('fs').promises
-
 const convertChars = require('../helpers/convertChars')
 
+let lastFloodError = 0
+let lastTimeoutError = 0
+
 module.exports = async (err, ctx) => {
-  if (
-    err.code === 429 &&
-    err.description?.startsWith('Too Many Requests: retry after')
-  ) {
-    if (Date.now() - config.lastFloodError < 180000 && config.lastFloodError)
-      return
-
-    console.error(
-      `${new Date().toLocaleString('ru')} SLOW ANSWER in FLOOD ERROR in ${
-        ctx.updateType
-      }[${ctx.updateSubTypes}] | ${
-        (ctx?.message?.text &&
-          Array.from(ctx.message.text).slice(0, 300).join('')) ||
-        ctx?.callbackQuery?.data ||
-        ctx?.inlineQuery?.query ||
-        'empty'
-      }`,
-      err,
-    )
-
-    config.lastFloodError = Date.now()
-    await fs.writeFile('config.json', JSON.stringify(config, null, '  '))
-
-    return ctx.telegram
-      .sendMessage(
-        process.env.DEV_ID,
-        `FLOOD ERROR in ${ctx.updateType}[${ctx.updateSubTypes}] | ${
-          (ctx?.message?.text &&
-            Array.from(convertChars(ctx.message.text))
-              .slice(0, 300)
-              .join('')) ||
-          ctx?.callbackQuery?.data ||
-          ctx?.inlineQuery?.query ||
-          'empty'
-        }
-      \n<i>${convertChars(err.description)}</i>`,
-        { parse_mode: 'HTML' },
-      )
-      .catch((error) => {
-        console.error('Error Flood handling error', error)
-      })
-  } else if (
-    err.code === 400 &&
-    err.description ===
-      'Bad Request: query is too old and response timeout expired or query ID is invalid'
-  ) {
-    if (
-      Date.now() - config.lastTimeoutError < 180000 &&
-      config.lastTimeoutError
-    )
-      return
-
-    console.error(
-      `${new Date().toLocaleString('ru')} SLOW ANSWER in ${ctx.updateType}[${
-        ctx.updateSubTypes
-      }] | ${ctx.callbackQuery?.data}`,
-      err,
-    )
-
-    config.lastTimeoutError = Date.now()
-    await fs.writeFile('config.json', JSON.stringify(config, null, '  '))
-
-    return ctx.telegram
-      .sendMessage(
-        process.env.DEV_ID,
-        `SLOW ANSWER in ${ctx.updateType}[${ctx.updateSubTypes}] | ${
-          ctx.callbackQuery?.data
-        }
-      \n<i>${convertChars(err.description)}</i>`,
-        { parse_mode: 'HTML' },
-      )
-      .catch((error) => {
-        console.error('Error SlowAnswer handling error', error)
-      })
-  } else if (
-    err.code === 400 &&
-    (err.description === 'Bad Request: message to edit not found' ||
-      err.description === 'Bad Request: MESSAGE_ID_INVALID')
-  )
-    return ctx.telegram
-      .sendCopy(err.on.payload.chat_id, err.on.payload, err.on.payload)
-      .catch((error) => {
-        console.error('Error MessageEdit handling error', error)
-      })
-  else if (
-    (err.code === 400 || err.code === 403) &&
-    err.description &&
-    [
-      'Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message',
-      'Bad Request: message to delete not found',
-      'Forbidden: bot was blocked by the user',
-      "Bad Request: message can't be deleted for everyone",
-    ].includes(err.description)
-  ) {
+  if (!ctx) {
+    console.error(`[❌] ERROR: ctx aniqlanmadi!`, err)
     return
   }
 
-  console.error(
-    `${new Date().toLocaleString('ru')} ERROR in ${ctx.updateType}[${
-      ctx.updateSubTypes
-    }] | ${ctx.from?.id || 'noUserId'} | ${ctx.chat?.id || 'noChatId'} | ${
-      (ctx?.message?.text &&
-        Array.from(ctx.message.text).slice(0, 300).join('')) ||
-      ctx.callbackQuery?.data ||
-      ctx.inlineQuery?.query ||
-      'noData'
-    } ${ctx.user?.state || 'noState'}`,
-    err,
-  )
+  const now = Date.now()
+  const userId = ctx?.from?.id || 'Unknown'
+  const chatId = ctx?.chat?.id || 'Unknown'
+  const updateType = ctx?.updateType || 'Unknown'
+  const messageText =
+    ctx?.message?.text?.slice(0, 100) ||
+    ctx?.callbackQuery?.data ||
+    ctx?.inlineQuery?.query ||
+    'NoData'
 
-  return ctx.telegram
-    .sendMessage(
-      process.env.DEV_ID,
-      `ERROR in ${ctx.updateType}[${ctx.updateSubTypes}] | ${
-        ctx.from?.id || 'noUserId'
-      } | ${ctx.chat?.id || 'noChatId'} | ${
-        (ctx.message?.text &&
-          Array.from(convertChars(ctx.message.text)).slice(0, 300).join('')) ||
-        ctx.callbackQuery?.data ||
-        ctx.inlineQuery?.query ||
-        'noData'
-      } ${ctx.user?.state || 'noState'}
-    \n<code>${convertChars(err.stack)}</code>\n${
-      (err.on &&
-        `<code>${JSON.stringify(convertChars(err.on), null, 2)}</code>`) ||
-      'noStack'
-    }`,
+  // 🚧 FLOOD ERROR (Too Many Requests)
+  if (err.code === 429 && err.description?.startsWith('Too Many Requests: retry after')) {
+    if (now - lastFloodError < 180000) return // 3 daqiqadan kam bo‘lsa, yana xabar yubormaymiz
+    lastFloodError = now
+
+    console.warn(`[⚠️] FLOOD ERROR (${updateType}) | Message: "${messageText}"`)
+    return notifyAdmin(ctx, '⚠️ FLOOD ERROR', updateType, messageText, err.description)
+  }
+
+  // ⏳ TIMEOUT ERROR (Eski so‘rov yoki muddati tugagan)
+  if (err.code === 400 && err.description?.includes('query is too old')) {
+    if (now - lastTimeoutError < 180000) return
+    lastTimeoutError = now
+
+    console.warn(`[⏳] TIMEOUT ERROR (${updateType}) | Message: "${messageText}"`)
+    return notifyAdmin(ctx, '⏳ TIMEOUT ERROR', updateType, messageText, err.description)
+  }
+
+  // ❌ XABARNI O'ZGARTIRISH XATOLARI (Edit yoki Delete muammolari)
+  if (err.code === 400 && ['message to edit not found', 'MESSAGE_ID_INVALID'].includes(err.description)) {
+    return ctx.telegram.sendCopy(err.on.payload.chat_id, err.on.payload).catch(console.error)
+  }
+
+  // 🔇 E'tiborsiz qoldiriladigan xatolar
+  if ([400, 403].includes(err.code) && [
+    'message is not modified',
+    'message to delete not found',
+    'bot was blocked by the user',
+    'message can\'t be deleted for everyone',
+  ].includes(err.description)) {
+    return
+  }
+
+  // 🚨 BOSHQA BARCHA XATOLAR
+  console.error(`[❌] ERROR (${updateType}) | User: ${userId} | Chat: ${chatId} | Message: "${messageText}"`, err)
+  return notifyAdmin(ctx, '🚨 ERROR', updateType, messageText, err.stack)
+}
+
+// 🛠 ADMINGA XABAR YUBORISH FUNKSIYASI
+async function notifyAdmin(ctx, errorType, updateType, messageText, errorDetails) {
+  const adminId = process.env.DEV_ID
+  if (!adminId) {
+    console.warn(`[⚠️] DEV_ID yo‘q, xabar yuborilmadi!`)
+    return
+  }
+
+  try {
+    await ctx.telegram.sendMessage(
+      adminId,
+      `${errorType} in <b>${updateType}</b>\n📝 <code>${messageText}</code>\n\n<i>${convertChars(errorDetails)}</i>`,
       { parse_mode: 'HTML' },
     )
-    .catch((error) => {
-      console.error('Error Main handling error', error)
-    })
+  } catch (error) {
+    console.error('[❌] Admin xabar yuborishda xatolik', error)
+  }
 }

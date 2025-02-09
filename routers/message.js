@@ -2,6 +2,8 @@ const { Router } = require('telegraf')
 const config = require('../config')
 const View = require('../models/view')
 const Mail = require('../models/mail')
+const start = require('../actions/start')
+const handle = require('../actions/handle')
 
 const router = new Router(async (ctx) => {
   if (ctx.chat.type !== 'private') return
@@ -30,8 +32,15 @@ const commandRouter = new Router(async (ctx) => {
   return { route: cmd[0] }
 })
 
+commandRouter.on('start', async (ctx) => {
+  try {
+    await start(ctx)
+  } catch (error) {
+    console.error('[❌] /start ishlashida xatolik:', error)
+  }
+})
+
 commandRouter.on('admin', require('../actions/admin'))
-commandRouter.on('start', require('../actions/start'))
 commandRouter.on('lang', require('../actions/translateBot'))
 
 router.on('command', commandRouter)
@@ -45,10 +54,7 @@ const stateRouter = new Router(async (ctx) => {
 
 adminRouter.on('addAdmin', require('../actions/admin/addAdmin'))
 adminRouter.on('addSubscription', require('../actions/admin/addSubscription'))
-adminRouter.on(
-  'addBotSubscription',
-  require('../actions/admin/addBotSubscription'),
-)
+adminRouter.on('addBotSubscription', require('../actions/admin/addBotSubscription'))
 adminRouter.on('addJoin', require('../actions/admin/addJoin'))
 adminRouter.on('addVip', require('../actions/admin/addVip'))
 adminRouter.on('addWithdraw', require('../actions/admin/addWithdraw'))
@@ -60,13 +66,11 @@ const adminViewRouter = new Router(async (ctx) => {
   const cmd = ctx.user.state.split('_')
 
   ctx.View = View
-
   ctx.state = cmd.slice(3, cmd.length)
   return { route: cmd[2] }
 })
 
 adminViewRouter.on('add', require('../actions/admin/view/add'))
-
 adminViewRouter.on('keyboard', require('../actions/admin/view/keyboard'))
 adminViewRouter.on('lang', require('../actions/admin/view/lang'))
 adminViewRouter.on('quantity', require('../actions/admin/view/quantity'))
@@ -80,13 +84,11 @@ const adminMailRouter = new Router(async (ctx) => {
   const cmd = ctx.user.state.split('_')
 
   ctx.Mail = Mail
-
   ctx.state = cmd.slice(3, cmd.length)
   return { route: cmd[2] }
 })
 
 adminMailRouter.on('add', require('../actions/admin/mail/add'))
-
 adminMailRouter.on('keyboard', require('../actions/admin/mail/keyboard'))
 adminMailRouter.on('lang', require('../actions/admin/mail/lang'))
 adminMailRouter.on('quantity', require('../actions/admin/mail/quantity'))
@@ -97,10 +99,10 @@ adminRouter.on('mail', adminMailRouter)
 
 stateRouter.on('admin', adminRouter)
 
-stateRouter.on('solve', require('../actions/handle'))
+stateRouter.on('solve', handle)
 
 router.on('state', stateRouter)
 
-router.on('else', require('../actions/handle'))
+router.on('else', handle)
 
 module.exports = router

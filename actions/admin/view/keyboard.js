@@ -9,10 +9,10 @@ module.exports = async (ctx) => {
       const view = await ctx.View.findByIdAndUpdate(ctx.state[0], {
         keyboard: [],
       })
-      return ctx.replyWithHTML('Клавиатура удалена', {
+      return ctx.replyWithHTML('Klaviatura o‘chirildi', {
         reply_markup: Markup.inlineKeyboard([
           Markup.callbackButton(
-            'Продолжить настройку',
+            'Sozlashni davom ettirish',
             `admin_view_id_${view._id}`,
           ),
         ]),
@@ -21,17 +21,17 @@ module.exports = async (ctx) => {
     ctx.user.state = `admin_view_keyboard_${ctx.state[0]}`
 
     return ctx.replyWithHTML(
-      `Введите список кнопок в следующем формате:
+      `Tugmalar ro‘yxatini quyidagi formatda kiriting:
 
-<code>Кнопка 1 http://example1.com</code>
+<code>Tugma 1 http://example1.com</code>
 
-<i>Используйте разделитель "|", чтобы добавить кнопки в один ряд:</i>
+<i>Bir qatorga bir nechta tugma qo‘shish uchun "|" ajratgichidan foydalaning:</i>
 
-<code>Кнопка 1 http://example1.com | Кнопка 2 http://example2.com
-Кнопка 3 http://example3.com | Кнопка 4 http://example4.com</code>`,
+<code>Tugma 1 http://example1.com | Tugma 2 http://example2.com
+Tugma 3 http://example3.com | Tugma 4 http://example4.com</code>`,
       {
         reply_markup: Markup.inlineKeyboard([
-          Markup.callbackButton('‹ Назад', `admin_view_id_${ctx.state[0]}`),
+          Markup.callbackButton('‹ Ortga', `admin_view_id_${ctx.state[0]}`),
         ]),
         parse_mode: 'HTML',
       },
@@ -71,17 +71,17 @@ module.exports = async (ctx) => {
         (enterKeyboard) => enterKeyboard.findIndex((key) => !key) !== -1,
       ) !== -1
     )
-      return ctx.reply('Ошибка при построении клавиатуры')
+      return ctx.reply('Klaviatura tuzilishida xatolik')
 
     ctx.user.state = null
 
     const view = await ctx.View.findByIdAndUpdate(ctx.state[0], {
       keyboard,
     })
-    return ctx.replyWithHTML('Клавиатура сохранена', {
+    return ctx.replyWithHTML('Klaviatura saqlandi', {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
-          'Продолжить настройку',
+          'Sozlashni davom ettirish',
           `admin_view_id_${view._id}`,
         ),
       ]),

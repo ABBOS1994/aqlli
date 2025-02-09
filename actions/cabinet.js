@@ -1,35 +1,49 @@
 const { Markup } = require('telegraf')
 
 module.exports = async (ctx) => {
-  if (ctx.callbackQuery) await ctx.answerCbQuery()
+  try {
+    if (ctx.callbackQuery) await ctx.answerCbQuery()
 
-  const isPremium = ctx.user.vip && ctx.user.vip > new Date()
+    const isPremium = ctx.user.vip && ctx.user.vip > new Date()
 
-  return ctx[ctx.message ? 'reply' : 'editMessageText'](
-    ctx.i18n.t('cabinet.text', {
-      id: ctx.user.id,
-      registered: new Date().toLocaleString('ru-RU', {
+    const registeredDate = new Date(ctx.user.id).toLocaleString('uz-UZ', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    })
+
+    const vipStatus = isPremium
+      ? new Date(ctx.user.vip).toLocaleString('uz-UZ', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
-      }),
-      vip: isPremium
-        ? new Date(ctx.user.vip).toLocaleString('ru-RU', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-          })
-        : false,
-    }),
-    Markup.inlineKeyboard([
-      [Markup.callbackButton(ctx.i18n.t('cabinet.key'), 'vip')],
-    ]).extra({
+      })
+      : 'VIP obuna mavjud emas'
+
+    const messageText = `
+      🏠 *Sizning kabinetingiz*:
+      ───────────────────
+      🆔 *ID:* \`${ctx.user.id}\`
+      📅 *Ro‘yxatdan o‘tgan sana:* ${registeredDate}
+      💎 *VIP holati:* ${vipStatus}
+      ───────────────────
+    `
+
+    const keyboard = Markup.inlineKeyboard([
+      [Markup.button.callback('💎 VIP olish', 'vip')],
+    ])
+
+    return ctx[ctx.message ? 'replyWithMarkdownV2' : 'editMessageText'](messageText, {
+      ...keyboard,
       disable_web_page_preview: true,
-      parse_mode: 'HTML',
-    }),
-  )
+      parse_mode: 'MarkdownV2',
+    })
+  } catch (error) {
+    console.error('[❌] Cabinet xatosi:', error)
+    return ctx.reply('❌ Xatolik yuz berdi, qayta urinib ko‘ring!')
+  }
 }

@@ -9,11 +9,11 @@ module.exports = async (ctx) => {
   await view.save()
 
   return ctx.replyWithHTML(
-    `Превью ${view.preview ? 'включено' : 'выключено'}.`,
+    `Ko‘rib chiqish ${view.preview ? 'yoqildi' : 'o‘chirildi'}.`,
     {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
-          'Продолжить настройку',
+          'Sozlashni davom ettirish',
           `admin_view_id_${ctx.state[0]}`,
         ),
       ]),

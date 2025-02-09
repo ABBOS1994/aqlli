@@ -1,4 +1,4 @@
-const Markup = require('telegraf/markup')
+const { Markup } = require('telegraf')
 const Mail = require('../../../models/mail')
 
 const dateConfig = {
@@ -8,25 +8,26 @@ const dateConfig = {
   hour: 'numeric',
   minute: 'numeric',
 }
+
 const statuses = {
-  stopped: '⏹ Рассылка остановлена',
-  paused: '⏸ Рассылка приостановлена',
-  ended: '📬 Рассылка завершена',
-  doing: '🕒 Рассылка выполняется',
-  notStarted: '🛠 Рассылка еще не начата',
+  stopped: '⏹ Jo‘natish to‘xtatildi',
+  paused: '⏸ Jo‘natish to‘xtatib qo‘yildi',
+  ended: '📬 Jo‘natish tugallandi',
+  doing: '🕒 Jo‘natish davom etmoqda',
+  notStarted: '🛠 Jo‘natish hali boshlanmadi',
 }
 
-const parts = [
-  '▓▓▓▓▓▓▓▓▓▓',
-  '█▓▓▓▓▓▓▓▓▓',
-  '██▓▓▓▓▓▓▓▓',
-  '███▓▓▓▓▓▓▓',
-  '████▓▓▓▓▓▓',
-  '█████▓▓▓▓▓',
-  '██████▓▓▓▓',
-  '███████▓▓▓',
-  '████████▓▓',
-  '█████████▓',
+const progressBars = [
+  '░░░░░░░░░░',
+  '█░░░░░░░░░',
+  '██░░░░░░░░',
+  '███░░░░░░░',
+  '████░░░░░░',
+  '█████░░░░░',
+  '██████░░░░',
+  '███████░░░',
+  '████████░░',
+  '█████████░',
   '██████████',
 ]
 
@@ -34,62 +35,58 @@ module.exports = async (ctx) => {
   await ctx.answerCbQuery()
   const mail = await Mail.findById(ctx.state[0])
 
-  const procent = (mail.success + mail.unsuccess) / mail.all
-  const time = new Date()
-  time.setSeconds(
-    time.getSeconds() + (mail.all - mail.success - mail.unsuccess) * 0.016,
-  )
+  if (!mail) {
+    return ctx.editMessageText('❌ Xatolik: Jo‘natish topilmadi.')
+  }
 
-  const result = `${statuses[mail.status]}
+  const completed = mail.success + mail.unsuccess
+  const progress = completed / mail.all
+  const remainingTime = Math.round(
+    ((mail.all - completed) * 0.016 * 60) / 60,
+  ) // daqiqaga o‘girilgan
 
-${
-  mail.status === 'notStarted'
-    ? mail.startDate
-      ? `Запланирована на ${new Date(mail.startDate).toLocaleString(
-          'ru',
-          dateConfig,
-        )}`
-      : 'Не запланирована'
-    : `${
-        mail.status !== 'completed'
-          ? `🏃 Прогресс выполнения: [${parts[Math.round(procent * 10)]}] - ${(
-              mail.success + mail.unsuccess
-            ).format(0)}/${mail.all.format(0)} - ${Math.floor(procent * 100)}%`
-          : ''
-      }
+  let result = `${statuses[mail.status]}\n\n`
 
-📊 Статистика:
-📬 Успешно: ${mail.success.format(0)}
-📭 Неуспешно: ${mail.unsuccess.format(0)}
+  if (mail.status === 'notStarted') {
+    result += mail.startDate
+      ? `📅 Rejalashtirilgan vaqt: ${new Date(mail.startDate).toLocaleString(
+        'uz-UZ',
+        dateConfig,
+      )}`
+      : '⏳ Rejalashtirilmagan'
+  } else {
+    result += `${
+      mail.status !== 'completed'
+        ? `🏃 Progress: [${progressBars[Math.round(progress * 10)]}] - ${completed}/${mail.all} - ${Math.floor(
+        progress * 100,
+        )}%\n\n`
+        : ''
+    }📊 Statistika:\n📬 Muvaffaqiyatli: ${mail.success}\n📭 Muvaffaqiyatsiz: ${
+      mail.unsuccess
+    }\n\n`
 
-${
-  ctx.from.id === Number(process.env.DEV_ID)
-    ? `⚠️ Ошибки: ${Object.entries(mail.errorsCount)
+    if (ctx.from.id === Number(process.env.DEV_ID)) {
+      result += `⚠️ Xatoliklar: ${Object.entries(mail.errorsCount)
         .map(([key, value]) => `${key} - ${value}`)
-        .join(', ')}`
-    : ''
-}
+        .join(', ')}\n\n`
+    }
 
-${
-  mail.status === 'doing'
-    ? `⌚️ Окончание через ≈${Math.round(
-        (time - new Date()) / (1000 * 60),
-      )} мин.`
-    : mail.status !== 'notStarted'
-      ? `🕰 Длительность ${Math.round(
-          ((mail.endDate ? new Date(mail.endDate) : new Date()) -
-            new Date(mail.startDate)) /
-            (1000 * 60),
-        )} мин.`
-      : ''
-}
-`
-}`
+    if (mail.status === 'doing') {
+      result += `⌚️ Tugashiga taxminan ${remainingTime} min. qoldi\n`
+    } else if (mail.status !== 'notStarted') {
+      const duration = Math.round(
+        ((mail.endDate ? new Date(mail.endDate) : new Date()) -
+          new Date(mail.startDate)) /
+        (1000 * 60),
+      )
+      result += `🕰 Davomiyligi: ${duration} min.\n`
+    }
+  }
 
   return ctx.editMessageText(result, {
     parse_mode: 'HTML',
     reply_markup: Markup.inlineKeyboard([
-      Markup.callbackButton('🔄', `inlineUpdateMail_${mail._id}`),
+      Markup.callbackButton('🔄 Yangilash', `inlineUpdateMail_${mail._id}`),
     ]),
   })
 }

@@ -1,6 +1,6 @@
-/* eslint-disable no-redeclare */
 const User = require('../../models/user')
 const Markup = require('telegraf/markup')
+
 const exportTemplate = {
   _id: '',
   id: '',
@@ -19,19 +19,18 @@ const exportTemplate = {
 
 module.exports = async (ctx) => {
   if (ctx.state[0]) {
-    await ctx.answerCbQuery('Экспортирование', true)
+    await ctx.answerCbQuery('📤 Foydalanuvchilar eksport qilinmoqda...', true)
 
     let contentUsers = []
     let users = []
+
     switch (ctx.state[0]) {
       case 'alive':
         users = await User.find({ alive: true }, '-_id id').lean()
-
         contentUsers = users.map((value) => Object.values(value))
         break
       case 'all':
         users = await User.find({}, '-_id id').lean()
-
         contentUsers = users.map((value) => Object.values(value))
         break
       case 'full':
@@ -51,20 +50,19 @@ module.exports = async (ctx) => {
 
     return ctx.replyWithDocument({
       source: Buffer.from(contentUsers.join('\n'), 'utf8'),
-      filename: 'users.csv',
+      filename: 'foydalanuvchilar.csv',
     })
   } else {
     await ctx.answerCbQuery()
 
     return ctx.editMessageText(
-      'Выберите вариант экспорта:',
+      '📥 **Qaysi formatda eksport qilishni tanlang:**',
       Markup.inlineKeyboard([
         [
-          // Markup.callbackButton(`Бекап`, `admin_listUsers_full`),
-          Markup.callbackButton('Полный', 'admin_listUsers_all'),
-          Markup.callbackButton('Живые', 'admin_listUsers_alive'),
+          Markup.callbackButton('📂 To‘liq ma’lumotlar', 'admin_listUsers_all'),
+          Markup.callbackButton('🟢 Faqat aktivlar', 'admin_listUsers_alive'),
         ],
-        [Markup.callbackButton('‹ Назад', 'admin_back')],
+        [Markup.callbackButton('🔙 Orqaga', 'admin_back')],
       ]).extra(),
     )
   }
