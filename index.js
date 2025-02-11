@@ -1,125 +1,74 @@
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
-const path = require('path')
-require('dotenv').config({ path: path.resolve('.env') })
+// index.js
 
-// eslint-disable-next-line no-extend-native
-Number.prototype.format = function (n, x) {
-  const re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')'
-  return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$& ')
+const path = require('path')
+const fs = require('fs')
+const { Telegraf } = require('telegraf')
+const schedule = require('node-schedule')
+const { randomInt } = require('crypto')
+const { ChatGPTAPI } = require('chatgpt')
+const tesseract = require('node-tesseract-ocr')
+require('dotenv').config({ path: fs.existsSync('.env') ? path.resolve('.env') : undefined })
+
+const formatNumber = (num, n = 0, x = 3) => {
+  const re = new RegExp(`\d(?=(\d{${x}})+(\.|$))`, 'g')
+  return num.toFixed(n).replace(re, '$& ')
 }
 
 require('./models')
 
-const { Telegraf } = require('telegraf')
-const allowedUpdates = [
-  'message',
-  'inline_query',
-  'callback_query',
-  'my_chat_member',
-  'chat_join_request'
-]
+const bot = new Telegraf(process.env.BOT_TOKEN, { handlerTimeout: 1000 });
 
-const bot = new Telegraf(process.env.BOT_TOKEN, { handlerTimeout: 1 })
+['attachUser', 'logging', 'sysRefs', 'subscription'].forEach(mw => bot.use(require(`./middlewares/${mw}`)))
 
 bot.catch(require('./actions/error'))
 
-const I18n = require('telegraf-i18n')
-const i18n = new I18n({
-  directory: 'locales',
-  defaultLanguage: 'ru',
-  defaultLanguageOnMissing: true
-})
+const i18n = require('./helpers/i18n')
 bot.use(i18n.middleware())
 
-const rateLimit = require('telegraf-ratelimit')
-const limitConfig = {
-  window: 3000,
-  limit: 3
-}
-bot.use(rateLimit(limitConfig))
+bot.use(require('telegraf-ratelimit')({ window: 3000, limit: 3 }));
 
-bot.on('chat_join_request', require('./actions/chatJoin'))
-bot.on('my_chat_member', require('./actions/myChatMember'))
+['chat_join_request', 'my_chat_member'].forEach(event => bot.on(event, require(`./actions/${event}`)));
+['message', 'callback_query', 'inline_query'].forEach(event => bot.on(event, require(`./routers/${event}`)));
 
-bot.use(require('./middlewares/attachUser'))
+['cabinet', 'help', 'solve', 'partner'].forEach(cmd => bot.hears(i18n.match(`start.keys.${cmd}`), require(`./actions/${cmd}`)))
 
-bot.use(require('./middlewares/logging'))
+const api = new ChatGPTAPI({ apiKey: process.env.OPENAI_API_KEY })
 
-bot.on('text', require('./middlewares/sysRefs'))
-
-bot.on('message', require('./middlewares/subscription'))
-
-bot.hears(I18n.match('start.keys.cabinet'), require('./actions/cabinet'))
-bot.hears(I18n.match('start.keys.help'), require('./actions/help'))
-bot.hears(I18n.match('start.keys.solve'), require('./actions/solve'))
-bot.hears(I18n.match('start.keys.partner'), require('./actions/partner'))
-
-bot.on('message', require('./routers/message'))
-
-bot.on('callback_query', require('./routers/callbackQuery'))
-
-bot.on('inline_query', require('./routers/inlineQuery'))
-
-bot.launch(
-  process.env.USE_WEBHOOK === 'true'
-    ? {
-        webhook: {
-          domain: `https://${process.env.WEBHOOK_DOMAIN}`,
-          hookPath: `/${process.env.WEBHOOK_PATH}/${process.env.BOT_TOKEN}`,
-          port: process.env.WEBHOOK_PORT,
-          extra: {
-            max_connections: 100,
-            allowed_updates: allowedUpdates
-          }
-        }
-      }
-    : {
-        polling: {
-          allowedUpdates
-        }
-      }
-)
-
-bot.telegram.getWebhookInfo().then((webhookInfo) => {
-  console.log(
-    `✅ Bot is up and running\n${JSON.stringify(webhookInfo, null, ' ')}`
-  )
+bot.on('text', async (ctx) => {
+  await ctx.replyWithChatAction('typing')
+  const response = await api.sendMessage(ctx.message.text)
+  ctx.reply(response.text)
 })
-bot.telegram.getMe().then((info) => console.log(info))
 
-const updateStat = require('./helpers/updateStat')
-const botStat = require('./helpers/botStat')
+bot.on('photo', async (ctx) => {
+  await ctx.replyWithChatAction('typing')
+  const fileLink = await ctx.telegram.getFileLink(ctx.message.photo.pop().file_id)
+  const text = await tesseract.recognize(fileLink, { lang: 'uzb' })
+  const response = await api.sendMessage(text)
+  ctx.reply(response.text)
+})
 
-const schedule = require('node-schedule')
+const isWebhook = process.env.USE_WEBHOOK === 'true'
+bot.launch(
+  isWebhook
+    ? {
+      webhook: {
+        domain: `https://${process.env.WEBHOOK_DOMAIN}`,
+        hookPath: `/${process.env.WEBHOOK_PATH}/${process.env.BOT_TOKEN}`,
+        port: process.env.WEBHOOK_PORT,
+        extra: {
+          max_connections: 100,
+          allowed_updates: ['message', 'inline_query', 'callback_query', 'my_chat_member', 'chat_join_request']
+        }
+      }
+    }
+    : { polling: { allowedUpdates: ['message', 'inline_query', 'callback_query', 'my_chat_member', 'chat_join_request'] } }
+);
 
-const Mail = require('./models/mail')
-
-const lauchWorker = require('./actions/admin/mail/lauchWorker')
-const checkVip = require('./actions/checkVip')
-
-function imitateAsync() {}
-;(async () => {
-  const result = await Mail.findOne({ status: 'doing' })
-  if (result) lauchWorker(result._id)
+(async () => {
+  const webhookInfo = await bot.telegram.getWebhookInfo()
+  console.log(`✅ Bot is running:\n${JSON.stringify(webhookInfo, null, 2)}`)
+  console.log(await bot.telegram.getMe())
 })()
 
-schedule.scheduleJob('* * * * *', async () => {
-  const result = await Mail.findOne({
-    status: 'notStarted',
-    startDate: { $exists: true, $lte: new Date() }
-  })
-  if (result) lauchWorker(result._id)
-
-  await checkVip(bot, i18n)
-
-  await require('./actions/checkPayme')(bot, i18n)
-})
-
-const { randomInt } = require('crypto')
-
-schedule.scheduleJob(`0 ${randomInt(2, 6)} * * *`, async () => {
-  await updateStat(bot)
-
-  await botStat()
-})
+require('./helpers/scheduler')(bot, i18n)
