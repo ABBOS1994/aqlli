@@ -1,0 +1,15 @@
+{
+  "admins": [
+    305544740,
+    5875097427,
+    980614989
+  ],
+  "subsChannels": [
+    "https://t.me/maxfiydasturchi"
+  ],
+  "botStat": {
+    "send": false,
+    "alive": true,
+    "key": ""
+  }
+}
