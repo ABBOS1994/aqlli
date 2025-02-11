@@ -1,5 +1,5 @@
 name: 🇺🇿 O'zbek tili
-article: https://t.me/aqlli_uka
+article: https://t.me/misolai_bot
 start:
   text: |
     👋 Salom! Men - sun'iy intellektman, <b>misollarni yechish uchun yaratilinganman.</b>
@@ -18,74 +18,35 @@ subscribe:
   text: Botdan foydalanish uchun kanalimizga obuna bo'ling 👇🏻
   key:
     check: Tekshirish
-  success: Siz kanal qo'shildingiz va botdan foydalanishingiz mumkun!
+  success: Siz kanal qo'shildingiz va botdan foydalanishingiz mumkin!
 joinRequest:
   text: Arizangiz tasdiqlandi
 solve:
   text: |
-    📩<b>Misolni yozuv yoki rasm formatida tashang va bir daqiqadan so'ng uning ba'tafsil yechimini oling!</b>
+    📩<b>Misolni yozuv yoki rasm formatida yuboring va bir daqiqadan so‘ng uning batafsil yechimini oling!</b>
 
     📝<b><i>Savol berish namunalari:</i></b>
-    – Algebradan misolni yechib beri (Misolni yozing).
+    – Algebradan misolni yechib bering (Misolni yozing).
     – Fizikadan misolni yeching (Misolni yozing).
-    – (Mavzuni yozib) shu mavzu bo'yicha matn tuzib ber.
+    – (Mavzuni yozib) shu mavzu bo‘yicha matn tuzib bering.
 
-    ‼️ <b><i>Hamda bir mutaxassislikga yo'naltirilgan misollarni ham yecha olaman!</i></b>
+    ‼️ <b><i>Shuningdek, ixtisoslashgan fanlar bo‘yicha ham misollarni yecha olaman!</i></b>
 
-    📂 <b>Qoidalar bilan tanishib chiqing: - </b><a href="https://t.me/aqlli_uka"><b>Aqlli uka qobiliyatlari!</b></a>
+    📂 <b>Qoidalar bilan tanishib chiqing: - </b><a href="https://t.me/misolai_bot"><b>MisolAI Bot qobiliyatlari!</b></a>
   key: ✅ Tanishib chiqdim
-  text1: |
-    <b>🗣️ Man tekst hamda rasm orqali ham misol yecha olaman! </b>
-
-    📖 <b>Maqolani o'qish - </b><a href="https://t.me/aqlli_uka">Aqlli uka qobiliyatlari!</a>
-
-    <i>O'zingizga qulay uslubni tanlang:</i>
-  keys:
-    image: Rasm orqali 📸
-    text: Tekst orqali ✏️
-  solution:
-    text: |
-      📝 <b>Savolingizni tekst formatida jo'nating!</b> <b>Iltimos har bir javobimni yaxshilab tekshiring!</b>
-
-      <b>🧮 Символы для вычислений:</b> 
-      <code>∫</code> , <code>^</code>, <code>√</code>, <code>π</code>, <code>sin</code>, <code>cos</code>, <code>tg</code>, <code>ctg</code>, <code>log</code>
-
-      📖Maqolani o'qish - <u>Tekst formatda savol berish namunalari</u>
-    image:
-      text: |
-        Rasm orqali 📸
-      keys:
-        math: Matematik misollar 🧮
-        default: Matnli misollar 📖
-      math: |
-        <b>Bo'lim</b> - «Matematik misollar 🧮»
-
-        <b>📖 Maqolani o'qish - <a href="https://t.me/aqlli_uka">Savol berish namunalari</a></b>
-
-        📤 ‍<i>Yechishingiz kerak bo'lgan misolni rasm yoki skrinshotini yuboring!</i>
-      default: |
-        <b>Bo'lim</b> - «Matnli masalalar 📖»
-
-        <b>📖 Maqolani o'qish - <a href="https://t.me/aqlli_uka">Savol berish namunalari</a></b>
-
-        📤 ‍<i>Yechishingiz kerak bo'lgan misolni rasm yoki skrinshotini yuboring!.</i>
-generation: |
-  <b>🧠 Hozir o'ylayapman!!</b>
-
-  <i>Ikki daqiqa ichida javob berolmasam, manga boshidan savol bering!</i>
 cabinet:
   text: |
-    <b>Mening profilim</b> 
+    <b>Mening profilim</b>
 
-    Profilingiz bo'yicha barcha kerakli ma'lumotlar 
+    Profilingiz haqida ma'lumot:
     👁‍🗨 <b>ID</b> : <code>${id}</code>
-    👁‍🗨 <b>Ro'yhatdan o'tilgan</b> : ${registered} 
+    👁‍🗨 <b>Ro‘yxatdan o‘tgan</b> : ${registered}
 
-    📝 <b>Obuna</b> ${vip ? 'tugaydi ': ''}${vip || 'mavjud emas'}
+    📝 <b>Obuna</b> ${vip ? 'tugaydi ' : ''}${vip || 'mavjud emas'}
   key: Obuna sotib olish 💵
 vip:
   text: |
-    <b>🛍️ Obuna muddati tugagunigacha behisob misollar yechishga imkon beradi!</b>
+    <b>🛍️ Obuna - cheksiz misollar yechishga imkon beradi!</b>
 
     <i>👇🏻 Mavjud tariflar 👇🏻</i>
   keys:
@@ -94,72 +55,32 @@ vip:
     720: Bir oylik
     87600: Cheksiz
   choose:
-    text: To'lovga ${number} UZS
+    text: To'lov miqdori: ${number} UZS
     key: To'lash
   description: Obuna
-  success: Obuna ${date}  kungacha muvaffaqiyatli faollashtirildi.
+  success: Obuna ${date} kungacha muvaffaqiyatli faollashtirildi.
 help:
   text: |
-    Bot bilan ishlash qo'llanmalari shu kanalda: @aqlli_uka
+    Bot bilan ishlash qo‘llanmasi shu kanalda: @misolai_bot
   key:
     text: ☎️ Texnik yordam
-    url: t.me/aqlli_uka_yordam
+    url: t.me/misolai_bot_yordam
 partner:
   text: |
     🤝 <b>Sheriklik dasturi</b>
 
-    <a href="https://t.me/aqlli_uka">📚 Sheriklik dasturi bo'yicha qo'llanma!</a>
+    <a href="https://t.me/misolai_bot">📚 Sheriklik dasturi bo‘yicha qo‘llanma!</a>
 
-    🏆 Referal (sheriklik) dasturidan beriladigan mukofot taklif qilgan odamlaringizning obuna sotib olingan narxlaridan 40% tashkil etadi.
+    🏆 Sheriklik dasturidan foyda - taklif qilgan odamlaringizning obuna to‘lovidan 40%.
 
-    <b>Nech pul foyda qilish mumkin?</b>
-    ├ Misol uchun, agar 10 ta siz taklif qilgan odam oylik obuna sotib olsa, siz 176 000 so'mga ega bo'lasiz, lekin bizda mukofot qilib beriladigan pul miqdorida chegara yo'q, shuning uchun siz 1000 ta odam taklif qilishingiz mumkin, oylik obuna oladigan, 176 000 000 so'mni qo'lga kiritasiz 
-    └ Va taklif qilgan odamlaringiz keyingi oy ham to'lov qilishsa, sizga bonus yozilaveradi!
-
-    🥇 <b>Statistika:</b>
-    ├  To'langan: ${withdraw} UZS
-    ├  Ishlab topilgan: ${earned} UZS
-    ├  Chiqimga mavjud: ${diff} UZS
-    └  Taklif qilingan odamlar: ${refCount}
-
-    *Chiqarib olish mumkin bo'lgan minimal summa: 50 000ming so'm
-
-    🎁 <b>Aktivlik uchun bonuslar:</b>
-    ├ 5 va undan ortiq odamlar (oylik obuna olishgan) taklif qilinsa, oylik obuna bilan taqdirlanadi 🧠 
-    └ Xar 50ta taklif qilingan odamga (oylik obuna olishgan) sizga 💵 75000 so'm ko'rinishida bonus beriladi 
+    🎁 <b>Bonus tizimi:</b>
+    ├ 5+ odam (oylik obuna sotib olgan) = bepul oylik obuna 🧠
+    ├ Har 50 ta taklif qilingan odam uchun 75 000 so‘m qo‘shimcha mukofot 💵
+    └ Cheksiz imkoniyatlar mavjud!
 
     ⤵️ <b>Sizning havolangiz</b> - ${link}
   keys:
-    list: 📋 Referral ro'yhati
+    list: 📋 Referal ro‘yxati
     withdraw: 💸 Pul chiqarish
-  withdraw:
-    text: |
-      🗣 <i>Siz pulni bank kartalariga</i> yoki telefon raqamingizga chiqarishingiz mumkin <i>(Chiqarib olish mumkin bo'lgan minimal summa: 50 000ming so'm).</i>
-
-      <b>Chiqim qilish uchun kerakli narsalar:</b> 
-      1) Shahsiy kabinetni skrinshot qilish.
-      2) Skrinshotni menejirimizga yuborish.
-      3) Chiqarmoqchi bo'lgan pul miqdorini etish.
-      4) Mablag' tushadigan karta tafsilotlarini berish.
-
-      ⚙️ <b>UPD: Kelajakda bu funksiya avtomatlashtiriladi</b>
-    key:
-      text: 👨‍💻 Manager bilan bog'lanmoq
-      url: t.me/Aqlli_uka_yordam
 back: ← Ortga
-error: Xatolik yuz berdi, keyinroq urunib koring.\n\n<code>${error}</code>
-promptPrefix: |
-  Sen "Aqlli uka" sun'iy intellektisan, har qanday qiyinlikdagi misollarni yechishga qodirsan
-  Bugungi sana: ${date}
-
-  Savol:
-left: Sizda ${n}ta tekin urunish qoldi!
-noRequests:
-  text: |
-    ⌛️ <b>Sizning sinov muddatingiz - yakunlandi!</b>
-
-    👤 <i>Obuna - chegaralanmagan miqdordagi misollarni yechishga imkon ochib beradi!</i>
-  key: 🛍️ Obuna olmoq
-vipExpires:
-  text: ‼️ Sizning obuna sotib olgan muddatingiz tugadi!
-  key: ▶️ Uzaytirmoq
+error: Xatolik yuz berdi, keyinroq urunib ko‘ring.\n\n<code>${error}</code>
