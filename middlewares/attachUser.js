@@ -17,7 +17,7 @@ module.exports = async (ctx, next) => {
       langCode: ctx.from.language_code || 'NoLang',
       alive: true,
       from: ctx?.message?.text?.split(' ')[1] || null,
-      lastMessage: Date.now(),
+      lastMessage: Date.now()
     })
 
     await user.save()

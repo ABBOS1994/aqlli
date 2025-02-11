@@ -1,70 +1,70 @@
 const { Markup } = require('telegraf')
-const { createTransaction } = require('../helpers/atmos')
-const Deposit = require('../models/deposit')
+
+const crypto = require('crypto')
 
 const prices = {
   24: 6000,
   168: 15000,
   720: 44000,
-  87600: 119000,
+  87600: 119000
 }
 
+const Deposit = require('../models/deposit')
+
 module.exports = async (ctx) => {
-  try {
-    if (ctx.callbackQuery) await ctx.answerCbQuery()
+  if (ctx.callbackQuery) await ctx.answerCbQuery()
 
-    if (ctx.state[0]) {
-      const period = ctx.state[0]
-      const amount = prices[period]
+  if (ctx.state[0]) {
+    const random = crypto.randomInt(10000)
+    const amount = prices[ctx.state[0]] * 100 + random
+    const realAmount = amount / 100
 
-      const { paymentUrl, transactionId } = await createTransaction(amount, `VIP ${period} soatga obuna`, ctx.user.id)
+    await Deposit.create({
+      status: 'pending',
+      type: 'payme',
+      amount: realAmount,
+      currency: 'UZS',
+      per: ctx.state[0],
+      user: ctx.user.id,
+      createdAt: new Date()
+    })
 
-      await Deposit.create({
-        status: 'pending',
-        type: 'atmos',
-        transaction_id: transactionId,
-        amount: amount,
-        currency: 'UZS',
-        per: period,
-        user: ctx.user.id,
-        createdAt: new Date(),
-      })
-
-      return ctx.editMessageText(
-        `💎 *VIP obuna tanlandi: ${period} soat*\n💰 To‘lov summasi: *${amount.toLocaleString()} so‘m*\n\n⬇️ To‘lovni amalga oshirish uchun havolaga o‘ting:`,
-        {
-          parse_mode: 'MarkdownV2',
-          disable_web_page_preview: true,
-          ...Markup.inlineKeyboard([
-            [Markup.button.url('💳 To‘lov qilish', paymentUrl)],
-            [Markup.button.callback('🔍 To‘lovni tekshirish', `check_payment_${transactionId}`)],
-            [Markup.button.callback('🔙 Orqaga', 'vip')],
-          ]),
-        },
-      )
-    }
-
-    return ctx[ctx.message ? 'reply' : 'editMessageText'](
-      `💎 *VIP obuna olish* \n\nTanlang:`,
-      {
-        parse_mode: 'MarkdownV2',
-        disable_web_page_preview: true,
-        ...Markup.inlineKeyboard([
-          [
-            Markup.button.callback('⏳ 24 soat - 6,000 so‘m', 'vip_24'),
-            Markup.button.callback('⏳ 7 kun - 15,000 so‘m', 'vip_168'),
-          ],
-          [
-            Markup.button.callback('⏳ 30 kun - 44,000 so‘m', 'vip_720'),
-            Markup.button.callback('⏳ 10 yil - 119,000 so‘m', 'vip_87600'),
-          ],
-          [Markup.button.callback('🔙 Orqaga', 'cabinet')],
-        ]),
-      },
+    const finalUrl = encodeURI(
+      `https://payme.uz/${process.env.PAYME_CARD_ID}/${amount}`
     )
 
-  } catch (error) {
-    console.error('[❌] VIP xatosi:', error)
-    return ctx.reply('❌ Xatolik yuz berdi, qayta urinib ko‘ring!')
+    return ctx.editMessageText(
+      ctx.i18n.t('vip.choose.text', { number: realAmount.format(1) }),
+      Markup.inlineKeyboard(
+        [
+          Markup.urlButton(ctx.i18n.t('vip.choose.key'), finalUrl),
+          Markup.callbackButton(ctx.i18n.t('back'), 'vip')
+        ],
+        { columns: 1 }
+      ).extra({
+        parse_mode: 'HTML',
+        disable_web_page_preview: true,
+        reply_to_message_id: ctx.message?.message_id,
+        allow_sending_without_reply: true
+      })
+    )
   }
+
+  return ctx[ctx.message ? 'reply' : 'editMessageText'](
+    ctx.i18n.t('vip.text'),
+    Markup.inlineKeyboard([
+      [
+        Markup.callbackButton(ctx.i18n.t('vip.keys.24'), `vip_24`),
+        Markup.callbackButton(ctx.i18n.t('vip.keys.168'), `vip_168`)
+      ],
+      [
+        Markup.callbackButton(ctx.i18n.t('vip.keys.720'), `vip_720`),
+        Markup.callbackButton(ctx.i18n.t('vip.keys.87600'), `vip_87600`)
+      ],
+      [Markup.callbackButton(ctx.i18n.t('back'), 'cabinet')]
+    ]).extra({
+      parse_mode: 'HTML',
+      disable_web_page_preview: true
+    })
+  )
 }

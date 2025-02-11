@@ -1,5 +1,4 @@
 const Markup = require('telegraf/markup')
-const Mail = require('../../../models/mail') // ✅ Mail modelini to‘g‘ri chaqirish
 
 module.exports = async (ctx) => {
   if (ctx.callbackQuery) {
@@ -7,30 +6,29 @@ module.exports = async (ctx) => {
     await ctx.deleteMessage()
 
     ctx.user.state = 'admin_mail_add'
-    return ctx.replyWithHTML('Har qanday postni tayyor holda yuboring.', {
+    return ctx.replyWithHTML('Отправьте любой пост в готовом виде.', {
       reply_markup: Markup.inlineKeyboard([
-        Markup.callbackButton('⬅️ Orqaga', 'admin_mail'),
+        Markup.callbackButton('‹ Назад', 'admin_mail')
       ]),
-      parse_mode: 'HTML',
+      parse_mode: 'HTML'
     })
   } else {
-    const mail = new Mail({
+    const mail = ctx.Mail({
       uid: ctx.from.id,
       message: ctx.message,
-      keyboard: ctx.message?.reply_markup?.inline_keyboard || [], // ✅ Xatoni oldini olish uchun fallback
-      status: 'notStarted',
+      keyboard: ctx.message?.reply_markup?.inline_keyboard,
+      status: 'notStarted'
     })
-
     await mail.save()
     ctx.user.state = null
 
-    return ctx.replyWithHTML('Post saqlandi.', {
+    return ctx.replyWithHTML('Пост сохранен', {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
-          '⚙️ Sozlashni davom ettirish',
-          `admin_mail_id_${mail._id}`,
-        ),
-      ]),
+          'Продолжить настройку',
+          `admin_mail_id_${mail._id}`
+        )
+      ])
     })
   }
 }

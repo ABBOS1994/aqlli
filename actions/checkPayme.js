@@ -8,7 +8,7 @@ const Deposit = require('../models/deposit')
 
 const asyncFilter = async (arr, predicate) =>
   Promise.all(arr.map(predicate)).then((results) =>
-    arr.filter((_v, index) => results[index]),
+    arr.filter((_v, index) => results[index])
   )
 
 const tls = require('tls')
@@ -20,15 +20,15 @@ const loginFunction = async () => {
     url: 'https://payme.uz/api/users.log_in',
     headers: {
       'Content-Type': 'text/plain',
-      device: process.env.PAYME_DEVICE,
+      device: process.env.PAYME_DEVICE
     },
     data: {
       method: 'users.log_in',
       params: {
         login: process.env.PAYME_LOGIN,
-        password: process.env.PAYME_PASS,
-      },
-    },
+        password: process.env.PAYME_PASS
+      }
+    }
   })
 
   config.paymeSession = login.headers['api-session']
@@ -53,7 +53,7 @@ module.exports = async (bot, i18n) => {
       'api-session': config.paymeSession,
       device: process.env.PAYME_DEVICE,
       'user-agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'
     },
     data: {
       method: 'cheque.get_all',
@@ -63,10 +63,10 @@ module.exports = async (bot, i18n) => {
         to: {
           year: date.getFullYear(),
           month: date.getMonth(),
-          day: date.getDate(),
-        },
-      },
-    },
+          day: date.getDate()
+        }
+      }
+    }
   })
 
   if (getHistory.data.error && getHistory.data.error.code === -32504) {
@@ -79,7 +79,7 @@ module.exports = async (bot, i18n) => {
         'api-session': config.paymeSession,
         device: process.env.PAYME_DEVICE,
         'user-agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'
       },
       data: {
         method: 'cheque.get_all',
@@ -89,29 +89,29 @@ module.exports = async (bot, i18n) => {
           to: {
             year: date.getFullYear(),
             month: date.getMonth(),
-            day: date.getDate(),
-          },
-        },
-      },
+            day: date.getDate()
+          }
+        }
+      }
     })
   }
 
   if (getHistory.data.error) return console.error(getHistory.data)
 
   const cheques = getHistory.data.result.cheques.filter(
-    (cheque) => cheque.card._id === process.env.PAYME_CARD_ID,
+    (cheque) => cheque.card._id === process.env.PAYME_CARD_ID
   )
 
   const history = await Deposit.find({
-    id: { $in: cheques.map((cheque) => cheque._id) },
+    id: { $in: cheques.map((cheque) => cheque._id) }
   })
 
   const newCheques = cheques.filter(
-    (cheque) => !history.find((element) => `${element.id}` === `${cheque._id}`),
+    (cheque) => !history.find((element) => `${element.id}` === `${cheque._id}`)
   )
   const acceptedCheques = await asyncFilter(newCheques, async (cheque) => {
     const info = await Deposit.findOne({ amount: cheque.amount / 100 }).sort({
-      _id: -1,
+      _id: -1
     })
     return !!info
   })
@@ -119,9 +119,9 @@ module.exports = async (bot, i18n) => {
   return Promise.all(
     acceptedCheques.map(async (cheque) => {
       const deposit = await Deposit.findOne({
-        amount: cheque.amount / 100,
+        amount: cheque.amount / 100
       }).sort({
-        _id: -1,
+        _id: -1
       })
       if (!deposit) return console.error('cheque not found')
 
@@ -137,7 +137,7 @@ module.exports = async (bot, i18n) => {
       await Promise.all([
         User.updateOne(
           { id: user.id },
-          { $set: { vip: date }, $inc: { deposit: deposit.amount } },
+          { $set: { vip: date }, $inc: { deposit: deposit.amount } }
         ),
         bot.telegram.sendMessage(
           user.id,
@@ -147,21 +147,21 @@ module.exports = async (bot, i18n) => {
               month: 'long',
               day: 'numeric',
               hour: 'numeric',
-              minute: 'numeric',
-            }),
+              minute: 'numeric'
+            })
           }),
           {
             disable_web_page_preview: true,
-            parse_mode: 'HTML',
-          },
+            parse_mode: 'HTML'
+          }
         ),
         Deposit.updateOne(
           { _id: deposit._id },
           {
             paidAt: new Date(),
             status: 'paid',
-            id: cheque._id,
-          },
+            id: cheque._id
+          }
         ),
         Promise.all(
           config.admins.map((admin) =>
@@ -176,13 +176,13 @@ module.exports = async (bot, i18n) => {
                 month: 'long',
                 day: 'numeric',
                 hour: 'numeric',
-                minute: 'numeric',
+                minute: 'numeric'
               })} за ${deposit.amount.format(0)} ${deposit.currency}`,
-              { parse_mode: 'HTML' },
-            ),
-          ),
-        ),
+              { parse_mode: 'HTML' }
+            )
+          )
+        )
       ])
-    }),
+    })
   )
 }

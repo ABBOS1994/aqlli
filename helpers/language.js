@@ -1,14 +1,18 @@
+const yaml = require('js-yaml')
 const fs = require('fs')
+const Markup = require('telegraf/markup')
 const path = require('path')
-const { Markup } = require('telegraf')
 
-const localesPath = path.resolve('locales')
+const locales = fs.readdirSync(path.resolve('locales'))
 
-const keyboard = fs.readdirSync(localesPath).map((file) => {
-  const localeCode = path.basename(file, path.extname(file))
-  return Markup.button.callback(localeCode.toUpperCase(), `translateBot_${localeCode}`)
+const keyboard = locales.map((locale) => {
+  const localeCode = locale.split('.')[0]
+  const localeName = yaml.load(
+    fs.readFileSync(path.resolve(`locales/${locale}`), 'utf8')
+  ).name
+
+  return Markup.callbackButton(localeName, `translateBot_${localeCode}`)
 })
-
 const languageKeyboard = Markup.inlineKeyboard(keyboard, { columns: 2 })
 
 module.exports = languageKeyboard

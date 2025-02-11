@@ -9,15 +9,15 @@ module.exports = async (ctx) => {
   await view.save()
 
   return ctx.replyWithHTML(
-    `Unikalik ${view.unique ? 'yoqildi' : 'o‘chirildi'}.`,
+    `Уникальность ${view.unique ? 'включена' : 'выключена'}.`,
     {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
-          'Sozlashni davom ettirish',
-          `admin_view_id_${ctx.state[0]}`,
-        ),
+          'Продолжить настройку',
+          `admin_view_id_${ctx.state[0]}`
+        )
       ]),
-      parse_mode: 'HTML',
-    },
+      parse_mode: 'HTML'
+    }
   )
 }

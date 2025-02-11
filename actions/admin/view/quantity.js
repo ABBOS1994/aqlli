@@ -7,40 +7,40 @@ module.exports = async (ctx) => {
 
     if (ctx.state[1]) {
       const view = await ctx.View.findByIdAndUpdate(ctx.state[0], {
-        quantity: 0,
+        quantity: 0
       })
-      return ctx.replyWithHTML('Foydalanuvchilar soni o‘chirildi', {
+      return ctx.replyWithHTML('Кол-во пользоваталей удалено', {
         reply_markup: Markup.inlineKeyboard([
           Markup.callbackButton(
-            'Sozlashni davom ettirish',
-            `admin_view_id_${view._id}`,
-          ),
-        ]),
+            'Продолжить настройку',
+            `admin_view_id_${view._id}`
+          )
+        ])
       })
     }
 
     ctx.user.state = `admin_view_quantity_${ctx.state[0]}`
 
-    return ctx.replyWithHTML('Maksimal qabul qiluvchilar sonini kiriting', {
+    return ctx.replyWithHTML('Введите максимальное кол-во получателей', {
       reply_markup: Markup.inlineKeyboard([
-        Markup.callbackButton('‹ Ortga', `admin_view_id_${ctx.state[0]}`),
+        Markup.callbackButton('‹ Назад', `admin_view_id_${ctx.state[0]}`)
       ]),
-      parse_mode: 'HTML',
+      parse_mode: 'HTML'
     })
   } else {
     const view = await ctx.View.findByIdAndUpdate(ctx.state[0], {
-      quantity: ctx.message.text,
+      quantity: ctx.message.text
     })
 
     ctx.user.state = null
 
-    return ctx.replyWithHTML('Qabul qiluvchilar soni saqlandi', {
+    return ctx.replyWithHTML('Кол-во получателей сохранено', {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
-          'Sozlashni davom ettirish',
-          `admin_view_id_${view._id}`,
-        ),
-      ]),
+          'Продолжить настройку',
+          `admin_view_id_${view._id}`
+        )
+      ])
     })
   }
 }

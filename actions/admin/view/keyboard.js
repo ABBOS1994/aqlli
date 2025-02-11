@@ -7,34 +7,34 @@ module.exports = async (ctx) => {
 
     if (ctx.state[1]) {
       const view = await ctx.View.findByIdAndUpdate(ctx.state[0], {
-        keyboard: [],
+        keyboard: []
       })
-      return ctx.replyWithHTML('Klaviatura o‘chirildi', {
+      return ctx.replyWithHTML('Клавиатура удалена', {
         reply_markup: Markup.inlineKeyboard([
           Markup.callbackButton(
-            'Sozlashni davom ettirish',
-            `admin_view_id_${view._id}`,
-          ),
-        ]),
+            'Продолжить настройку',
+            `admin_view_id_${view._id}`
+          )
+        ])
       })
     }
     ctx.user.state = `admin_view_keyboard_${ctx.state[0]}`
 
     return ctx.replyWithHTML(
-      `Tugmalar ro‘yxatini quyidagi formatda kiriting:
+      `Введите список кнопок в следующем формате:
 
-<code>Tugma 1 http://example1.com</code>
+<code>Кнопка 1 http://example1.com</code>
 
-<i>Bir qatorga bir nechta tugma qo‘shish uchun "|" ajratgichidan foydalaning:</i>
+<i>Используйте разделитель "|", чтобы добавить кнопки в один ряд:</i>
 
-<code>Tugma 1 http://example1.com | Tugma 2 http://example2.com
-Tugma 3 http://example3.com | Tugma 4 http://example4.com</code>`,
+<code>Кнопка 1 http://example1.com | Кнопка 2 http://example2.com
+Кнопка 3 http://example3.com | Кнопка 4 http://example4.com</code>`,
       {
         reply_markup: Markup.inlineKeyboard([
-          Markup.callbackButton('‹ Ortga', `admin_view_id_${ctx.state[0]}`),
+          Markup.callbackButton('‹ Назад', `admin_view_id_${ctx.state[0]}`)
         ]),
-        parse_mode: 'HTML',
-      },
+        parse_mode: 'HTML'
+      }
     )
   } else {
     const possibleUrls = [
@@ -43,7 +43,7 @@ Tugma 3 http://example3.com | Tugma 4 http://example4.com</code>`,
       'tg://',
       'ton://',
       't.me/',
-      'telegram.me/',
+      'telegram.me/'
     ]
 
     const splitByEnter = ctx.message.text.split('\n')
@@ -53,13 +53,13 @@ Tugma 3 http://example3.com | Tugma 4 http://example4.com</code>`,
 
       return splitByWand.map((wand) => {
         const indexOfUrl = wand.indexOf(
-          possibleUrls.find((url) => wand.includes(url)),
+          possibleUrls.find((url) => wand.includes(url))
         )
         if (indexOfUrl === -1) return false
 
         const key = {
           text: wand.slice(0, indexOfUrl).replace(' - ', '').trim(),
-          url: wand.slice(indexOfUrl).trim(),
+          url: wand.slice(indexOfUrl).trim()
         }
 
         return key.text && key.url ? key : false
@@ -68,23 +68,23 @@ Tugma 3 http://example3.com | Tugma 4 http://example4.com</code>`,
 
     if (
       keyboard.findIndex(
-        (enterKeyboard) => enterKeyboard.findIndex((key) => !key) !== -1,
+        (enterKeyboard) => enterKeyboard.findIndex((key) => !key) !== -1
       ) !== -1
     )
-      return ctx.reply('Klaviatura tuzilishida xatolik')
+      return ctx.reply('Ошибка при построении клавиатуры')
 
     ctx.user.state = null
 
     const view = await ctx.View.findByIdAndUpdate(ctx.state[0], {
-      keyboard,
+      keyboard
     })
-    return ctx.replyWithHTML('Klaviatura saqlandi', {
+    return ctx.replyWithHTML('Клавиатура сохранена', {
       reply_markup: Markup.inlineKeyboard([
         Markup.callbackButton(
-          'Sozlashni davom ettirish',
-          `admin_view_id_${view._id}`,
-        ),
-      ]),
+          'Продолжить настройку',
+          `admin_view_id_${view._id}`
+        )
+      ])
     })
   }
 }

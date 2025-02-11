@@ -7,7 +7,7 @@ module.exports = {
       name: process.env.BOT_USERNAME,
       script: 'index.js',
       watch: true,
-      ignore_watch: ['config.json', 'images', 'voices'],
-    },
-  ],
+      ignore_watch: ['config.json', 'images', 'voices']
+    }
+  ]
 }

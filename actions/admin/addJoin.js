@@ -9,65 +9,55 @@ module.exports = async (ctx) => {
     ctx.user.state = 'admin_addJoin'
 
     return ctx.editMessageText(
-      `📌 Arizalarni qabul qilish uchun kanal yoki chat qo‘shish uchun **ID yoki @username** ni kiriting.\n\n` +
-      `📌 Namuna:\n` +
-      `<code>-1001488198124</code>\n\n` +
-      `📌 Kanal yoki chatni arizalarni qabul qilish ro‘yxatidan o‘chirish uchun uning ID'sini kiriting.\n\n` +
-      `📜 Hozirgi arizalarni qabul qiluvchi kanallar/chatlar:\n` +
-      `${
-        config.joinChannels?.length
-          ? config.joinChannels
-            .map((e) => `${e.title} (<code>${e.id}</code>)`)
-            .join('\n')
-          : '🚫 Hozircha hech qanday kanal yoki chat mavjud emas.'
+      `Для добавления канала/чата на принятие заявок введите id/@username\nПример: 
+<code>-1001488198124</code>
+
+Для удаления канала/чата из принятия заявок введите его id\n
+Текущий список каналов/чатов на принятие заявок: ${
+        config.joinChannels
+          ?.map((e) => `${e.title} (<code>${e.id}</code>)`)
+          .join(', ') || ''
       }`,
       {
         ...admin.backKeyboard,
         parse_mode: 'HTML',
-        disable_web_page_preview: true,
-      },
+        disable_web_page_preview: true
+      }
     )
   } else {
     const list = ctx.message.text.split(' ')
 
-    if (!config.joinChannels) config.joinChannels = []
+    if (!config.joinChannels?.length) config.joinChannels = []
 
-    const chatId = Number(list[0])
-    const existingIndex = config.joinChannels.findIndex((o) => o.id === chatId)
-
-    if (existingIndex !== -1) {
-      // 🔥 Agar kanal mavjud bo‘lsa, uni o‘chiramiz
-      config.joinChannels.splice(existingIndex, 1)
-    } else {
+    let find = config.joinChannels.findIndex((o) => o.id === Number(list[0]))
+    if (find !== -1) config.joinChannels.splice(find, 1)
+    else {
       try {
-        var getChat = await ctx.telegram.getChat(chatId)
+        // eslint-disable-next-line no-var
+        var getChat = await ctx.telegram.getChat(list[0])
       } catch (e) {
-        return ctx.replyWithHTML('❌ Noto‘g‘ri kanal/chat yoki bot qo‘shilmagan.')
+        return ctx.replyWithHTML('Неверный канал/чат или не добавлен бот')
       }
 
-      // 📌 Agar kanal yangi bo‘lsa, uni ro‘yxatga qo‘shamiz
-      config.joinChannels.push({
-        title: getChat.title,
-        id: getChat.id,
-      })
+      find = config.joinChannels.findIndex((o) => o.id === getChat.id)
+      if (find === -1) {
+        config.joinChannels.push({
+          title: getChat.title,
+          id: getChat.id
+        })
+      } else config.joinChannels.splice(find, 1)
     }
-
-    await fs.writeFile('config.json', JSON.stringify(config, null, 2))
+    await fs.writeFile('config.json', JSON.stringify(config, null, '  '))
 
     return ctx.replyWithHTML(
-      `✅ Arizalarni qabul qiluvchi kanallar/chatlar ro‘yxati yangilandi!\n\n` +
-      `📜 Hozirgi arizalarni qabul qiluvchi kanallar/chatlar:\n` +
-      `${
-        config.joinChannels.length
-          ? config.joinChannels
-            .map((e) => `${e.title} (<code>${e.id}</code>)`)
-            .join('\n')
-          : '🚫 Hozircha hech qanday kanal yoki chat mavjud emas.'
-      }`,
+      `Список каналов/чатов на принятие заявок обновлен.\n
+Текущий список каналов/чатов на принятие заявок: ${config.joinChannels
+        .map((e) => `${e.title} (<code>${e.id}</code>)`)
+        .join(', ')}`,
       {
         ...admin.backKeyboard,
-        disable_web_page_preview: true,
-      },
+        disable_web_page_preview: true
+      }
     )
   }
 }

@@ -1,8 +1,11 @@
-const { Markup } = require('telegraf')
+const Markup = require('telegraf/markup')
 
 module.exports = (ctx) => {
-  return Markup.keyboard([
-    ['📜 Buyurtmalar', '⚙️ Sozlamalar'],
-    ['ℹ️ Yordam', '📞 Kontakt'],
-  ]).resize()
+  const keyboard = [
+    [ctx.i18n.t('start.keys.solve')],
+    [ctx.i18n.t('start.keys.cabinet'), ctx.i18n.t('start.keys.help')],
+    [ctx.i18n.t('start.keys.partner')]
+  ]
+
+  return Markup.keyboard(keyboard).resize()
 }

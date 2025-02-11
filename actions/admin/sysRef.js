@@ -1,14 +1,14 @@
 const Ref = require('../../models/ref')
 const User = require('../../models/user')
-const Markup = require('telegraf/markup')
 
 const dateConfig = {
   year: 'numeric',
   month: 'numeric',
   day: 'numeric',
   hour: 'numeric',
-  minute: 'numeric',
+  minute: 'numeric'
 }
+const Markup = require('telegraf/markup')
 
 const defaultShift = 20
 
@@ -17,6 +17,7 @@ module.exports = async (ctx) => {
 
   if (ctx.message?.text && ctx.state[1] === 'price') {
     ctx.user.state = null
+
     await Ref.updateOne({ name: ctx.state[0] }, { price: ctx.message.text })
   }
 
@@ -27,59 +28,72 @@ module.exports = async (ctx) => {
       ctx.user.state = `admin_sysRef_${ctx.state[0]}_price`
 
       return ctx.editMessageText(
-        '💰 Narxni kiriting:',
+        'Введите цену.',
         Markup.inlineKeyboard([
-          [Markup.callbackButton('🔙 Orqaga', `admin_sysRef_${ctx.state[0]}`)],
-        ]).extra({ parse_mode: 'HTML' }),
+          [Markup.callbackButton('‹ Назад', `admin_sysRef_${ctx.state[0]}`)]
+        ]).extra({ parse_mode: 'HTML' })
       )
     }
 
     const [result, alive, subscribed, deposited] = await Promise.all([
       Ref.findOne({ name: ctx.state[0] }),
+
       User.countDocuments({ from: `ref-${ctx.state[0]}`, alive: true }),
+
       User.countDocuments({ from: `ref-${ctx.state[0]}`, subscribed: true }),
-      User.countDocuments({ from: `ref-${ctx.state[0]}`, deposit: { $gt: 0 } }),
+
+      User.countDocuments({ from: `ref-${ctx.state[0]}`, deposit: { $gt: 0 } })
     ])
 
     return ctx[ctx.message ? 'reply' : 'editMessageText'](
       `
-📊 **Statistika:**
-🔗 Havoladan foydalanganlar: ${result.count.format(0)}
-🔎 Unikal o‘tishlar: ${result.uniqueCount.format(0)} (${Math.round(
-        (result.uniqueCount / result.count) * 100,
-      )}%)
-🆕 Yangi foydalanuvchilar: ${result.newCount.format(0)} (${Math.round(
-        (result.newCount / result.uniqueCount) * 100,
-      )}%)
-✅ Obuna bo‘lganlar: ${subscribed.format(0)} (${Math.round(
-        (subscribed / result.newCount) * 100,
-      )}%)
-💰 To‘lov qilganlar: ${deposited.format(0)} (${Math.round(
-        (deposited / result.newCount) * 100,
-      )}%)
-👤 Aktiv foydalanuvchilar: ${alive.format(0)} (${Math.round(
-        (alive / result.newCount) * 100,
-      )}%)
+Всего переходов: ${result.count.format(0)} ${
+        result.price ? `(${(result.price / result.count).format(1)} р.ед)` : ''
+      }
+Уникальных переходов: ${result.uniqueCount.format(0)} (${Math.round(
+        (result.uniqueCount / result.count) * 100
+      )}%) ${
+        result.price
+          ? `${(result.price / result.uniqueCount).format(1)} р.ед`
+          : ''
+      }
+Новых пользователей: ${result.newCount.format(0)} (${Math.round(
+        (result.newCount / result.uniqueCount) * 100
+      )}%) ${
+        result.price ? `${(result.price / result.newCount).format(1)} р.ед` : ''
+      }
+Прошедших ОП: ${subscribed.format(0)} (${Math.round(
+        (subscribed / result.newCount) * 100
+      )}%)  ${
+        result.price ? `${(result.price / subscribed).format(1)} р.ед` : ''
+      }
+Купивших подписку: ${deposited.format(0)} (${Math.round(
+        (deposited / result.newCount) * 100
+      )}%)  ${
+        result.price ? `${(result.price / deposited).format(1)} р.ед` : ''
+      }
+Живых пользователей: ${alive.format(0)} (${Math.round(
+        (alive / result.newCount) * 100
+      )}%)  ${result.price ? `${(result.price / alive).format(1)} р.ед` : ''}
+${result.price ? `Стоимость: ${result.price.format(1)} р.ед\n` : ''}
+Первый переход: ${new Date(result.first).toLocaleString('ru', dateConfig)}
+Последний переход: ${new Date(result.last).toLocaleString('ru', dateConfig)}
 
-🕰 **Birinchi o‘tish:** ${new Date(result.first).toLocaleString(
-        'uz',
-        dateConfig,
-      )}
-🕰 **Oxirgi o‘tish:** ${new Date(result.last).toLocaleString(
-        'uz',
-        dateConfig,
-      )}
-
-🔗 **Havola:** [T.me/${process.env.BOT_USERNAME}?start=ref-${result.name}](https://t.me/${process.env.BOT_USERNAME}?start=ref-${result.name})
+Ссылка: https://t.me/${process.env.BOT_USERNAME}?start=ref-${result.name}
 `,
       Markup.inlineKeyboard([
-        [Markup.callbackButton('💰 Narxni o‘zgartirish', `admin_sysRef_${result.name}_price`)],
-        [Markup.callbackButton('🔄 Yangilash', `admin_sysRef_${result.name}`)],
-        [Markup.callbackButton('🔙 Orqaga', 'admin_sysRef')],
+        [
+          Markup.callbackButton(
+            'Стоимость',
+            `admin_sysRef_${result.name}_price`
+          )
+        ],
+        [Markup.callbackButton('🔄 Обновить', `admin_sysRef_${result.name}`)],
+        [Markup.callbackButton('‹ Назад', 'admin_sysRef')]
       ]).extra({
-        parse_mode: 'Markdown',
-        disable_web_page_preview: true,
-      }),
+        parse_mode: 'HTML',
+        disable_web_page_preview: true
+      })
     )
   }
 
@@ -88,51 +102,58 @@ module.exports = async (ctx) => {
 
   if (!count) {
     return ctx.editMessageText(
-      `⚠️ Hozircha referal havolalar mavjud emas.\n\n💡 Havola yaratish uchun quyidagi formatdan foydalaning:\n\`https://t.me/${process.env.BOT_USERNAME}?start=ref-KOD\`\nBu havola orqali foydalanuvchilar tizimga qo‘shiladi.`,
+      `Реферальных ссылок еще не существует.\n
+<code>https://t.me/${process.env.BOT_USERNAME}?start=ref-</code>code, переходя по такой ссылке пользователь автоматически учитывается в списке.
+code - любой код для отличия ссылки от других ссылок`,
       Markup.inlineKeyboard([
-        Markup.callbackButton('🔙 Orqaga', 'admin_back'),
+        Markup.callbackButton('‹ Назад', 'admin_back')
       ]).extra({
-        parse_mode: 'Markdown',
-        disable_web_page_preview: true,
-      }),
+        parse_mode: 'HTML',
+        disable_web_page_preview: true
+      })
     )
   }
 
-  if (shift < 0 || shift >= count) return ctx.answerCbQuery('❌ Boshqa ma’lumot yo‘q!', true)
+  if (shift < 0 || shift >= count) return ctx.answerCbQuery('Нельзя', true)
   await ctx.answerCbQuery()
 
-  const results = await Ref.find().skip(shift).limit(defaultShift).sort({ _id: -1 })
+  const results = await Ref.find()
+    .skip(shift)
+    .limit(defaultShift)
+    .sort({ _id: -1 })
 
   const content = results.map(
-    (result) =>
-      `🔹 **${result.name}**: ${result.count} / ${result.uniqueCount}`,
+    (result) => `<b>${result.name}</b>: ${result.count} / ${result.uniqueCount}`
   )
-
   const keyboard = results.map((result) =>
-    Markup.callbackButton(`${result.name} (${result.count})`, `admin_sysRef_${result.name}`),
+    Markup.callbackButton(
+      `${result.name} ${result.count}`,
+      `admin_sysRef_${result.name}`
+    )
   )
 
   return ctx.editMessageText(
     `
-📋 **Referal havolalar:**
-\`https://t.me/${process.env.BOT_USERNAME}?start=ref-\`KOD
+<code>https://t.me/${process.env.BOT_USERNAME}?start=ref-</code>code
 
-${content.join('\n')}
-`,
+${content.join('\n')}`,
     {
-      parse_mode: 'Markdown',
+      parse_mode: 'HTML',
       reply_markup: {
         inline_keyboard: Markup.inlineKeyboard(keyboard, {
-          columns: 2,
+          columns: 2
         }).inline_keyboard.concat([
           [
             Markup.callbackButton('◀️', `admin_sysRef_${shift - defaultShift}`),
-            Markup.callbackButton(`${shift + results.length}/${count} 🔄`, `admin_sysRef_${shift}`),
-            Markup.callbackButton('▶️', `admin_sysRef_${shift + defaultShift}`),
+            Markup.callbackButton(
+              `${shift + results.length}/${count} 🔄`,
+              `admin_sysRef_${shift}`
+            ),
+            Markup.callbackButton('▶️', `admin_sysRef_${shift + defaultShift}`)
           ],
-          [Markup.callbackButton('🔙 Orqaga', 'admin_back')],
-        ]),
-      },
-    },
+          [Markup.callbackButton('‹ Назад', 'admin_back')]
+        ])
+      }
+    }
   )
 }

@@ -1,18 +1,16 @@
-const { Markup } = require('telegraf')
-const { ObjectId } = require('mongodb')
-
+const Markup = require('telegraf/markup')
 const dateConfig = {
   year: 'numeric',
   month: 'numeric',
   day: 'numeric',
   hour: 'numeric',
-  minute: 'numeric',
+  minute: 'numeric'
 }
-
+const { ObjectId } = require('mongodb')
 const statuses = {
-  notStarted: '🛠 Ko‘rishlar hali boshlanmagan',
-  doing: '🕒 Ko‘rishlar davom etmoqda',
-  ended: '📬 Ko‘rishlar tugallandi',
+  notStarted: '🛠 Просмотры еще не начаты',
+  doing: '🕒 Просмотры выполняются',
+  ended: '📬 Просмотры завершены'
 }
 
 module.exports = async (ctx) => {
@@ -22,25 +20,26 @@ module.exports = async (ctx) => {
   else if (isNaN(ctx.state[0])) {
     a =
       (await ctx.View.countDocuments({
-        _id: { $gte: ObjectId(ctx.state[0]) },
+        _id: { $gte: ObjectId(ctx.state[0]) }
       })) - 1
   } else a = Number(ctx.state[0])
 
-  if (a < 0) return ctx.answerCbQuery('⛔️ Chegara!')
+  if (a < 0) return ctx.answerCbQuery('Нельзя', true)
 
   const count = await ctx.View.countDocuments()
-  if (a !== 0 && a + 1 > count) return ctx.answerCbQuery('⛔️ Chegara!')
+  if (a !== 0 && a + 1 > count) return ctx.answerCbQuery('Нельзя', true)
 
   await ctx.answerCbQuery()
+
   ctx.user.state = null
 
   if (count === 0) {
-    return ctx.editMessageText('⚠️ Ko‘rishlar mavjud emas.', {
+    return ctx.editMessageText('Нет просмотров', {
       reply_markup: Markup.inlineKeyboard([
-        [Markup.callbackButton('➕ Qo‘shish', 'admin_view_add')],
-        [Markup.callbackButton('🔙 Ortga', 'admin_back')],
+        [Markup.callbackButton('Добавить', 'admin_view_add')],
+        [Markup.callbackButton('‹ Назад', 'admin_back')]
       ]),
-      parse_mode: 'HTML',
+      parse_mode: 'HTML'
     })
   } else {
     await ctx.deleteMessage()
@@ -60,75 +59,75 @@ module.exports = async (ctx) => {
       [
         Markup.callbackButton('◀️', `admin_view_id_${a - 1}`),
         Markup.callbackButton(`${a + 1}/${count} 🔄`, `admin_view_id_${a}`),
-        Markup.callbackButton('▶️', `admin_view_id_${a + 1}`),
+        Markup.callbackButton('▶️', `admin_view_id_${a + 1}`)
       ],
       [
         Markup.callbackButton(
-          `👉 ${statuses[result.status]} 👈`,
-          `admin_view_id_${a}_${result._id}`,
-        ),
-      ],
+          `👉${statuses[result.status]}👈`,
+          `admin_view_id_${a}_${result._id}`
+        )
+      ]
     ]
 
     if (result.status === 'notStarted') {
       extraKeyboard = extraKeyboard.concat([
         [
           Markup.callbackButton(
-            `🔘 Tugmalar ${result.keyboard.length ? '✅' : '❌'}`,
-            `admin_view_keyboard_${result._id}`,
+            `🔘 Кнопки ${result.keyboard.length ? '✅' : '❌'}`,
+            `admin_view_keyboard_${result._id}`
           ),
-          Markup.callbackButton('🗑 O‘chirish', `admin_view_keyboard_${result._id}_del`),
+          Markup.callbackButton('🧹', `admin_view_keyboard_${result._id}_del`)
         ],
         [
           Markup.callbackButton(
-            `🕓 Boshlanish vaqti ${
+            `🕓 Начало ${
               result.startDate
-                ? new Date(result.startDate).toLocaleString('uz', dateConfig)
+                ? new Date(result.startDate).toLocaleString('ru', dateConfig)
                 : '❌'
             }`,
-            `admin_view_startDate_${result._id}`,
+            `admin_view_startDate_${result._id}`
           ),
-          Markup.callbackButton('🗑 O‘chirish', `admin_view_startDate_${result._id}_del`),
+          Markup.callbackButton('🧹', `admin_view_startDate_${result._id}_del`)
         ],
         [
           Markup.callbackButton(
-            `🕤 Tugash vaqti ${
+            `🕤 Окончание ${
               result.endDate
-                ? new Date(result.endDate).toLocaleString('uz', dateConfig)
+                ? new Date(result.endDate).toLocaleString('ru', dateConfig)
                 : '❌'
             }`,
-            `admin_view_endDate_${result._id}`,
+            `admin_view_endDate_${result._id}_end`
           ),
-          Markup.callbackButton('🗑 O‘chirish', `admin_view_endDate_${result._id}_del`),
+          Markup.callbackButton('🧹', `admin_view_endDate_${result._id}_del`)
         ],
         [
           Markup.callbackButton(
-            `🫂 Maksimal soni ${result.quantity === 0 ? '♾️' : result.quantity}`,
-            `admin_view_quantity_${result._id}`,
+            `🫂 Макс кол-во ${result.quantity === 0 ? '♾️' : result.quantity}`,
+            `admin_view_quantity_${result._id}`
           ),
-          Markup.callbackButton('🗑 O‘chirish', `admin_view_quantity_${result._id}_del`),
+          Markup.callbackButton('🧹', `admin_view_quantity_${result._id}_del`)
         ],
         [
           Markup.callbackButton(
-            `🏳️ Til ${result.lang === null ? 'Barcha' : result.lang}`,
-            `admin_view_lang_${result._id}`,
+            `🏳️ Язык ${result.lang === null ? 'все' : result.lang}`,
+            `admin_view_lang_${result._id}`
           ),
-          Markup.callbackButton('🗑 O‘chirish', `admin_view_lang_${result._id}_del`),
+          Markup.callbackButton('🧹', `admin_view_lang_${result._id}_del`)
         ],
         [
           Markup.callbackButton(
-            `🌐 Preview ${result.preview ? '✅' : '❌'}`,
-            `admin_view_preview_${result._id}`,
+            `🌐 Превью ${result.preview ? '✅' : '❌'}`,
+            `admin_view_preview_${result._id}`
           ),
           Markup.callbackButton(
-            `✉️ Unikal ${result.unique ? '✅' : '❌'}`,
-            `admin_view_unique_${result._id}`,
+            `✉️ Уникальные ${result.unique ? '✅' : '❌'}`,
+            `admin_view_unique_${result._id}`
           ),
           Markup.callbackButton(
-            '📃 Postni o‘zgartirish',
-            `admin_view_editPost_${result._id}`,
-          ),
-        ],
+            '📃 Изменить пост',
+            `admin_view_editPost_${result._id}`
+          )
+        ]
       ])
     }
 
@@ -136,30 +135,30 @@ module.exports = async (ctx) => {
       extraKeyboard = extraKeyboard.concat([
         [
           Markup.callbackButton(
-            `👁 Ko‘rishlar soni: ${result.views}`,
-            'admin_view_none',
-          ),
-        ],
+            `👁 Просмотров ${result.views}`,
+            'admin_view_none'
+          )
+        ]
       ])
     }
 
     extraKeyboard = extraKeyboard.concat([
       [
-        Markup.switchToChatButton('✈️ Ulashish', `view_${result._id}`),
-        Markup.callbackButton('🗑 O‘chirish', `admin_view_delete_${result._id}`),
+        Markup.switchToChatButton('✈️ Поделиться', `view_${result._id}`),
+        Markup.callbackButton('🗑 Удалить', `admin_view_delete_${result._id}`)
       ],
       [
-        Markup.callbackButton('➕ Ko‘rish qo‘shish', 'admin_view_add'),
-        Markup.callbackButton('🔙 Ortga', 'admin_back'),
-      ],
+        Markup.callbackButton('Добавить просмотры', 'admin_view_add'),
+        Markup.callbackButton('‹ Назад', 'admin_back')
+      ]
     ])
-
     const keyboard = result.keyboard.concat(extraKeyboard)
+
     delete result.message.chat
 
     return ctx.telegram.sendCopy(ctx.from.id, result.message, {
       reply_markup: Markup.inlineKeyboard(keyboard),
-      disable_web_page_preview: !result.preview,
+      disable_web_page_preview: !result.preview
     })
   }
 }
