@@ -1,3 +1,4 @@
+
 node_modules
 #.env
 .git
@@ -12,3 +13,4 @@ package-lock.json
 ./package-lock.json
 .idea
 /.idea
+idea
