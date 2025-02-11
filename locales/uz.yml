@@ -32,12 +32,12 @@ solve:
 
     ‼️ <b><i>Hamda bir mutaxassislikga yo'naltirilgan misollarni ham yecha olaman!</i></b>
 
-    📂 <b>Qoidalar bilan tanishib chiqing: - </b><a href="https://t.me/misolai_bot"><b>Aqlli uka qobiliyatlari!</b></a>
+    📂 <b>Qoidalar bilan tanishib chiqing: - </b><a href="https://t.me/misolai_bot"><b>Misol AI qobiliyatlari!</b></a>
   key: ✅ Tanishib chiqdim
   text1: |
     <b>🗣️ Man tekst hamda rasm orqali ham misol yecha olaman! </b>
 
-    📖 <b>Maqolani o'qish - </b><a href="https://t.me/misolai_bot">Aqlli uka qobiliyatlari!</a>
+    📖 <b>Maqolani o'qish - </b><a href="https://t.me/misolai_bot">Misol AI qobiliyatlari!</a>
 
     <i>O'zingizga qulay uslubni tanlang:</i>
   keys:
@@ -149,7 +149,7 @@ partner:
 back: ← Ortga
 error: Xatolik yuz berdi, keyinroq urunib koring.\n\n<code>${error}</code>
 promptPrefix: |
-  Sen "Aqlli uka" sun'iy intellektisan, har qanday qiyinlikdagi misollarni yechishga qodirsan
+  Sen "Misol AI" sun'iy intellektisan, har qanday qiyinlikdagi misollarni yechishga qodirsan
   Bugungi sana: ${date}
 
   Savol:
