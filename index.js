@@ -22,8 +22,6 @@ const bot = new Telegraf(process.env.BOT_TOKEN, { handlerTimeout: 1000 });
 
 bot.catch(require('./actions/error'))
 
-const i18n = require('./helpers/i18n')
-bot.use(i18n.middleware())
 
 bot.use(require('telegraf-ratelimit')({ window: 3000, limit: 3 }));
 
@@ -71,4 +69,4 @@ bot.launch(
   console.log(await bot.telegram.getMe())
 })()
 
-require('./helpers/scheduler')(bot, i18n)
+require('./helpers/scheduler')(bot)
