@@ -1,5 +1,5 @@
 name: 🇺🇿 O'zbek tili
-article: https://t.me/misolai
+article: https://t.me/misolai_bot
 start:
   text: |
     👋 Salom! Men - sun'iy intellektman, <b>misollarni yechish uchun yaratilinganman.</b>
@@ -32,12 +32,12 @@ solve:
 
     ‼️ <b><i>Shuningdek, ixtisoslashgan fanlar bo‘yicha ham misollarni yecha olaman!</i></b>
 
-    📂 <b>Qoidalar bilan tanishib chiqing: - </b><a href="https://t.me/misolai"><b>MisolAI qobiliyatlari!</b></a>
+    📂 <b>Qoidalar bilan tanishib chiqing: - </b><a href="https://t.me/misolai_bot"><b>misolai_bot qobiliyatlari!</b></a>
   key: ✅ Tanishib chiqdim
   text1: |
     <b>🗣️ Men tekst hamda rasm orqali ham misol yecha olaman! </b>
 
-    📖 <b>Maqolani o'qish - </b><a href="https://t.me/misolai">MisolAI qobiliyatlari!</a>
+    📖 <b>Maqolani o'qish - </b><a href="https://t.me/misolai_bot">misolai_bot qobiliyatlari!</a>
 
     <i>O'zingizga qulay uslubni tanlang:</i>
   keys:
@@ -78,15 +78,15 @@ vip:
   success: Obuna ${date} kungacha muvaffaqiyatli faollashtirildi.
 help:
   text: |
-    Bot bilan ishlash qo‘llanmalari shu kanalda: @misolai
+    Bot bilan ishlash qo‘llanmalari shu kanalda: @misolai_bot
   key:
     text: ☎️ Texnik yordam
-    url: t.me/misolai_yordam
+    url: t.me/misolai_bot_yordam
 partner:
   text: |
     🤝 <b>Sheriklik dasturi</b>
 
-    <a href="https://t.me/misolai">📚 Sheriklik dasturi bo‘yicha qo‘llanma!</a>
+    <a href="https://t.me/misolai_bot">📚 Sheriklik dasturi bo‘yicha qo‘llanma!</a>
 
     🏆 Referal (sheriklik) dasturidan foyda - taklif qilgan odamlaringizning obuna to‘lovidan 40%.
 
@@ -112,11 +112,11 @@ partner:
       ⚙️ <b>UPD: Kelajakda bu funksiya avtomatlashtiriladi</b>
     key:
       text: 👨‍💻 Menejer bilan bog‘lanmoq
-      url: t.me/misolai_yordam
+      url: t.me/misolai_bot_yordam
 back: ← Ortga
 error: Xatolik yuz berdi, keyinroq urinib ko‘ring.\n\n<code>${error}</code>
 promptPrefix: |
-  Sen "MisolAI" sun'iy intellektisan, har qanday qiyinlikdagi misollarni yechishga qodirsan.
+  Sen "misolai_bot" sun'iy intellektisan, har qanday qiyinlikdagi misollarni yechishga qodirsan.
   Bugungi sana: ${date}
 
   Savol:
