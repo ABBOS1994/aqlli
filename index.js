@@ -1,9 +1,6 @@
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
 const path = require('path')
 require('dotenv').config({ path: path.resolve('.env') })
 
-// eslint-disable-next-line no-extend-native
 Number.prototype.format = function (n, x) {
   const re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')'
   return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$& ')
@@ -20,14 +17,14 @@ const allowedUpdates = [
   'chat_join_request'
 ]
 
-const bot = new Telegraf(process.env.BOT_TOKEN, { handlerTimeout: 1 })
+const bot = new Telegraf(process.env.BOT_TOKEN)
 
 bot.catch(require('./actions/error'))
 
 const I18n = require('telegraf-i18n')
 const i18n = new I18n({
   directory: 'locales',
-  defaultLanguage: 'ru',
+  defaultLanguage: 'uz',
   defaultLanguageOnMissing: true
 })
 bot.use(i18n.middleware())
@@ -82,11 +79,13 @@ bot.launch(
 )
 
 bot.telegram.getWebhookInfo().then((webhookInfo) => {
-  console.log(
-    `✅ Bot is up and running\n${JSON.stringify(webhookInfo, null, ' ')}`
-  )
+  // console.log(
+  //   `✅ Bot is up and running\n${JSON.stringify(webhookInfo, null, ' ')}`
+  // )
 })
-bot.telegram.getMe().then((info) => console.log(info))
+bot.telegram.getMe().then((info) => {
+  /* console.log(info) */
+})
 
 const updateStat = require('./helpers/updateStat')
 const botStat = require('./helpers/botStat')
