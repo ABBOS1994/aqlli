@@ -20,8 +20,8 @@ module.exports = async (ctx) => {
       ctx.state[1] === 'stop'
         ? 'остановлена'
         : ctx.state[1] === 'pause'
-        ? 'приостановлена'
-        : 'возобновлена'
+          ? 'приостановлена'
+          : 'возобновлена'
     }`,
     {
       reply_markup: Markup.inlineKeyboard([

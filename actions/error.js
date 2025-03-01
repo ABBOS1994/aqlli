@@ -127,10 +127,10 @@ module.exports = async (err, ctx) => {
         'noData'
       } ${ctx.user?.state || 'noState'}
     \n<code>${convertChars(err.stack)}</code>\n${
-        (err.on &&
-          `<code>${JSON.stringify(convertChars(err.on), null, 2)}</code>`) ||
-        'noStack'
-      }`,
+      (err.on &&
+        `<code>${JSON.stringify(convertChars(err.on), null, 2)}</code>`) ||
+      'noStack'
+    }`,
       { parse_mode: 'HTML' }
     )
     .catch((error) => {

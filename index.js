@@ -1,27 +1,27 @@
 const path = require('path')
 require('dotenv').config({ path: path.resolve('.env') })
 
-Number.prototype.format = function (n, x) {
-  const re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')'
-  return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$& ')
-}
+const { Telegraf } = require('telegraf')
+const I18n = require('telegraf-i18n')
+const rateLimit = require('telegraf-ratelimit')
+const schedule = require('node-schedule')
+const { randomInt } = require('crypto')
 
 require('./models')
 
-const { Telegraf } = require('telegraf')
-const allowedUpdates = [
-  'message',
-  'inline_query',
-  'callback_query',
-  'my_chat_member',
-  'chat_join_request'
-]
+// 🛠 Number format extension
+Number.prototype.format = function (n = 0, x = 3) {
+  return this.toFixed(n).replace(
+    new RegExp(`\d(?=(\d{${x}})+(?:\.|$))`, 'g'),
+    '$& '
+  )
+}
 
+// 📌 Bot konfiguratsiyasi
 const bot = new Telegraf(process.env.BOT_TOKEN)
-
 bot.catch(require('./actions/error'))
 
-const I18n = require('telegraf-i18n')
+// 🌍 Til sozlamalari
 const i18n = new I18n({
   directory: 'locales',
   defaultLanguage: 'uz',
@@ -29,96 +29,106 @@ const i18n = new I18n({
 })
 bot.use(i18n.middleware())
 
-const rateLimit = require('telegraf-ratelimit')
-const limitConfig = {
-  window: 3000,
-  limit: 3
-}
-bot.use(rateLimit(limitConfig))
+// 🚦 Rate limiter
+bot.use(rateLimit({ window: 3000, limit: 3 }))
 
-bot.on('chat_join_request', require('./actions/chatJoin'))
-bot.on('my_chat_member', require('./actions/myChatMember'))
-
+// 📩 Middleware lar
 bot.use(require('./middlewares/attachUser'))
-
 bot.use(require('./middlewares/logging'))
-
 bot.on('text', require('./middlewares/sysRefs'))
-
 bot.on('message', require('./middlewares/subscription'))
 
-bot.hears(I18n.match('start.keys.cabinet'), require('./actions/cabinet'))
-bot.hears(I18n.match('start.keys.help'), require('./actions/help'))
-bot.hears(I18n.match('start.keys.solve'), require('./actions/solve'))
-bot.hears(I18n.match('start.keys.partner'), require('./actions/partner'))
-
+// 🎯 Inline va Callback query lar
+bot.on('callback_query', require('./routers/callbackQuery'))
+bot.on('inline_query', require('./routers/inlineQuery'))
 bot.on('message', require('./routers/message'))
 
-bot.on('callback_query', require('./routers/callbackQuery'))
-
-bot.on('inline_query', require('./routers/inlineQuery'))
-
-bot.launch(
-  process.env.USE_WEBHOOK === 'true'
-    ? {
-        webhook: {
-          domain: `https://${process.env.WEBHOOK_DOMAIN}`,
-          hookPath: `/${process.env.WEBHOOK_PATH}/${process.env.BOT_TOKEN}`,
-          port: process.env.WEBHOOK_PORT,
-          extra: {
-            max_connections: 100,
-            allowed_updates: allowedUpdates
-          }
-        }
-      }
-    : {
-        polling: {
-          allowedUpdates
-        }
-      }
-)
-
-bot.telegram.getWebhookInfo().then((webhookInfo) => {
-  // console.log(
-  //   `✅ Bot is up and running\n${JSON.stringify(webhookInfo, null, ' ')}`
-  // )
-})
-bot.telegram.getMe().then((info) => {
-  /* console.log(info) */
+// 🎮 Tugmalar va buyruqlar
+const commands = {
+  'start.keys.cabinet': './actions/cabinet',
+  'start.keys.help': './actions/help',
+  'start.keys.solve': './actions/solve',
+  'start.keys.partner': './actions/partner'
+}
+Object.entries(commands).forEach(([key, path]) => {
+  bot.hears(I18n.match(key), require(path))
 })
 
-const updateStat = require('./helpers/updateStat')
-const botStat = require('./helpers/botStat')
-
-const schedule = require('node-schedule')
-
-const Mail = require('./models/mail')
-
-const lauchWorker = require('./actions/admin/mail/lauchWorker')
-const checkVip = require('./actions/checkVip')
-
-function imitateAsync() {}
+// 📲 Botni ishga tushirish
 ;(async () => {
-  const result = await Mail.findOne({ status: 'doing' })
-  if (result) lauchWorker(result._id)
+  try {
+    await bot.launch(
+      process.env.USE_WEBHOOK === 'true'
+        ? {
+            webhook: {
+              domain: `https://${process.env.WEBHOOK_DOMAIN}`,
+              hookPath: `/${process.env.WEBHOOK_PATH}/${process.env.BOT_TOKEN}`,
+              port: process.env.WEBHOOK_PORT,
+              extra: {
+                max_connections: 100,
+                allowed_updates: [
+                  'message',
+                  'inline_query',
+                  'callback_query',
+                  'my_chat_member',
+                  'chat_join_request'
+                ]
+              }
+            }
+          }
+        : {
+            polling: {
+              allowedUpdates: [
+                'message',
+                'inline_query',
+                'callback_query',
+                'my_chat_member',
+                'chat_join_request'
+              ]
+            }
+          }
+    )
+    console.log(`${(await bot.telegram.getMe()).username} Bot ishga tushdi! ✅`)
+  } catch (error) {
+    console.error('❌ Botni ishga tushirishda xatolik:', error)
+  }
 })()
 
-schedule.scheduleJob('* * * * *', async () => {
-  const result = await Mail.findOne({
-    status: 'notStarted',
-    startDate: { $exists: true, $lte: new Date() }
-  })
-  if (result) lauchWorker(result._id)
-
-  await checkVip(bot, i18n)
-
-  await require('./actions/checkPayme')(bot, i18n)
+// 📊 Statistikani yangilash
+const updateStat = require('./helpers/updateStat')
+const botStat = require('./helpers/botStat')
+schedule.scheduleJob(`0 ${randomInt(2, 6)} * * *`, async () => {
+  try {
+    await updateStat(bot)
+    await botStat()
+  } catch (err) {
+    console.error('❌ Statistika yangilanmadi:', err)
+  }
 })
 
-const { randomInt } = require('crypto')
+// 📬 Email xabarnomalari
+const Mail = require('./models/mail')
+const lauchWorker = require('./actions/admin/mail/lauchWorker')
+const checkVip = require('./actions/checkVip')
+;(async () => {
+  try {
+    const result = await Mail.findOne({ status: 'doing' })
+    if (result) lauchWorker(result._id)
+  } catch (err) {
+    console.error('❌ Mailni tekshirishda xatolik:', err)
+  }
+})()
 
-schedule.scheduleJob(`0 ${randomInt(2, 6)} * * *`, async () => {
-  await updateStat(bot)
-
-  await botStat()
+// 📅 Yangi xabarlar monitoringi
+schedule.scheduleJob('* * * * *', async () => {
+  try {
+    const result = await Mail.findOne({
+      status: 'notStarted',
+      startDate: { $exists: true, $lte: new Date() }
+    })
+    if (result) lauchWorker(result._id)
+    await checkVip(bot, i18n)
+  } catch (err) {
+    console.error('❌ Xatolik yuz berdi:', err)
+  }
 })

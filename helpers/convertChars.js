@@ -6,7 +6,7 @@ const convert = (str) => {
     '>': '&gt;',
     '&': '&amp;',
     '"': '&quot;',
-    '\'': '&#39;', // Xavfsizlik uchun bitta tirnoq ham almashtirildi
+    "'": '&#39;' // Xavfsizlik uchun bitta tirnoq ham almashtirildi
   }
 
   return str.replace(/[<>&"']/g, (char) => chars[char])

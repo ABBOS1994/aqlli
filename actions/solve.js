@@ -59,10 +59,7 @@ module.exports = async (ctx) => {
       ctx.user.acquainted
         ? [
             Markup.callbackButton(ctx.i18n.t('solve.keys.text'), 'solve_text'),
-            Markup.callbackButton(
-              ctx.i18n.t('solve.keys.image'),
-              'solve_image'
-            ),
+            Markup.callbackButton(ctx.i18n.t('solve.keys.image'), 'solve_image')
           ]
         : [Markup.callbackButton(ctx.i18n.t('solve.key'), 'solve_acquainted')],
       { columns: 1 }
