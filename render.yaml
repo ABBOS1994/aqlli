@@ -1,6 +1,6 @@
 # Exported from Render on 2025-03-01T19:55:59Z
 services:
-- type: web
+- type: worker
   name: aqlli
   runtime: node
   repo: https://gitlab.com/Abbos1994/aqlli
