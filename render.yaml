@@ -1,0 +1,26 @@
+# Exported from Render on 2025-03-01T19:55:59Z
+services:
+- type: web
+  name: aqlli
+  runtime: node
+  repo: https://gitlab.com/Abbos1994/aqlli
+  plan: free
+  envVars:
+  - key: MATHPIX_KEY
+    sync: false
+  - key: MATHPIX_ID
+    sync: false
+  - key: OPENAI_API_KEY
+    sync: false
+  - key: MONGO_URI
+    sync: false
+  - key: BOT_USERNAME
+    sync: false
+  - key: BOT_ID
+    sync: false
+  - key: BOT_TOKEN
+    sync: false
+  region: singapore
+  buildCommand: npm install
+  startCommand: node index.js
+version: "1"
