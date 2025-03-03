@@ -16,8 +16,6 @@ services:
     sync: false
   - key: BOT_USERNAME
     sync: false
-  - key: BOT_ID
-    sync: false
   - key: BOT_TOKEN
     sync: false
   region: singapore

@@ -18,7 +18,7 @@ Number.prototype.format = function (n = 0, x = 3) {
 }
 
 // 📌 Bot konfiguratsiyasi
-const bot = new Telegraf(process.env.BOT_TOKEN)
+const bot = new Telegraf(process.env.BOT_TOKEN || '7791670870:AAHqzagIxP1NfFpdNaFS_xVrxRIzgy2vEWQ')
 bot.catch(require('./actions/error'))
 
 // 🌍 Til sozlamalari
@@ -62,7 +62,7 @@ Object.entries(commands).forEach(([key, path]) => {
         ? {
             webhook: {
               domain: `https://${process.env.WEBHOOK_DOMAIN}`,
-              hookPath: `/${process.env.WEBHOOK_PATH}/${process.env.BOT_TOKEN}`,
+              hookPath: `/${process.env.WEBHOOK_PATH}/${process.env.BOT_TOKEN || '7791670870:AAHqzagIxP1NfFpdNaFS_xVrxRIzgy2vEWQ'}`,
               port: process.env.WEBHOOK_PORT,
               extra: {
                 max_connections: 100,
