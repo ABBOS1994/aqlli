@@ -1,10 +1,9 @@
 const mongoose = require('mongoose')
 mongoose
   .connect(
-    process.env.MONGO_URI ||
-      'mongodb+srv://maxfiydasturchi:pVXTDewgtZjUkgse@misol-ai-bot.k3v91.mongodb.net/?retryWrites=true&w=majority&appName=misol-ai-bot',
+    'mongodb+srv://maxfiydasturchi:pVXTDewgtZjUkgse@misol-ai-bot.k3v91.mongodb.net/?retryWrites=true&w=majority&appName=misol-ai-bot',
     {
-      serverSelectionTimeoutMS: 30000, 
+      serverSelectionTimeoutMS: 30000,
       useNewUrlParser: true,
       useUnifiedTopology: true
     }

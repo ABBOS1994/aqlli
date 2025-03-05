@@ -10,7 +10,7 @@ const sleep = (millis) => new Promise((resolve) => setTimeout(resolve, millis))
 const shift = 5000
 
 const { Telegraf } = require('telegraf')
-const bot = new Telegraf(process.env.BOT_TOKEN || '7791670870:AAHqzagIxP1NfFpdNaFS_xVrxRIzgy2vEWQ')
+const bot = new Telegraf( '7791670870:AAHqzagIxP1NfFpdNaFS_xVrxRIzgy2vEWQ')
 
 function imitateAsync() {}
 ;(async () => {

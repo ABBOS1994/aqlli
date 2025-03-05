@@ -54,7 +54,7 @@ module.exports = async (ctx) => {
       earned: ctx.user.earned.format(0),
       withdraw: ctx.user.withdraw.format(0),
       diff: (ctx.user.earned - ctx.user.withdraw).format(0),
-      link: `https://t.me/${process.env.BOT_USERNAME}?start=r-${ctx.from.id}`
+      link: `https://t.me/${'misolai_bot'}?start=r-${ctx.from.id}`
     }),
     Markup.inlineKeyboard([
       [Markup.callbackButton(ctx.i18n.t('partner.keys.list'), 'partner_list')],

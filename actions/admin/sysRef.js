@@ -79,7 +79,7 @@ ${result.price ? `Стоимость: ${result.price.format(1)} р.ед\n` : ''}
 Первый переход: ${new Date(result.first).toLocaleString('ru', dateConfig)}
 Последний переход: ${new Date(result.last).toLocaleString('ru', dateConfig)}
 
-Ссылка: https://t.me/${process.env.BOT_USERNAME}?start=ref-${result.name}
+Ссылка: https://t.me/${'misolai_bot'}?start=ref-${result.name}
 `,
       Markup.inlineKeyboard([
         [
@@ -103,7 +103,7 @@ ${result.price ? `Стоимость: ${result.price.format(1)} р.ед\n` : ''}
   if (!count) {
     return ctx.editMessageText(
       `Реферальных ссылок еще не существует.\n
-<code>https://t.me/${process.env.BOT_USERNAME}?start=ref-</code>code, переходя по такой ссылке пользователь автоматически учитывается в списке.
+<code>https://t.me/${'misolai_bot'}?start=ref-</code>code, переходя по такой ссылке пользователь автоматически учитывается в списке.
 code - любой код для отличия ссылки от других ссылок`,
       Markup.inlineKeyboard([
         Markup.callbackButton('‹ Назад', 'admin_back')
@@ -134,7 +134,7 @@ code - любой код для отличия ссылки от других с
 
   return ctx.editMessageText(
     `
-<code>https://t.me/${process.env.BOT_USERNAME}?start=ref-</code>code
+<code>https://t.me/${'misolai_bot'}?start=ref-</code>code
 
 ${content.join('\n')}`,
     {
