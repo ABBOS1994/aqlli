@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "nodemon app.js",
-    "start": "npx pm2 start pm2.config.js",
+    "start": "node app.js",
     "restart": "npx pm2 restart pm2.config.js",
     "format:check": "prettier --check .",
     "format:write": "prettier --write ."
