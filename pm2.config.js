@@ -5,7 +5,7 @@ module.exports = {
   apps: [
     {
       name: 'misolai',
-      script: 'index.js',
+      script: 'app.js',
       watch: true,
       ignore_watch: ['config.json', 'images', 'voices']
     }
