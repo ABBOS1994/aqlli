@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "node app.js",
+    "dev": "nodemon index.js",
+    "start": "npx pm2 start pm2.config.js",
     "restart": "npx pm2 restart pm2.config.js",
     "format:check": "prettier --check .",
     "format:write": "prettier --write ."
@@ -35,7 +35,7 @@
   },
   "name": "misolai_bot",
   "version": "2.1.1",
-  "main": "app.js",
+  "main": "index.js",
   "author": "maxfiydasturchi",
   "license": "ISC"
 }
