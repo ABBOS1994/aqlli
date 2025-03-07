@@ -7,6 +7,7 @@ module.exports = {
       name: 'misolai',
       script: 'index.js',
       watch: true,
+      instances: 1, // 1 yoki 2 qilishingiz mumkin
       ignore_watch: ['config.json', 'images', 'voices']
     }
   ]

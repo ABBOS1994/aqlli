@@ -1,6 +1,4 @@
-const path = require('path')
-require('dotenv').config({ path: path.resolve('.env') })
-
+require('dotenv').config()
 const { Telegraf } = require('telegraf')
 const I18n = require('telegraf-i18n')
 const rateLimit = require('telegraf-ratelimit')
