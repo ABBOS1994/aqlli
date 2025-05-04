@@ -16,6 +16,7 @@
     "chatgpt": "^5.2.5",
     "dotenv": "^16.4.7",
     "js-yaml": "^4.1.0",
+    "katex": "^0.16.22",
     "marked": "^15.0.7",
     "mongoose": "^8.11.0",
     "node-html-to-image": "^5.0.0",
@@ -23,10 +24,11 @@
     "node-tesseract-ocr": "^2.2.1",
     "openai": "^4.86.1",
     "pm2": "^5.4.3",
-    "puppeteer": "^24.3.0",
+    "puppeteer": "^24.7.2",
     "telegraf": "github:NMIFUN/telegraf",
     "telegraf-i18n": "^6.6.0",
     "telegraf-ratelimit": "^2.0.0",
+    "tmp": "^0.2.3",
     "xlsx-stream-writer": "^0.2.6"
   },
   "devDependencies": {

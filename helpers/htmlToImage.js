@@ -1,3 +1,4 @@
+//helpers/htmlToImage.js
 const puppeteer = require('puppeteer')
 
 let browser

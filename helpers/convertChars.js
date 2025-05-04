@@ -1,3 +1,4 @@
+//helpers/convertChars.js
 const convert = (str) => {
   if (!str) return str // Null, undefined yoki bo‘sh qiymat bo‘lsa, o‘zini qaytaradi
 
