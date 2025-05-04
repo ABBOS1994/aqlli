@@ -1,0 +1,7 @@
+BOT_TOKEN=7791670870:AAHqzagIxP1NfFpdNaFS_xVrxRIzgy2vEWQ
+BOT_ID=6054896486
+BOT_USERNAME=misolai_bot
+MONGO_URI=mongodb+srv://maxfiydasturchi:pVXTDewgtZjUkgse@misol-ai-bot.k3v91.mongodb.net/?retryWrites=true&w=majority&appName=misol-ai-bot
+OPENAI_API_KEY=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
+MATHPIX_ID=marketing_reshak_io_53d787_fa22fc
+MATHPIX_KEY=2bdd6a0df0233b111aea7208b426505d48f9a93506f77b8a802d23a6c41d14c6
