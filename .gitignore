@@ -3,3 +3,5 @@ node_modules
 .git
 .idea
 package-lock.json
+/.idea
+/package-look.json

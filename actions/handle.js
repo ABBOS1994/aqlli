@@ -1,6 +1,11 @@
 let ChatGPTAPI
 ;(async () => {
-  ChatGPTAPI = (await import('chatgpt')).ChatGPTAPI
+  try {
+    ChatGPTAPI = (await import('chatgpt')).ChatGPTAPI
+    console.log('ChatGPT API moduli muvaffaqiyatli yuklandi')
+  } catch (error) {
+    console.error('ChatGPT API modulini yuklashda xatolik:', error.message)
+  }
 })()
 
 const showView = require('./showView')
@@ -8,6 +13,21 @@ const showView = require('./showView')
 const sleep = (millis) => new Promise((resolve) => setTimeout(resolve, millis))
 
 const User = require('../models/user')
+
+// API kalitini tekshirish va validatsiya qilish
+const validateApiKey = (apiKey) => {
+  if (!apiKey) return false
+  
+  // OpenAI API kalitlari formatini tekshirish
+  const isValidFormat = /^(sk-[a-zA-Z0-9]{32,}|sk-proj-[a-zA-Z0-9-_]{32,})$/.test(apiKey)
+  
+  if (!isValidFormat) {
+    console.error('OpenAI API kaliti noto\'g\'ri formatda:', 
+                 apiKey.substring(0, 7) + '...' + apiKey.substring(apiKey.length - 4))
+  }
+  
+  return isValidFormat
+}
 
 const marked = require('marked')
 marked.use({
@@ -128,8 +148,20 @@ module.exports = async (ctx) => {
   await User.updateOne({ id: ctx.user.id }, { $inc: { requests: -1 } })
   ctx.user.requests -= 1
 
+  // API kalitini tekshirish
+  const openaiApiKey = process.env.OPENAI_API_KEY;
+  const isValidApiKey = validateApiKey(openaiApiKey);
+  
+  if (!isValidApiKey) {
+    console.error('OpenAI API kaliti noto\'g\'ri yoki yo\'q. Kalitni .env faylida tekshiring');
+    await editMessageText(ctx.i18n.t('error', { error: 'API kaliti xatoligi. Administrator bilan bog\'laning.' }));
+    await User.updateOne({ id: ctx.user.id }, { $inc: { requests: 1 } }); // Foydalanuvchiga so'rovni qaytarish
+    ctx.user.requests += 1;
+    return;
+  }
+  
   const api = new ChatGPTAPI({
-    apiKey: process.env.OPENAI_API_KEY
+    apiKey: openaiApiKey
   })
 
   const unofAPI = new ChatGPTAPI({
@@ -148,6 +180,8 @@ module.exports = async (ctx) => {
   }${text}`
   let result
   try {
+    // Norasmiy API orqali so'rov yuborish
+    console.log('Norasmiy API orqali so\'rov yuborilmoqda...')
     result = await unofAPI.sendMessage(question, {
       conversationId,
       parentMessageId,
@@ -169,10 +203,13 @@ module.exports = async (ctx) => {
         }
       }
     })
-  } catch (error) {
-    console.error(`Unofficial API`, error)
-
+    console.log('Norasmiy API so\'rovi muvaffaqiyatli bajarildi')
+  } catch (unofficialError) {
+    console.error(`Norasmiy API xatoligi:`, unofficialError.message || unofficialError)
+    
     try {
+      // Rasmiy OpenAI API orqali so'rov yuborish
+      console.log('Rasmiy OpenAI API orqali so\'rov yuborilmoqda...')
       result = await api.sendMessage(question, {
         conversationId,
         parentMessageId,
@@ -194,53 +231,88 @@ module.exports = async (ctx) => {
           }
         }
       })
-    } catch (error) {
-      console.error(`Official API`, error)
-
-      await User.updateOne({ id: ctx.user.id }, { $inc: { dailyUsage: -1 } })
-
-      return editMessageText(ctx.i18n.t('error', { error }))
+      console.log('Rasmiy OpenAI API so\'rovi muvaffaqiyatli bajarildi')
+    } catch (officialError) {
+      console.error(`Rasmiy API xatoligi:`, officialError.message || officialError)
+      
+      // API xatoligi turini tekshirish
+      let errorMessage = '';
+      if (officialError.message && officialError.message.includes('401')) {
+        errorMessage = 'API kalit xatoligi. Administrator bilan bog\'laning.';
+        console.error('401 xatolik: API kaliti noto\'g\'ri yoki yaroqsiz');
+      } else if (officialError.message && officialError.message.includes('429')) {
+        errorMessage = 'API so\'rovlar limiti tugadi. Keyinroq urinib ko\'ring.';
+      } else {
+        errorMessage = 'Xatolik yuz berdi. Keyinroq urinib ko\'ring.';
+      }
+  
+      // Foydalanuvchiga so'rovni qaytarish
+      await User.updateOne({ id: ctx.user.id }, { $inc: { requests: 1 } })
+      ctx.user.requests += 1
+  
+      return editMessageText(errorMessage)
     }
   }
 
-  const id = await axios.post(
-    `https://api.mathpix.com/v3/converter`,
-    {
-      mmd: result.text,
-      formats: { html: true }
-    },
-    {
-      headers: {
-        app_id: process.env.MATHPIX_ID,
-        app_key: process.env.MATHPIX_KEY
+  try {
+    // Natijani Mathpix orqali konvertatsiya qilish
+    const id = await axios.post(
+      `https://api.mathpix.com/v3/converter`,
+      {
+        mmd: result.text,
+        formats: { html: true }
+      },
+      {
+        headers: {
+          app_id: process.env.MATHPIX_ID,
+          app_key: process.env.MATHPIX_KEY
+        }
       }
-    }
-  )
-
-  await sleep(3000)
-
-  const html = await axios.get(
-    `https://api.mathpix.com/v3/converter/${id.data.conversion_id}.html`,
-    {
-      headers: {
-        app_id: process.env.MATHPIX_ID,
-        app_key: process.env.MATHPIX_KEY
+    )
+  
+    await sleep(3000)
+  
+    const html = await axios.get(
+      `https://api.mathpix.com/v3/converter/${id.data.conversion_id}.html`,
+      {
+        headers: {
+          app_id: process.env.MATHPIX_ID,
+          app_key: process.env.MATHPIX_KEY
+        }
       }
-    }
-  )
+    )
+  
+    const buffer = await htmlToImage(html.data)
+    
+    // Natijalarni yuborish
+    return Promise.all([
+      editMessageText(
+        `<a href='http://noting.com/${result.conversationId}|||${
+          result.parentMessageId
+        }'>‍</a>${parseText(result.text)}`
+      ),
+      ctx.replyWithPhoto({ source: buffer }),
+      showView(ctx),
+      ctx.user.requests >= 0
+        ? ctx.replyWithHTML(ctx.i18n.t('left', { n: ctx.user.requests }))
+        : undefined
+    ])
+  } catch (mathpixError) {
+    console.error('Mathpix konvertatsiya xatoligi:', mathpixError.message)
+    
+    // Rasm yaratish imkoni bo'lmasa, faqat matnni yuborish
+    return Promise.all([
+      editMessageText(
+        `<a href='http://noting.com/${result.conversationId}|||${
+          result.parentMessageId
+        }'>‍</a>${parseText(result.text)}`
+      ),
+      showView(ctx),
+      ctx.user.requests >= 0
+        ? ctx.replyWithHTML(ctx.i18n.t('left', { n: ctx.user.requests }))
+        : undefined
+    ])
+  }
 
-  const buffer = await htmlToImage(html.data)
-
-  return Promise.all([
-    editMessageText(
-      `<a href='http://noting.com/${result.conversationId}|||${
-        result.parentMessageId
-      }'>‍</a>${parseText(result.text)}`
-    ),
-    ctx.replyWithPhoto({ source: buffer }),
-    showView(ctx),
-    ctx.user.requests >= 0
-      ? ctx.replyWithHTML(ctx.i18n.t('left', { n: ctx.user.requests }))
-      : undefined
-  ])
+  // Bu qism yuqoridagi try-catch ichiga ko'chirildi
 }
