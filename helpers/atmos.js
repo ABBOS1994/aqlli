@@ -1,25 +1,15 @@
-//helpers/atmos.js
 const axios = require('axios')
-const crypto = require('crypto')
 const OAuth = require('./oauth')
 const https = require('https')
 
-/**
- * Atmos API bilan ishlash uchun yordamchi funksiyalar
- * Atmos.uz OAuth 1.0a bilan yangilangan
- */
 class AtmosAPI {
   constructor() {
-    // Atmos to'lov tizimi API manzillari
-    this.apiUrl = 'https://api.atmos.uz' // Rasmiy to'lov API manzili
+    this.partnerUrl = 'https://partner.atmos.uz'
+    this.storeId = process.env.ATMOS_STORE_ID
 
-    // Store/Merchant ID
-    this.storeId = '1961'
-
-    // OAuth 1.0a konfiguratsiyasi
     this.oauth = new OAuth(
-      'Vb7eMJzHros5E0vQIQtZL6U_ziAa', // Consumer key
-      'i701e_cJQCZ6OfBfETk7B_TguZoa' // Consumer secret
+      process.env.ATMOS_CONSUMER_KEY,
+      process.env.ATMOS_CONSUMER_SECRET
     )
 
     this.httpClient = axios.create({
@@ -41,7 +31,7 @@ class AtmosAPI {
   }
 
   getApiUrl(endpoint) {
-    return `${this.apiUrl}/api${endpoint}`
+    return `${this.partnerUrl}${endpoint.startsWith('/') ? '' : '/'}${endpoint}`
   }
 
   async makeApiRequest(method, endpoint, options = {}) {
@@ -65,7 +55,7 @@ class AtmosAPI {
           Authorization: authHeader,
           'Content-Type': 'application/json'
         },
-        params: method.toUpperCase() === 'GET' ? queryParams : {},
+        params: method.toUpperCase() === 'GET' ? queryParams : undefined,
         data: method.toUpperCase() !== 'GET' ? requestData : undefined
       })
 
@@ -92,7 +82,7 @@ class AtmosAPI {
       throw Object.assign(error, {
         details: {
           message: errorMessage,
-          code: error.code || 'UNKNOWN_ERROR',
+          code: error.code || 'UNKNOWN',
           statusCode: statusCode || 0,
           isTimeout: isConnectionError
         }
@@ -100,41 +90,9 @@ class AtmosAPI {
     }
   }
 
-  async createPayment(amount, description, returnUrl, orderId = null)
-  {
-    const paymentData = {
-      amount,
-      description,
-      return_url: returnUrl,
-      reference_id: this.generateReferenceId()
-    }
-    if (orderId) paymentData.order_id = orderId
-
-    try {
-      const response = await this.makeApiRequest('POST', '/payments/create', {
-        data: paymentData
-      })
-      console.log('qarash kere: ', response)
-
-      return response && response.payment_url
-        ? response
-        : {
-            ...response,
-            payment_url: null,
-            error: 'No payment_url returned by API'
-          }
-    } catch (error) {
-      return {
-        payment_url: null,
-        reference_id: paymentData.reference_id,
-        error: error.message || 'Unknown error'
-      }
-    }
-  }
-
   async getPaymentsHistory(from, to, limit = 10, offset = 0) {
     try {
-      const response = await this.makeApiRequest('GET', '/payments/history', {
+      const response = await this.makeApiRequest('GET', '/api/payments/history', {
         params: { from, to, limit, offset }
       })
       return response && response.payments ? response : { payments: [] }
@@ -147,22 +105,6 @@ class AtmosAPI {
         }
       }
     }
-  }
-
-  async checkPayment(paymentId) {
-    try {
-      return await this.makeApiRequest('POST', '/payments/check', {
-        data: { payment_id: paymentId }
-      })
-    } catch (error) {
-      return { status: 'unknown', error: error.message }
-    }
-  }
-
-  generateReferenceId() {
-    const timestamp = Date.now().toString()
-    const random = crypto.randomBytes(4).toString('hex')
-    return `${timestamp}-${random}`
   }
 }
 
