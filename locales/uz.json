@@ -1,0 +1,101 @@
+{
+  "name": "🇺🇿 O'zbek tili",
+  "article": "https://t.me/aqlli_uka",
+  "start": {
+    "text": "👋 Salom! Men - sun'iy intellektman, <b>misollarni yechish uchun yaratilinganman.</b>\n\n🤖 Man kimlar uchun mo'ljallanganman: <b>maktabda yoki institutda o'qidiganlar uchun, chunki har qanday masalada yordam bera olaman.</b>",
+    "keys": {
+      "solve": "🧠  Misol yechish",
+      "cabinet": "👨‍🎓 Shaxsiy kabinet",
+      "help": "❓ Bot qanday ishlaydi",
+      "partner": "🤝 Sheriklik dasturi"
+    }
+  },
+  "languageSet": "Til tanlandi",
+  "subscribe": {
+    "notif": "Siz obuna bo'lmagansiz!",
+    "channel": "Kanal",
+    "bot": "Bot",
+    "text": "Botdan foydalanish uchun kanalimizga obuna bo'ling 👇🏻",
+    "key": {
+      "check": "Tekshirish"
+    },
+    "success": "Siz kanal qo'shildingiz va botdan foydalanishingiz mumkun!"
+  },
+  "joinRequest": {
+    "text": "Arizangiz tasdiqlandi"
+  },
+  "solve": {
+    "text": "📩<b>Misolni yozuv yoki rasm formatida tashang va bir daqiqadan so'ng uning ba'tafsil yechimini oling!</b>\n\n📝<b><i>Savol berish namunalari:</i></b>\n– Algebradan misolni yechib beri (Misolni yozing).\n– Fizikadan misolni yeching (Misolni yozing).\n– (Mavzuni yozib) shu mavzu bo'yicha matn tuzib ber.\n\n‼️ <b><i>Hamda bir mutaxassislikga yo'naltirilgan misollarni ham yecha olaman!</i></b>\n\n📂 <b>Qoidalar bilan tanishib chiqing: - </b><a href=\"https://t.me/aqlli_uka\"><b>Aqlli uka qobiliyatlari!</b></a>",
+    "key": "✅ Tanishib chiqdim",
+    "text1": "<b>🗣️ Man tekst hamda rasm orqali ham misol yecha olaman! </b>\n\n📖 <b>Maqolani o'qish - </b><a href=\"https://t.me/aqlli_uka\">Aqlli uka qobiliyatlari!</a>\n\n<i>O'zingizga qulay uslubni tanlang:</i>",
+    "keys": {
+      "image": "Rasm orqali 📸",
+      "text": "Tekst orqali ✏️"
+    },
+    "solution": {
+      "text": "📝 <b>Savolingizni tekst formatida jo'nating!</b> <b>Iltimos har bir javobimni yaxshilab tekshiring!</b>\n\n<b>🧮 Символы для вычислений:</b>\n<code>∫</code> , <code>^</code>, <code>√</code>, <code>π</code>, <code>sin</code>, <code>cos</code>, <code>tg</code>, <code>ctg</code>, <code>log</code>\n\n📖Maqolani o'qish - <u>Tekst formatda savol berish namunalari</u>",
+      "image": {
+        "text": "Rasm orqali 📸",
+        "keys": {
+          "math": "Matematik misollar 🧮",
+          "default": "Matnli misollar 📖"
+        },
+        "math": "<b>Bo'lim</b> - «Matematik misollar 🧮»\n\n<b>📖 Maqolani o'qish - <a href=\"https://t.me/aqlli_uka\">Savol berish namunalari</a></b>\n\n📤 ‍<i>Yechishingiz kerak bo'lgan misolni rasm yoki skrinshotini yuboring!</i>",
+        "default": "<b>Bo'lim</b> - «Matnli masalalar 📖»\n\n<b>📖 Maqolani o'qish - <a href=\"https://t.me/aqlli_uka\">Savol berish namunalari</a></b>\n\n📤 ‍<i>Yechishingiz kerak bo'lgan misolni rasm yoki skrinshotini yuboring!.</i>"
+      }
+    }
+  },
+  "generation": "<b>🧠 Hozir o'ylayapman!!</b>\n\n<i>Ikki daqiqa ichida javob berolmasam, manga boshidan savol bering!</i>",
+  "cabinet": {
+    "text": "<b>Mening profilim</b> \n\nProfilingiz bo'yicha barcha kerakli ma'lumotlar \n👁‍🗨 <b>ID</b> : <code>${id}</code>\n👁‍🗨 <b>Ro'yhatdan o'tilgan</b> : ${registered} \n\n📝 <b>Obuna</b> ${vip ? 'tugaydi ': ''}${vip || 'mavjud emas'}",
+    "key": "Obuna sotib olish 💵"
+  },
+  "vip": {
+    "text": "<b>🛍️ Obuna muddati tugagunigacha behisob misollar yechishga imkon beradi!</b>\n\n<i>👇🏻 Mavjud tariflar 👇🏻</i>",
+    "keys": {
+      "24": "Bir kunlik",
+      "168": "Bir haftalik",
+      "720": "Bir oylik",
+      "87600": "Cheksiz"
+    },
+    "choose": {
+      "text": "To'lovga ${number} UZS",
+      "key": "To'lash"
+    },
+    "description": "Obuna",
+    "success": "Obuna ${date}  kungacha muvaffaqiyatli faollashtirildi."
+  },
+  "help": {
+    "text": "Bot bilan ishlash qo'llanmalari shu kanalda: @aqlli_uka",
+    "key": {
+      "text": "☎️ Texnik yordam",
+      "url": "t.me/aqlli_uka_yordam"
+    }
+  },
+  "partner": {
+    "text": "🤝 <b>Sheriklik dasturi</b>\n\n<a href=\"https://t.me/aqlli_uka\">📚 Sheriklik dasturi bo'yicha qo'llanma!</a>\n\n🏆 Referal (sheriklik) dasturidan beriladigan mukofot taklif qilgan odamlaringizning obuna sotib olingan narxlaridan 40% tashkil etadi.\n\n<b>Nech pul foyda qilish mumkin?</b>\n├ Misol uchun, agar 10 ta siz taklif qilgan odam oylik obuna sotib olsa, siz 176 000 so'mga ega bo'lasiz, lekin bizda mukofot qilib beriladigan pul miqdorida chegara yo'q, shuning uchun siz 1000 ta odam taklif qilishingiz mumkin, oylik obuna oladigan, 176 000 000 so'mni qo'lga kiritasiz \n└ Va taklif qilgan odamlaringiz keyingi oy ham to'lov qilishsa, sizga bonus yozilaveradi!\n\n🥇 <b>Statistika:</b>\n├  To'langan: ${withdraw} UZS\n├  Ishlab topilgan: ${earned} UZS\n├  Chiqimga mavjud: ${diff} UZS\n└  Taklif qilingan odamlar: ${refCount}\n\n*Chiqarib olish mumkin bo'lgan minimal summa: 50 000ming so'm\n\n🎁 <b>Aktivlik uchun bonuslar:</b>\n├ 5 va undan ortiq odamlar (oylik obuna olishgan) taklif qilinsa, oylik obuna bilan taqdirlanadi 🧠 \n└ Xar 50ta taklif qilingan odamga (oylik obuna olishgan) sizga 💵 75000 so'm ko'rinishida bonus beriladi \n\n⤵️ <b>Sizning havolangiz</b> - ${link}",
+    "keys": {
+      "list": "📋 Referral ro'yhati",
+      "withdraw": "💸 Pul chiqarish"
+    },
+    "withdraw": {
+      "text": "🗣 <i>Siz pulni bank kartalariga</i> yoki telefon raqamingizga chiqarishingiz mumkin <i>(Chiqarib olish mumkin bo'lgan minimal summa: 50 000ming so'm).</i>\n\n<b>Chiqim qilish uchun kerakli narsalar:</b> \n1) Shahsiy kabinetni skrinshot qilish.\n2) Skrinshotni menejirimizga yuborish.\n3) Chiqarmoqchi bo'lgan pul miqdorini etish.\n4) Mablag' tushadigan karta tafsilotlarini berish.\n\n⚙️ <b>UPD: Kelajakda bu funksiya avtomatlashtiriladi</b>",
+      "key": {
+        "text": "👨‍💻 Manager bilan bog'lanmoq",
+        "url": "t.me/Aqlli_uka_yordam"
+      }
+    }
+  },
+  "back": "← Ortga",
+  "error": "Xatolik yuz berdi, keyinroq urunib koring.\n\n<code>${error}</code>",
+  "promptPrefix": "Sen \"Aqlli uka\" sun'iy intellektisan, har qanday qiyinlikdagi misollarni yechishga qodirsan\nBugungi sana: ${date}\n\nSavol:",
+  "left": "Sizda ${n}ta tekin urunish qoldi!",
+  "noRequests": {
+    "text": "⌛️ <b>Sizning sinov muddatingiz - yakunlandi!</b>\n\n👤 <i>Obuna - chegaralanmagan miqdordagi misollarni yechishga imkon ochib beradi!</i>",
+    "key": "🛍️ Obuna olmoq"
+  },
+  "vipExpires": {
+    "text": "‼️ Sizning obuna sotib olgan muddatingiz tugadi!",
+    "key": "▶️ Uzaytirmoq"
+  }
+}

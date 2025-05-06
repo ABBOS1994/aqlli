@@ -45,12 +45,24 @@ let User = mongoose.Schema(
     subscribed: {
       type: Boolean,
       default: false
+    },
+
+    // 🆕 Karta ma'lumotlari
+    card: {
+      card_id: Number,
+      card_token: String,
+      pan: String,          // Masalan: 986009******1840
+      expiry: String,       // YYMM formatda
+      card_holder: String,
+      phone: String
     }
+
   },
   {
     timestamps: true
   }
 )
+
 User = mongoose.model('User', User)
 
 module.exports = User
