@@ -62,7 +62,7 @@ const createTransaction = async (userId, amount) => {
         account: userId,
         store_id: parseInt(process.env.ATMOS_STORE_ID),
         terminal_id: process.env.ATMOS_TERMINAL_ID,
-        lang: 'ru'
+        lang: 'uz'
       },
       {
         headers: {

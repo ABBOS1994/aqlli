@@ -2,6 +2,7 @@ const { Router } = require('telegraf')
 const config = require('../config')
 const View = require('../models/view')
 const Mail = require('../models/mail')
+const bindCard = require('../actions/bind_card')
 
 const router = new Router(async (ctx) => {
   const split = ctx.callbackQuery.data.split('_')
@@ -9,7 +10,7 @@ const router = new Router(async (ctx) => {
   ctx.state = split.slice(1, split.length)
   return { route: split[0] }
 })
-
+router.on('bind_card', bindCard)
 router.on('translateBot', require('../actions/translateBot'))
 router.on('subscription', require('../middlewares/subscription'))
 

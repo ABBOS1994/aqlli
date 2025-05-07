@@ -1,7 +1,13 @@
-//actions/vip.js
+// actions/vip.js
 const { Markup } = require('telegraf')
 const crypto = require('crypto')
-const { createTransaction, preConfirmTransaction, applyTransaction } = require('../helpers/atmosPayment')
+const {
+  createTransaction,
+  preConfirmTransaction,
+  applyTransaction,
+  initCardBinding,
+  confirmCardBinding
+} = require('../helpers/atmosPayment')
 const Deposit = require('../models/deposit')
 const User = require('../models/user')
 
@@ -14,10 +20,65 @@ const prices = {
 
 module.exports = async (ctx) => {
   if (ctx.callbackQuery) await ctx.answerCbQuery()
+  ctx.session = ctx.session || {}
 
   if (ctx.state[0]) {
+    const duration = ctx.state[0]
+    const price = prices[duration]
+
+    if (!price) {
+      return ctx.reply('❌ Noto‘g‘ri reja tanlandi.')
+    }
+
+    // Karta ulash jarayoni: session orqali ishlash
+    if (ctx.session.card_step) {
+      const text = ctx.message?.text?.trim()
+
+      if (ctx.session.card_step === 'enter_card_number') {
+        if (!/^[0-9]{16}$/.test(text)) {
+          return ctx.reply('❌ Noto‘g‘ri karta raqami. 16 xonali raqam kiriting.')
+        }
+        ctx.session.card_bind.card_number = text
+        ctx.session.card_step = 'enter_expiry'
+        return ctx.reply('📅 Karta amal qilish muddatini kiriting (YYMM formatda, masalan: 2605):')
+      }
+
+      if (ctx.session.card_step === 'enter_expiry') {
+        if (!/^[0-9]{4}$/.test(text)) {
+          return ctx.reply('❌ Noto‘g‘ri format. Masalan: 2605 (2026 yil may)')
+        }
+
+        const card_number = ctx.session.card_bind.card_number
+        const expiry = text
+        const result = await initCardBinding({ card_number, expiry })
+
+        if (result?.transaction_id) {
+          ctx.session.card_step = 'confirm_otp'
+          ctx.session.card_bind.transaction_id = result.transaction_id
+          return ctx.reply('📩 SMS kod yuborildi. Iltimos, uni kiriting:')
+        } else {
+          ctx.session.card_step = null
+          return ctx.reply('❌ Karta bog‘lashda xatolik. Keyinroq urinib ko‘ring.')
+        }
+      }
+
+      if (ctx.session.card_step === 'confirm_otp') {
+        const otp = text
+        const transaction_id = ctx.session.card_bind.transaction_id
+        const res = await confirmCardBinding({ transaction_id, otp, userId: ctx.user.id })
+
+        if (res?.data?.card_token) {
+          ctx.session.card_step = null
+          return ctx.reply('✅ Karta muvaffaqiyatli bog‘landi. Endi VIP to‘lovni qayta boshlang.')
+        } else {
+          return ctx.reply('❌ Kod noto‘g‘ri yoki vaqt tugagan. Yana urinib ko‘ring.')
+        }
+      }
+      return
+    }
+
     const random = crypto.randomInt(10000)
-    const amount = prices[ctx.state[0]] * 100 + random
+    const amount = price * 100 + random
     const realAmount = amount / 100
     const requestId = `${ctx.user.id}_${Date.now()}`
 
@@ -27,21 +88,24 @@ module.exports = async (ctx) => {
         type: 'atmos',
         amount: realAmount,
         currency: 'UZS',
-        per: ctx.state[0],
+        per: duration,
         user: ctx.user.id,
         ext_id: requestId,
         createdAt: new Date()
       })
-      const transactionData = await createTransaction(await ctx.user.id, await amount)
+
+      const transactionData = await createTransaction(ctx.user.id, amount)
       if (!transactionData || !transactionData.transaction_id) {
         throw new Error('Atmos to‘lov tranzaksiyasi yaratilmagan')
       }
 
       const user = await User.findOne({ id: ctx.user.id })
-      const card_token = user.card_token
+      const card_token = user?.card_token
 
       if (!card_token) {
-        return ctx.reply('❗ Karta tokeni topilmadi. Avval kartani bog‘lang.')
+        ctx.session.card_bind = {}
+        ctx.session.card_step = 'enter_card_number'
+        return ctx.reply('❗ Karta tokeni topilmadi. Karta bog‘lashni boshlaymiz.\n💳 Karta raqamini kiriting (16 raqam):')
       }
 
       const preConfirm = await preConfirmTransaction(transactionData.transaction_id, card_token)

@@ -1,6 +1,6 @@
 const path = require('path');
 require('dotenv').config({ path: path.resolve('.env') });
-
+const sessionHandler = require('./middlewares/sessionHandler')
 Number.prototype.format = function (n, x) {
   const re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
   return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$& ');
@@ -18,7 +18,7 @@ const allowedUpdates = [
 ];
 
 const bot = new Telegraf(process.env.BOT_TOKEN, { handlerTimeout: 1 });
-
+bot.use(sessionHandler())
 bot.catch(require('./actions/error'));
 
 const I18n = require('telegraf-i18n');
