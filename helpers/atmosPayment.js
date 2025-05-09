@@ -80,7 +80,7 @@ const createTransaction = async (userId, amount) => {
 }
 
 // 🔐 4. Pre-confirm bosqichi
-const preConfirmTransaction = async ({ transaction_id, card_token }) => {
+const preConfirmTransaction = async (transaction_id, card_token) => {
   const token = await getToken()
   try {
     const res = await axios.post(
