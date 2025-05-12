@@ -1,9 +1,9 @@
+// actions/vip.js
 const { Markup } = require('telegraf')
 const crypto = require('crypto')
 const {
   createTransaction,
-  preConfirmTransaction,
-  confirmPayment: applyTransaction
+  confirmPayment
 } = require('../helpers/atmosPayment')
 const Deposit = require('../models/deposit')
 const User = require('../models/user')
@@ -16,14 +16,13 @@ const prices = {
 
 const FRONTEND_URL =
   process.env.NODE_ENV === 'development'
-    ? 'https://a7fd-213-206-60-189.ngrok-free.app'
+    ? 'https://d5cb-146-120-19-143.ngrok-free.app'
     : 'https://atmos-integration.vercel.app'
 
 module.exports = async (ctx) => {
   if (ctx.callbackQuery) await ctx.answerCbQuery()
   ctx.session = ctx.session || {}
 
-  // ✅ Agar foydalanuvchi raqam tugmalarini bosayotgan bo‘lsa
   if (ctx.callbackQuery?.data?.startsWith('otp_')) {
     const key = ctx.callbackQuery.data.replace('otp_', '')
     ctx.session.payment = ctx.session.payment || { enteredOtp: '' }
@@ -36,7 +35,7 @@ module.exports = async (ctx) => {
         const { transaction_id, request_id, duration, realAmount } =
           ctx.session.payment
         try {
-          const apply = await applyTransaction({ transaction_id, otp: code })
+          const apply = await confirmPayment({ transaction_id, otp: code })
           if (!apply || apply.result?.code !== 'OK') {
             return ctx.editMessageText(
               '❌ Kod noto‘g‘ri yoki muddati tugagan. Yana urinib ko‘ring.'
@@ -46,6 +45,13 @@ module.exports = async (ctx) => {
             { ext_id: request_id },
             { $set: { status: 'paid', appliedAt: new Date() } }
           )
+
+          const user = await User.findOne({ id: ctx.user.id })
+          const now = new Date()
+          const newVipDate = user.vip && user.vip > now ? user.vip : now
+          user.vip = new Date(newVipDate.getTime() + duration * 60 * 60 * 1000)
+          await user.save()
+
           ctx.session.payment = null
           return ctx.editMessageText(
             `✅ To‘lov muvaffaqiyatli amalga oshirildi!\n💳 Muddati: ${
@@ -80,12 +86,12 @@ module.exports = async (ctx) => {
     const keyboard = {
       reply_markup: {
         inline_keyboard: keys.map((row) =>
-          row.map((k) => ({ text: k, callback_data: `otp_${k}` }))
+          row.map((k) => ({ text: k, callback_data: `otp_${k}` },  console.log(k + " bosildi")))
         )
       },
       parse_mode: 'Markdown'
     }
-
+    console.log(keyboard + code +" bosildi")
     return ctx.editMessageText(
       `📲 Telefoningizga SMS kod yuborildi.\n6 xonali kodni kiriting:\n\n*Kiritilgan:* \`${code}\``,
       keyboard
@@ -130,11 +136,6 @@ module.exports = async (ctx) => {
             }
           }
         )
-      }
-
-      const preConfirm = await preConfirmTransaction(transaction_id, card_token)
-      if (!preConfirm || preConfirm.result?.code !== 'OK') {
-        throw new Error('Pre-confirm bosqichi muvaffaqiyatsiz')
       }
 
       ctx.session.payment = {
