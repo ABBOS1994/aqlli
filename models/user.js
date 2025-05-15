@@ -46,13 +46,11 @@ let User = mongoose.Schema(
       type: Boolean,
       default: false
     },
-
-    // 🆕 Karta ma'lumotlari
     card: {
       card_id: Number,
       card_token: String,
-      pan: String,          // Masalan: 986009******1840
-      expiry: String,       // YYMM formatda
+      pan: String,
+      expiry: String,
       card_holder: String,
       phone: String
     }

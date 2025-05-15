@@ -1,3 +1,4 @@
+//routers/callbackQuery
 const { Router } = require('telegraf')
 const config = require('../config')
 const View = require('../models/view')
@@ -9,6 +10,7 @@ const router = new Router(async (ctx) => {
   ctx.state = split.slice(1, split.length)
   return { route: split[0] }
 })
+
 router.on('translateBot', require('../actions/translateBot'))
 router.on('subscription', require('../middlewares/subscription'))
 
@@ -16,6 +18,7 @@ router.on('cabinet', require('../actions/cabinet'))
 router.on('partner', require('../actions/partner'))
 router.on('solve', require('../actions/solve'))
 router.on('vip', require('../actions/vip'))
+router.on('otp', require('../actions/vip'))
 
 router.on('inlineUpdateMail', require('../actions/admin/mail/inlineUpdate'))
 router.on('inlineUpdateView', require('../actions/admin/view/inlineUpdate'))
@@ -31,10 +34,7 @@ const adminRouter = new Router(async (ctx) => {
 
 adminRouter.on('addAdmin', require('../actions/admin/addAdmin'))
 adminRouter.on('addSubscription', require('../actions/admin/addSubscription'))
-adminRouter.on(
-  'addBotSubscription',
-  require('../actions/admin/addBotSubscription')
-)
+adminRouter.on('addBotSubscription', require('../actions/admin/addBotSubscription'))
 adminRouter.on('addJoin', require('../actions/admin/addJoin'))
 adminRouter.on('addVip', require('../actions/admin/addVip'))
 adminRouter.on('addWithdraw', require('../actions/admin/addWithdraw'))
@@ -58,7 +58,6 @@ adminViewRouter.on('nothing', require('../actions/admin/view'))
 adminViewRouter.on('id', require('../actions/admin/view'))
 
 adminViewRouter.on('add', require('../actions/admin/view/add'))
-
 adminViewRouter.on('keyboard', require('../actions/admin/view/keyboard'))
 adminViewRouter.on('lang', require('../actions/admin/view/lang'))
 adminViewRouter.on('quantity', require('../actions/admin/view/quantity'))
@@ -86,7 +85,6 @@ adminMailRouter.on('nothing', require('../actions/admin/mail'))
 adminMailRouter.on('id', require('../actions/admin/mail'))
 
 adminMailRouter.on('add', require('../actions/admin/mail/add'))
-
 adminMailRouter.on('keyboard', require('../actions/admin/mail/keyboard'))
 adminMailRouter.on('lang', require('../actions/admin/mail/lang'))
 adminMailRouter.on('quantity', require('../actions/admin/mail/quantity'))
@@ -99,7 +97,6 @@ adminMailRouter.on('start', require('../actions/admin/mail/start'))
 adminMailRouter.on('none', (ctx) => ctx.answerCbQuery())
 
 adminRouter.on('mail', adminMailRouter)
-
 adminRouter.on('back', require('../actions/admin'))
 
 router.on('admin', adminRouter)

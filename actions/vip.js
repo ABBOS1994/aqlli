@@ -1,103 +1,63 @@
 // actions/vip.js
-const { Markup } = require('telegraf')
+const { NODE_ENV, ATMOS_INTEGRATION } = process.env
 const crypto = require('crypto')
 const {
   createTransaction,
-  confirmPayment
+  confirmPayment,
+  preApplyPayment
 } = require('../helpers/atmosPayment')
+const { removeCard } = require('../helpers/atmosCard')
 const Deposit = require('../models/deposit')
 const User = require('../models/user')
 
 const prices = {
-  720: 39000, // 1 oy
-  2160: 99000, // 3 oy
-  8760: 390000 // 12 oy
+  720: 39000,
+  2160: 99000,
+  8760: 390000
 }
 
-const FRONTEND_URL =
-  process.env.NODE_ENV === 'development'
-    ? 'https://d5cb-146-120-19-143.ngrok-free.app'
-    : 'https://atmos-integration.vercel.app'
+const FRONTEND_URL = ATMOS_INTEGRATION
+const isDev = NODE_ENV === 'development'
 
 module.exports = async (ctx) => {
   if (ctx.callbackQuery) await ctx.answerCbQuery()
   ctx.session = ctx.session || {}
 
-  if (ctx.callbackQuery?.data?.startsWith('otp_')) {
-    const key = ctx.callbackQuery.data.replace('otp_', '')
-    ctx.session.payment = ctx.session.payment || { enteredOtp: '' }
-    let code = ctx.session.payment.enteredOtp || ''
+  const user = await User.findOne({ id: ctx.user.id })
 
-    if (key === '🗑') {
-      code = ''
-    } else if (key === '✅') {
-      if (code.length === 6) {
-        const { transaction_id, request_id, duration, realAmount } =
-          ctx.session.payment
-        try {
-          const apply = await confirmPayment({ transaction_id, otp: code })
-          if (!apply || apply.result?.code !== 'OK') {
-            return ctx.editMessageText(
-              '❌ Kod noto‘g‘ri yoki muddati tugagan. Yana urinib ko‘ring.'
-            )
-          }
-          await Deposit.updateOne(
-            { ext_id: request_id },
-            { $set: { status: 'paid', appliedAt: new Date() } }
-          )
-
-          const user = await User.findOne({ id: ctx.user.id })
-          const now = new Date()
-          const newVipDate = user.vip && user.vip > now ? user.vip : now
-          user.vip = new Date(newVipDate.getTime() + duration * 60 * 60 * 1000)
-          await user.save()
-
-          ctx.session.payment = null
-          return ctx.editMessageText(
-            `✅ To‘lov muvaffaqiyatli amalga oshirildi!\n💳 Muddati: ${
-              duration / 720
-            } oy, Summasi: ${realAmount.toLocaleString()} so‘m`
-          )
-        } catch (error) {
-          console.error(
-            '❌ Apply bosqichida xatolik:',
-            error.response?.data || error.message
-          )
-          return ctx.editMessageText(
-            '❌ Kodni tasdiqlashda xatolik yuz berdi. Iltimos, qaytadan urinib ko‘ring.'
-          )
-        }
-      } else {
-        return ctx.answerCbQuery('⛔️ Kod hali to‘liq emas')
-      }
-    } else if (/^\d$/.test(key) && code.length < 6) {
-      code += key
-    }
-
-    ctx.session.payment.enteredOtp = code
-
-    const keys = [
-      ['1', '2', '3'],
-      ['4', '5', '6'],
-      ['7', '8', '9'],
-      ['🗑', '0', '✅']
-    ]
-
-    const keyboard = {
+  // ❌ Kartani o‘chirish
+  if (ctx.callbackQuery?.data === 'vip_remove_card') {
+    await removeCard({
+      id: user.card.card_id,
+      token: user.card.card_token
+    })
+    await User.updateOne({ id: ctx.user.id }, { $unset: { card: '' } })
+    return ctx.editMessageText('💳 Karta muvaffaqiyatli o‘chirildi.', {
       reply_markup: {
-        inline_keyboard: keys.map((row) =>
-          row.map((k) => ({ text: k, callback_data: `otp_${k}` },  console.log(k + " bosildi")))
-        )
-      },
-      parse_mode: 'Markdown'
-    }
-    console.log(keyboard + code +" bosildi")
-    return ctx.editMessageText(
-      `📲 Telefoningizga SMS kod yuborildi.\n6 xonali kodni kiriting:\n\n*Kiritilgan:* \`${code}\``,
-      keyboard
-    )
+        inline_keyboard: [[{ text: '⬅️ Ortga', callback_data: 'vip' }]]
+      }
+    })
   }
 
+  // ♻️ Kartani o‘zgartirish (WebApp havolasi)
+  if (ctx.callbackQuery?.data === 'vip_change_card') {
+    const transaction_id = 'change_card'
+    const url = `${FRONTEND_URL}/?chat_id=${ctx.from.id}&transaction_id=${transaction_id}`
+    if (isDev) {
+      console.log('🧪 Karta o‘zgartirish havolasi (dev):', url)
+      return ctx.reply(`🧪 Havola:\n<code>${url}</code>`, {
+        parse_mode: 'HTML'
+      })
+    }
+
+    return ctx.reply('💳 Kartani o‘zgartirish uchun:', {
+      reply_markup: {
+        inline_keyboard: [[{ text: '♻️ Karta o‘zgartirish', web_app: { url } }]]
+      }
+    })
+  }
+
+  // 💰 To‘lov jarayoni
   if (ctx.state[0]) {
     const duration = ctx.state[0]
     const price = prices[duration]
@@ -120,77 +80,105 @@ module.exports = async (ctx) => {
 
       const transactionData = await createTransaction(ctx.user.id, amount)
       const transaction_id = transactionData?.transaction_id
-      const user = await User.findOne({ id: ctx.user.id })
-      const card_token = user.card?.card_token
 
-      if (!card_token) {
-        const chatId = ctx.chat?.id || ctx.from?.id || ctx.message?.chat?.id
-        const url = `${FRONTEND_URL}/?chat_id=${chatId}&transaction_id=${transaction_id}`
-        return ctx.reply(
-          '❗️ Sizda karta tokeni mavjud emas.\n👇 Karta bog‘lash uchun tugmani bosing:',
-          {
-            reply_markup: {
-              inline_keyboard: [
-                [{ text: '💳 Karta bog‘lash', web_app: { url } }]
-              ]
-            }
+      if (!user.card?.card_token) {
+        const url = `${FRONTEND_URL}/?chat_id=${ctx.from.id}&transaction_id=${transaction_id}`
+        if (isDev) {
+          console.log('🧪 Karta biriktirish havolasi (dev):', url)
+          return ctx.reply(`🧪 Havola:\n<code>${url}</code>`, {
+            parse_mode: 'HTML'
+          })
+        }
+
+        return ctx.reply('💳 Karta topilmadi. Biriktiring:', {
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: '➕ Karta biriktirish', web_app: { url } }]
+            ]
           }
-        )
+        })
       }
 
-      ctx.session.payment = {
+      const preApply = await preApplyPayment({
         transaction_id,
-        request_id: requestId,
-        duration,
-        realAmount,
-        enteredOtp: ''
+        card_token: user.card.card_token
+      })
+
+      console.log('📤 Pre-apply:', preApply)
+
+      if (!preApply || preApply.result?.code !== 'OK') {
+        const msg = preApply?.result?.description || 'Pre-apply xatoligi'
+        return ctx.reply(`❌ Pre-apply xato:\n${msg}`)
       }
 
-      const keys = [
-        ['1', '2', '3'],
-        ['4', '5', '6'],
-        ['7', '8', '9'],
-        ['🗑', '0', '✅']
-      ]
+      const apply = await confirmPayment({ transaction_id })
 
-      const keyboard = {
-        reply_markup: {
-          inline_keyboard: keys.map((row) =>
-            row.map((k) => ({ text: k, callback_data: `otp_${k}` }))
-          )
-        },
-        parse_mode: 'Markdown'
+      console.log('✅ Apply response:', apply)
+
+      if (!apply || apply.result?.code !== 'OK') {
+        const msg = apply?.result?.description || 'Tasdiqlashda xato'
+        return ctx.reply(`❌ Tasdiqlash xatoligi:\n${msg}`)
       }
+
+      await Deposit.updateOne(
+        { ext_id: requestId },
+        { $set: { status: 'paid', appliedAt: new Date() } }
+      )
+
+      const now = new Date()
+      const newVipDate = user.vip && user.vip > now ? user.vip : now
+      user.vip = new Date(newVipDate.getTime() + duration * 60 * 60 * 1000)
+      await user.save()
 
       return ctx.reply(
-        `📲 Telefoningizga SMS kod yuborildi.\n6 xonali kodni kiriting:\n\n*Kiritilgan:* \`\``,
-        keyboard
+        `✅ To‘lov amalga oshdi!\n💳 Muddati: ${
+          duration / 720
+        } oy\n💰 Summasi: ${realAmount.toLocaleString()} so‘m`
       )
     } catch (err) {
-      console.error(
-        '❌ Atmos tranzaksiya jarayonida xatolik:',
-        err.response?.data || err.message
-      )
-      return ctx.reply(
-        '❌ Tranzaksiya yaratishda yoki to‘lovda xatolik yuz berdi. Keyinroq urinib ko‘ring.'
-      )
+      console.error('❌ Umumiy xatolik:', err.response?.data || err.message)
+      return ctx.reply('❌ Tranzaksiya yaratishda xatolik yuz berdi.')
     }
   }
 
-  return ctx[ctx.message ? 'reply' : 'editMessageText'](
-    ctx.i18n.t('vip.text'),
-    {
-      reply_markup: {
-        inline_keyboard: [
-          [
-            { text: '🕐 1 oy – 39 000 so‘m', callback_data: 'vip_720' },
-            { text: '📅 3 oy – 99 000 so‘m', callback_data: 'vip_2160' }
-          ],
-          [{ text: '📆 12 oy – 390 000 so‘m', callback_data: 'vip_8760' }],
-          [{ text: ctx.i18n.t('back'), callback_data: 'cabinet' }]
-        ]
-      },
-      parse_mode: 'HTML'
+  // 📋 VIP menyu + karta va tel
+  const cardLast = user.card?.pan?.slice(-4)
+  const phone = user.card?.phone
+  const cardInfo = cardLast ? `💳 Karta: <b>....${cardLast}</b>\n` : ''
+  const phoneInfo = phone ? `📱 Tel: <b>${phone}</b>\n` : ''
+  const baseText = ctx.i18n.t('vip.text')
+  let finalText = `${cardInfo}${phoneInfo}${baseText}`
+
+  const keyboard = [
+    [
+      { text: '🕐 1 oy – 39 000 so‘m', callback_data: 'vip_720' },
+      { text: '📅 3 oy – 99 000 so‘m', callback_data: 'vip_2160' }
+    ],
+    [{ text: '📆 12 oy – 390 000 so‘m', callback_data: 'vip_8760' }]
+  ]
+
+  const chatId = ctx.from?.id || ctx.chat?.id
+
+  if (user.card?.card_token) {
+    keyboard.push([
+      { text: '♻️ Kartani o‘zgartirish', callback_data: 'vip_change_card' },
+      { text: '🗑 Kartani o‘chirish', callback_data: 'vip_remove_card' }
+    ])
+  } else {
+    const transaction_id = 'init_card'
+    const url = `${FRONTEND_URL}/?chat_id=${chatId}&transaction_id=${transaction_id}`
+    if (isDev) {
+      console.log('🧪 Karta qo‘shish havolasi (dev):', url)
+      finalText
+    } else {
+      keyboard.push([{ text: '➕ Karta biriktirish', web_app: { url } }])
     }
-  )
+  }
+
+  keyboard.push([{ text: ctx.i18n.t('back'), callback_data: 'cabinet' }])
+
+  return ctx[ctx.message ? 'reply' : 'editMessageText'](finalText, {
+    reply_markup: { inline_keyboard: keyboard },
+    parse_mode: 'HTML'
+  })
 }
