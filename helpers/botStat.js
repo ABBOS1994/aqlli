@@ -1,5 +1,5 @@
 const User = require('../models/user')
-const config = require('../config')
+const config = require('../config.json')
 const axios = require('axios')
 const FormData = require('form-data')
 
@@ -20,7 +20,7 @@ module.exports = async () => {
   if (config.botStat?.send && config.botStat?.key) {
     const axiosConfig = {
       method: 'post',
-      url: `https://api.botstat.io/create/${'7791670870:AAHqzagIxP1NfFpdNaFS_xVrxRIzgy2vEWQ'}/${config.botStat.key}?notify_id=${config.admins[0]}`,
+      url: `https://api.botstat.io/create/${process.env.BOT_TOKEN}/${config.botStat.key}?notify_id=${config.admins[0]}`,
       headers: {
         ...formData.getHeaders()
       },
@@ -32,7 +32,7 @@ module.exports = async () => {
   if (config.botStat?.botMan) {
     const axiosConfig = {
       method: 'post',
-      url: `https://api.botstat.io/botman/${'7791670870:AAHqzagIxP1NfFpdNaFS_xVrxRIzgy2vEWQ'}?owner_id=${config.admins[0]}`,
+      url: `https://api.botstat.io/botman/${process.env.BOT_TOKEN}?owner_id=${config.admins[0]}`,
       headers: {
         ...formData.getHeaders()
       },

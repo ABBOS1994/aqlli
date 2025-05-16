@@ -1,16 +1,11 @@
-//helpers/convertChars.js
 const convert = (str) => {
-  if (!str) return str // Null, undefined yoki bo‘sh qiymat bo‘lsa, o‘zini qaytaradi
+  if (typeof str !== 'string') return str
 
-  const chars = {
-    '<': '&lt;',
-    '>': '&gt;',
-    '&': '&amp;',
-    '"': '&quot;',
-    "'": '&#39;' // Xavfsizlik uchun bitta tirnoq ham almashtirildi
-  }
+  const chars = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }
 
-  return str.replace(/[<>&"']/g, (char) => chars[char])
+  return str.replace(/[<>&]/g, (s) => {
+    return chars[s]
+  })
 }
 
 module.exports = convert

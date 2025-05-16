@@ -42,7 +42,7 @@ module.exports = async (bot, i18n) => {
   ) {
     await loginFunction()
   }
-  // console.log('checkPayme')
+  console.log('checkPayme')
 
   const date = new Date()
 

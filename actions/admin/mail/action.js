@@ -1,5 +1,5 @@
 const Markup = require('telegraf/markup')
-const lauchWorker = require('../mail/lauchWorker')
+const lauchWorker = require('./lauchWorker')
 
 module.exports = async (ctx) => {
   await ctx.answerCbQuery()
@@ -20,8 +20,8 @@ module.exports = async (ctx) => {
       ctx.state[1] === 'stop'
         ? 'остановлена'
         : ctx.state[1] === 'pause'
-          ? 'приостановлена'
-          : 'возобновлена'
+        ? 'приостановлена'
+        : 'возобновлена'
     }`,
     {
       reply_markup: Markup.inlineKeyboard([

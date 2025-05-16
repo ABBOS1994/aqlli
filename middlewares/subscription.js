@@ -1,4 +1,4 @@
-const config = require('../config')
+const config = require('../config.json')
 const Markup = require('telegraf/markup')
 const asyncFilter = async (arr, predicate) =>
   Promise.all(arr.map(predicate)).then((results) =>

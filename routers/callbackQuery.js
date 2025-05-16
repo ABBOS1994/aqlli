@@ -1,5 +1,5 @@
 const { Router } = require('telegraf')
-const config = require('../config')
+const config = require('../config.json')
 const View = require('../models/view')
 const Mail = require('../models/mail')
 

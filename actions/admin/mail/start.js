@@ -1,5 +1,5 @@
 const Markup = require('telegraf/markup')
-const lauchWorker = require('../mail/lauchWorker')
+const lauchWorker = require('./lauchWorker')
 
 module.exports = async (ctx) => {
   await ctx.answerCbQuery()

@@ -1,5 +1,5 @@
 name: 🇺🇿 O'zbek tili
-article: https://t.me/misolai_bot
+article: https://t.me/aqlli_uka
 start:
   text: |
     👋 Salom! Men - sun'iy intellektman, <b>misollarni yechish uchun yaratilinganman.</b>
@@ -32,12 +32,12 @@ solve:
 
     ‼️ <b><i>Hamda bir mutaxassislikga yo'naltirilgan misollarni ham yecha olaman!</i></b>
 
-    📂 <b>Qoidalar bilan tanishib chiqing: - </b><a href="https://t.me/misolai_bot"><b>Misol AI qobiliyatlari!</b></a>
+    📂 <b>Qoidalar bilan tanishib chiqing: - </b><a href="https://t.me/aqlli_uka"><b>Aqlli uka qobiliyatlari!</b></a>
   key: ✅ Tanishib chiqdim
   text1: |
     <b>🗣️ Man tekst hamda rasm orqali ham misol yecha olaman! </b>
 
-    📖 <b>Maqolani o'qish - </b><a href="https://t.me/misolai_bot">Misol AI qobiliyatlari!</a>
+    📖 <b>Maqolani o'qish - </b><a href="https://t.me/aqlli_uka">Aqlli uka qobiliyatlari!</a>
 
     <i>O'zingizga qulay uslubni tanlang:</i>
   keys:
@@ -47,7 +47,7 @@ solve:
     text: |
       📝 <b>Savolingizni tekst formatida jo'nating!</b> <b>Iltimos har bir javobimni yaxshilab tekshiring!</b>
 
-      <b>🧮 Символы для вычислений:</b>
+      <b>🧮 Символы для вычислений:</b> 
       <code>∫</code> , <code>^</code>, <code>√</code>, <code>π</code>, <code>sin</code>, <code>cos</code>, <code>tg</code>, <code>ctg</code>, <code>log</code>
 
       📖Maqolani o'qish - <u>Tekst formatda savol berish namunalari</u>
@@ -60,13 +60,13 @@ solve:
       math: |
         <b>Bo'lim</b> - «Matematik misollar 🧮»
 
-        <b>📖 Maqolani o'qish - <a href="https://t.me/misolai_bot">Savol berish namunalari</a></b>
+        <b>📖 Maqolani o'qish - <a href="https://t.me/aqlli_uka">Savol berish namunalari</a></b>
 
         📤 ‍<i>Yechishingiz kerak bo'lgan misolni rasm yoki skrinshotini yuboring!</i>
       default: |
         <b>Bo'lim</b> - «Matnli masalalar 📖»
 
-        <b>📖 Maqolani o'qish - <a href="https://t.me/misolai_bot">Savol berish namunalari</a></b>
+        <b>📖 Maqolani o'qish - <a href="https://t.me/aqlli_uka">Savol berish namunalari</a></b>
 
         📤 ‍<i>Yechishingiz kerak bo'lgan misolni rasm yoki skrinshotini yuboring!.</i>
 generation: |
@@ -75,11 +75,11 @@ generation: |
   <i>Ikki daqiqa ichida javob berolmasam, manga boshidan savol bering!</i>
 cabinet:
   text: |
-    <b>Mening profilim</b>
+    <b>Mening profilim</b> 
 
-    Profilingiz bo'yicha barcha kerakli ma'lumotlar
+    Profilingiz bo'yicha barcha kerakli ma'lumotlar 
     👁‍🗨 <b>ID</b> : <code>${id}</code>
-    👁‍🗨 <b>Ro'yhatdan o'tilgan</b> : ${registered}
+    👁‍🗨 <b>Ro'yhatdan o'tilgan</b> : ${registered} 
 
     📝 <b>Obuna</b> ${vip ? 'tugaydi ': ''}${vip || 'mavjud emas'}
   key: Obuna sotib olish 💵
@@ -100,20 +100,20 @@ vip:
   success: Obuna ${date}  kungacha muvaffaqiyatli faollashtirildi.
 help:
   text: |
-    Bot bilan ishlash qo'llanmalari shu kanalda: @misolai_bot
+    Bot bilan ishlash qo'llanmalari shu kanalda: @aqlli_uka
   key:
     text: ☎️ Texnik yordam
-    url: t.me/misolai_bot_yordam
+    url: t.me/aqlli_uka_yordam
 partner:
   text: |
     🤝 <b>Sheriklik dasturi</b>
 
-    <a href="https://t.me/misolai_bot">📚 Sheriklik dasturi bo'yicha qo'llanma!</a>
+    <a href="https://t.me/aqlli_uka">📚 Sheriklik dasturi bo'yicha qo'llanma!</a>
 
     🏆 Referal (sheriklik) dasturidan beriladigan mukofot taklif qilgan odamlaringizning obuna sotib olingan narxlaridan 40% tashkil etadi.
 
     <b>Nech pul foyda qilish mumkin?</b>
-    ├ Misol uchun, agar 10 ta siz taklif qilgan odam oylik obuna sotib olsa, siz 176 000 so'mga ega bo'lasiz, lekin bizda mukofot qilib beriladigan pul miqdorida chegara yo'q, shuning uchun siz 1000 ta odam taklif qilishingiz mumkin, oylik obuna oladigan, 176 000 000 so'mni qo'lga kiritasiz
+    ├ Misol uchun, agar 10 ta siz taklif qilgan odam oylik obuna sotib olsa, siz 176 000 so'mga ega bo'lasiz, lekin bizda mukofot qilib beriladigan pul miqdorida chegara yo'q, shuning uchun siz 1000 ta odam taklif qilishingiz mumkin, oylik obuna oladigan, 176 000 000 so'mni qo'lga kiritasiz 
     └ Va taklif qilgan odamlaringiz keyingi oy ham to'lov qilishsa, sizga bonus yozilaveradi!
 
     🥇 <b>Statistika:</b>
@@ -125,8 +125,8 @@ partner:
     *Chiqarib olish mumkin bo'lgan minimal summa: 50 000ming so'm
 
     🎁 <b>Aktivlik uchun bonuslar:</b>
-    ├ 5 va undan ortiq odamlar (oylik obuna olishgan) taklif qilinsa, oylik obuna bilan taqdirlanadi 🧠
-    └ Xar 50ta taklif qilingan odamga (oylik obuna olishgan) sizga 💵 75000 so'm ko'rinishida bonus beriladi
+    ├ 5 va undan ortiq odamlar (oylik obuna olishgan) taklif qilinsa, oylik obuna bilan taqdirlanadi 🧠 
+    └ Xar 50ta taklif qilingan odamga (oylik obuna olishgan) sizga 💵 75000 so'm ko'rinishida bonus beriladi 
 
     ⤵️ <b>Sizning havolangiz</b> - ${link}
   keys:
@@ -136,7 +136,7 @@ partner:
     text: |
       🗣 <i>Siz pulni bank kartalariga</i> yoki telefon raqamingizga chiqarishingiz mumkin <i>(Chiqarib olish mumkin bo'lgan minimal summa: 50 000ming so'm).</i>
 
-      <b>Chiqim qilish uchun kerakli narsalar:</b>
+      <b>Chiqim qilish uchun kerakli narsalar:</b> 
       1) Shahsiy kabinetni skrinshot qilish.
       2) Skrinshotni menejirimizga yuborish.
       3) Chiqarmoqchi bo'lgan pul miqdorini etish.
@@ -145,11 +145,11 @@ partner:
       ⚙️ <b>UPD: Kelajakda bu funksiya avtomatlashtiriladi</b>
     key:
       text: 👨‍💻 Manager bilan bog'lanmoq
-      url: t.me/misolai_bot_yordam
+      url: t.me/Aqlli_uka_yordam
 back: ← Ortga
 error: Xatolik yuz berdi, keyinroq urunib koring.\n\n<code>${error}</code>
 promptPrefix: |
-  Sen "Misol AI" sun'iy intellektisan, har qanday qiyinlikdagi misollarni yechishga qodirsan
+  Sen "Aqlli uka" sun'iy intellektisan, har qanday qiyinlikdagi misollarni yechishga qodirsan
   Bugungi sana: ${date}
 
   Savol:
