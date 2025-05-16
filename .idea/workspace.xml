@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5f93d456-c726-4658-b743-15a334dde9d8" name="Changes" comment="mainga orginali qaytarildi orqaga bez.env">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.prettierrc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/addAdmin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/addBotSubscription.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/addJoin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/addSubscription.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/addVip.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/addWithdraw.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/ban.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/botStat.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/listUsers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/action.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/add.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/delete.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/editPost.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/inline.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/inlineUpdate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/keyboard.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/lang.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/lauchWorker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/preview.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/quantity.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/start.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/startDate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/mail/worker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/stat.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/sysRef.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/view/add.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/view/delete.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/view/editPost.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/view/endDate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/view/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/view/inline.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/view/inlineUpdate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/view/keyboard.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/view/lang.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/view/preview.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/view/quantity.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/view/startDate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/admin/view/unique.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/cabinet.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/chatJoin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/checkPayme.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/checkVip.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/error.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/handle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/help.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/myChatMember.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/partner.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/showView.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/solve.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/start.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/translateBot.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/vip.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/admin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/botStat.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/convertChars.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/htmlToImage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/language.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/mainKeyboard.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/substrHTML.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/updateStat.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/whisper.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/locales/uz.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/middlewares/attachUser.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/middlewares/logging.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/middlewares/subscription.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/middlewares/sysRefs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/deposit.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/mail.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/ref.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/view.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pm2.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/callbackQuery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/inlineQuery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/message.js" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="original_rabochi" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ABBOS1994&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ABBOS1994/aqlli.git&quot;,
+    &quot;accountId&quot;: &quot;14125179-1d26-4990-8251-f0dae2d0dccb&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;ABBOS1994&quot;,
+    &quot;repository&quot;: &quot;aqlli&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/actions/vip.js" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2wikH3mY5hmACDTAYMeZzsx2H4s" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;23.11.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.15.18&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Debug&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/abbos/WebstormProjects/aqlli/node_modules/prettier&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="Push.Settings">
+    <option name="SHOW_DETAILS_PANEL" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-WS-251.23774.424" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5f93d456-c726-4658-b743-15a334dde9d8" name="Changes" comment="" />
+      <created>1746531692884</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1746531692884</updated>
+      <workItem from="1746531694598" duration="61000" />
+      <workItem from="1746531813390" duration="147000" />
+      <workItem from="1746531990978" duration="31164000" />
+      <workItem from="1747034183344" duration="4531000" />
+      <workItem from="1747214048067" duration="4051000" />
+      <workItem from="1747219114003" duration="15456000" />
+      <workItem from="1747237677893" duration="5453000" />
+      <workItem from="1747303078384" duration="1272000" />
+      <workItem from="1747310163693" duration="6484000" />
+      <workItem from="1747322469671" duration="10366000" />
+      <workItem from="1747389013762" duration="4503000" />
+    </task>
+    <task id="LOCAL-00001" summary="token olinvotti tranzaksiya create qilinvotti endi faqat karta bog'lash bilan tolovni tasdiqlash qoldi manmcha">
+      <option name="closed" value="true" />
+      <created>1746546149504</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1746546149505</updated>
+    </task>
+    <task id="LOCAL-00002" summary="some changes">
+      <option name="closed" value="true" />
+      <created>1746629381561</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1746629381561</updated>
+    </task>
+    <task id="LOCAL-00003" summary="some changes">
+      <option name="closed" value="true" />
+      <created>1747056734396</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747056734396</updated>
+    </task>
+    <task id="LOCAL-00004" summary="payment integration tugadi endi serverga joylash kere">
+      <option name="closed" value="true" />
+      <created>1747333365392</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1747333365392</updated>
+    </task>
+    <task id="LOCAL-00005" summary="mainga orginali qaytarildi orqaga">
+      <option name="closed" value="true" />
+      <created>1747391199789</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1747391199789</updated>
+    </task>
+    <task id="LOCAL-00006" summary="mainga orginali qaytarildi orqaga bez.env">
+      <option name="closed" value="true" />
+      <created>1747391333625</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1747391333625</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="357b3dce-40c3-4bfa-995a-a445cf95522c" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="357b3dce-40c3-4bfa-995a-a445cf95522c">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="token olinvotti tranzaksiya create qilinvotti endi faqat karta bog'lash bilan tolovni tasdiqlash qoldi manmcha" />
+    <MESSAGE value="some changes" />
+    <MESSAGE value="payment integration tugadi endi serverga joylash kere" />
+    <MESSAGE value="mainga orginali qaytarildi orqaga" />
+    <MESSAGE value="mainga orginali qaytarildi orqaga bez.env" />
+    <option name="LAST_COMMIT_MESSAGE" value="mainga orginali qaytarildi orqaga bez.env" />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
+  </component>
+</project>
